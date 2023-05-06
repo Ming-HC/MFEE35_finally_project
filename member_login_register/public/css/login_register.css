@@ -1,0 +1,48 @@
+.container {
+    margin-top: 32px;
+}
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.header div {
+    display: inline-block;
+    width: 30%;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.imgcontainer {
+    text-align: center;
+}
+img {
+    width: 200px;
+    height: 200px;
+}
+.input_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 75%;
+    height: 300px;
+    margin: 20px auto;
+    padding-left: 50px;
+}
+input[name="uname"]+label, input[name="psw"]+label {
+    display: block;
+    color: red;
+    font-size: 14px;
+}
+input[type="submit"], input[type="button"] {
+    background-color: rgb(228, 152, 11);
+    color: white;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    text-align: center;
+}
+.cancelbtn {
+    float: right;
+}

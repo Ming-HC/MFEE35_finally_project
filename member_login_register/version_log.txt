@@ -1,0 +1,5 @@
+2023/04/27 update cloud: bug fixes: not uploaded headshot can't register, 
+	and headshot import error when login for members who have not uploaded headshot, 
+	and upload headshot rename bug fixex.
+2023/04/26 update cloud: Upload headshot function when register, and Removed example CSS and rebuilding CSS
+2023/04/18 update cloud: The session part of the member login function is done.
