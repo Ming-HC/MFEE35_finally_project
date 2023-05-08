@@ -59,7 +59,7 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
         conn.query(sql, [req.body.UserName, req.body.Password], function (err, results, fidlds) {
             if (err) {
                 console.log('select UserName error: ' + JSON.stringify(err));
-                res.send('UserName or Password Input error.');
+                res.send('Username or Password Input error.');
             } else {
                 if (results[0]) {
                     if (req.body.UserName == results[0].UserName) {
@@ -74,11 +74,11 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
                             console.log('User: ' + req.body.UserName + ', logined_at: ' + d.toISOString().replace('T', ' ').substr(0, 19));
                             res.send(req.session.user);
                         } else {
-                            res.send('UserName or Password Input error.');
+                            res.send('Username or Password Input error.');
                         }
                     }
                 } else {
-                    res.send('UserName or Password Input error.');
+                    res.send('Username or Password Input error.');
                 }
             }
         })
@@ -86,13 +86,13 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
         var sql = 'SELECT UserName FROM member.info where UserName = ?;';
         conn.query(sql, [req.body.UserName], function (err, results, fidlds) {
             if (err) {
-                var replydata = 'select UserName error';
+                var replydata = 'select Username error';
                 console.log(replydata + ': ' + JSON.stringify(err));
                 res.send(replydata);
             } else {
                 if (results[0]) {
                     if (req.body.UserName == results[0].UserName) {
-                        res.send('UserName already Register.');
+                        res.send('Username already Register.');
                     }
                 } else {
                     sql = "INSERT INTO member.info (UserName, Password, headshot) VALUES (?, ?, ?);";
@@ -114,16 +114,16 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
         conn.query(sql, [req.body.UserName], function (err, results, fidlds) {
             if (err) {
                 console.log('select UserName error: ' + JSON.stringify(err));
-                res.send('UserName Input error.');
+                res.send('Username Input error.');
             } else {
                 if (results[0]) {
                     if (req.body.UserName == results[0].UserName) {
-                        res.send("UserName can't use.");
+                        res.send("Username can't use.");
                     } else {
-                        res.send("UserName can use.");
+                        res.send("Username can use.");
                     }
                 } else {
-                    res.send('UserName can use.');
+                    res.send('Username can use.');
                 }
             }
         })

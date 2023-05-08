@@ -21,86 +21,70 @@ $(function () {
                     <div class="imgcontainer">
                         <img src="/image/member/demo.png" alt="Avatar" class="avatar">
                     </div>
-                    <form class="row">
+                    <form>
                         <div class="input_info">
-                            <div class="void col-12">
+                            <div>
+                                <label for="uname"><b>Username：</b></label>
+                                <input type="text" placeholder="Enter Username" name="uname" required>
+                                <label></label><br>
                             </div>
-                            <div class="col-12">
-                                <label for="uname" class="form-label"><b>Username：</b></label>
-                                <input type="text" placeholder="Enter Username" name="uname" class="form-control" required>
-                            </div>
-                            <div class="col-12">
+                            <div>
                                 <label for="psw"><b>Password：</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" class="form-control" required>
+                                <input type="password" placeholder="Enter Password" name="psw" required>
                                 <label></label>
                             </div>
                             <input type="submit" value="Login" />
                         </div>
                     </form>
+                    <button type="button" class="cancelbtn">Cancel</button>
                 </div>
             `;
             } else if (url == 'register') {
                 var newFORM = `
                 <div>
                     <div class="imgcontainer">
-                        <img src="/image/member/demo.png" class="avatar">
+                        <img src="/image/member/demo.png" alt="Avatar" class="avatar">
                     </div>
-                    <form action="/upload_headshot" method="post" enctype="multipart/form-data" class="row">
+                    <form action="/upload_headshot" method="post" enctype="multipart/form-data">
                         <div class="input_info">
                             <div>
-                                <label><b>Headshot：</b></label>
-                                <input type="file" name="headshot" class="form-control">
+                                <label><b>Update headshot：</b></label>
+                                <input type="file" name="headshot">
                             </div>
                             <div>
-                                <label><b>Username：</b></label>
-                                <input type="text" placeholder="Enter Username" name="uname" class="form-control is-invalid" required>
-                                <label>請輸入6-12個英數字</label><br>
+                                <label for="uname"><b>Username：</b></label>
+                                <input type="text" placeholder="Enter Username" name="uname" required>
+                                <label></label><br>
                             </div>
                             <div>
-                                <label><b>Password：</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" class="form-control is-invalid" required>
-                                <label>請輸入6-12個英數字</label>
+                                <label for="psw"><b>Password：</b></label>
+                                <input type="password" placeholder="Enter Password" name="psw" required>
+                                <label></label>
                             </div>
                             <input type="button" value="Register" />
                         </div>
                     </form>
+                    <button type="button" class="cancelbtn">Cancel</button>
                 </div>
             `;
             } else if (url == 'logined') {
                 alert('You are logined.');
+                // window.history.back();
                 location.href = '/';
             }
 
 
             $('.formResult').append(newFORM);
-
             if (window.location.pathname.indexOf('register') > -1) {
                 $('input[type=file]').change(function handleFiles() {
-                    var img = document.querySelector('.imgcontainer img');
+                    var img = document.querySelector('img');
                     img.src = window.URL.createObjectURL(this.files[0]);
                     img.onload = function () {
                         window.URL.revokeObjectURL(this.src);
                     }
                 })
-
-                $('input[name=uname]').on('keyup', function () {
+                $('input[name=uname').on('focusout', function () {
                     if ($('input[name=uname]').val() != "") {
-                        var inputvalue = $('input[name=uname]').val();
-                        var pattern = /^[A-Za-z0-9]{6,12}$/;
-                        if (inputvalue.match(pattern)) {
-                            $('input[name=uname]+label').text("");
-                            $('input[name=uname]').prop('class', 'form-control is-valid');
-                        } else {
-                            $('input[name=uname]+label').css('color', 'red');
-                            $('input[name=uname]+label').text("請輸入6-12個英數字");
-                            $('input[name=uname]').prop('class', 'form-control is-invalid');
-                        }
-                    } else {
-                        $('input[name=uname]').prop('class', 'form-control is-invalid');
-                    }
-                })
-                $('input[name=uname]').on('focusout', function () {
-                    if ($('input[name=uname]').val() != ""  && $('input[name=uname]').prop('class').indexOf('is-valid') > -1) {
                         var dataToServer = {
                             UserName: $('input[name=uname]').val()
                         }
@@ -112,37 +96,17 @@ $(function () {
                                 // console.log(req);
                                 if (req.indexOf("can't") > -1) {
                                     $('input[name=uname]+label').css('color', 'red');
-                                    $('input[name=uname]').prop('class', 'form-control is-invalid');
                                 } else {
                                     $('input[name=uname]+label').css('color', 'green');
-                                    $('input[name=uname]').prop('class', 'form-control is-valid');
                                 }
                                 $('input[name=uname]+label').text(req);
                             }
                         })
                     } else {
-                        $('input[name=uname]').prop('class', 'form-control is-invalid');
-                        $('input[name=uname]+label').text("請輸入6-12個英數字");
-                    }
-                })
-                $('input[name=psw]').on('keyup', function () {
-                    if ($('input[name=psw]').val() != "") {
-                        var inputvalue = $('input[name=psw]').val();
-                        var pattern = /^[A-Za-z0-9]{6,12}$/;
-                        if (inputvalue.match(pattern)) {
-                            $('input[name=psw]+label').text("");
-                            $('input[name=psw]').prop('class', 'form-control is-valid');
-                        } else {
-                            $('input[name=psw]+label').css('color', 'red');
-                            $('input[name=psw]+label').text("請輸入6-12個英數字");
-                            $('input[name=psw]').prop('class', 'form-control is-invalid');
-                        }
-                    } else {
-                        $('input[name=psw]').prop('class', 'form-control is-invalid');
+                        $('input[name=uname]+label').text("");
                     }
                 })
             }
-
             $('input[type=submit]').on('click', function (e) {
                 if ($('input[name=uname]').val() && $('input[name=psw]').val()) {
                     if (url == 'login') {
@@ -157,20 +121,14 @@ $(function () {
                             data: dataToServer,
                             success: function (req) {
                                 if (req.account) {
-                                    req.headshot ? $('.imgcontainer img, .d-none.d-md-block.button img, .navbar-brand.d-md-none.button img').prop('src', `/image/member/upload/headshot/${req.headshot}`) : null;
-                                    $('input[name=uname]').prop('class', 'form-control is-valid');
-                                    $('input[name=psw]').prop('class', 'form-control is-valid');
-                                    $('input[name=psw]+label').css('color', 'green');
-                                    $('input[name=psw]+label').text('Login Success, 5秒後跳轉頁面.');
-                                    
+                                    req.headshot? $('img').prop('src', `/image/member/upload/headshot/${req.headshot}`) : null;
+                                    $('input[name=psw]+label').text('Login Success, 5秒後跳轉至首頁.');
                                     if (document.referrer.indexOf('register') == -1) {
                                         setTimeout(() => { window.location.href = document.referrer; }, 5000);
                                     } else {
                                         setTimeout(() => { location.href = '/'; }, 5000);
                                     }
                                 } else {
-                                    $('input[name=uname]').prop('class', 'form-control is-invalid');
-                                    $('input[name=psw]').prop('class', 'form-control is-invalid');
                                     $('input[name=psw]+label').text(req);
                                 }
                             }
@@ -181,7 +139,7 @@ $(function () {
                 }
             })
             $('input[type=button]').click(() => {
-                if (url == 'register' && $('input[name=uname]').prop('class').indexOf('is-valid') > -1 && $('input[name=psw]').prop('class').indexOf('is-valid') > -1) {
+                if (url == 'register') {
                     postheadshot();
                 }
             })
@@ -198,7 +156,7 @@ $(function () {
                         contentType: false,
                         processData: false,
                         success: function (req) {
-                            $('.imgcontainer img').prop('src', `/image/member/upload/headshot/${req.split('headshot\\')[1]}`);
+                            $('img').prop('src', `/image/member/upload/headshot/${req.split('headshot\\')[1]}`);
                             postRegister(req.split('headshot\\')[1]);
                         }
                     })
@@ -231,7 +189,6 @@ $(function () {
         }
     }
     getform(url);
-
 
     var login_signup_button = document.querySelectorAll('.header div');
     if (url == 'login') {
