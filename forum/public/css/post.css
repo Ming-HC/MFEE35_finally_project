@@ -1,0 +1,138 @@
+body {
+    padding: 0;
+}
+
+.container {
+    margin-top: 30px;
+    width: 1000px;
+    /* height: 2000px; */
+    border: 1px solid black;
+}
+
+.reply_floor {
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+#title label {
+    color: lightgray;
+}
+
+h3 {
+    margin-left: 30px;
+    display: inline-block;
+}
+
+#user_info,
+#user_info+div {
+    display: inline-block;
+}
+
+#user_info {
+    text-align: center;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+}
+
+#user_info img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 15px;
+}
+
+#user_info+div {
+    vertical-align: top;
+}
+
+#reply_floor_div {
+    text-align: right;
+}
+
+#reply_floor_div label {
+    color: lightgray
+}
+
+pre {
+    width: 100%;
+    min-height: 200px;
+    white-space: pre-wrap;  /*pre換行*/
+    word-wrap: break-word;  /*pre換行*/
+}
+
+pre+label {
+    display: block;
+    text-align: right;
+    color: lightgray;
+}
+
+#message {
+    display: flex;
+    align-items: center;
+}
+
+#message img {
+    width: 50px;
+    height: 50px;
+}
+
+#message input {
+    margin-left: 50px;
+    width: 70%;
+}
+
+.reply_div {
+    margin-top: 50px;
+}
+
+.reply_div label,
+.reply_img_div * {
+    margin: 10px 10px 10px 7px;
+}
+
+.reply_div div {
+    text-align: center;
+}
+
+div.reply_img_div {
+    text-align: left;
+}
+
+.reply_img_div input {
+    width: 100%;
+}
+
+.reply_img_div img {
+    width: 50px;
+    height: 50px;
+}
+
+textarea {
+    resize: none;
+}
+
+div.reply_post_submit_div {
+    padding-right: 10px;
+    text-align: right;
+}
+
+/* 已刪除文章css */
+.d_title h3 {
+    color: lightgray;
+}
+
+.d_floor {
+    display: flex;
+    justify-content: space-around;
+}
+
+.d_floor label {
+    color: lightgray;
+}
+
+.d_floor div {
+    display: inline-block;
+    margin-left: auto;
+}
+
+/* 已刪除文章css */

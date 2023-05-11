@@ -1,0 +1,100 @@
+body {
+    padding: 0;
+    /* background-color: lightgray; */
+}
+
+.container {
+    margin-top: 30px;
+    width: 1000px;
+}
+
+.post a {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.post label {
+    color: black;
+}
+
+.post label:hover {
+    cursor: pointer;
+}
+
+.search_post div {
+    display: inline-block;
+}
+
+.search {
+    float: right;
+}
+
+.search>input {
+    width: 130px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid lightgray;
+    margin-right: 10px;
+}
+
+.search>input:hover,
+.search>input:focus {
+    width: 250px;
+}
+
+#search_submit,
+.post>button {
+    border-radius: 10px;
+}
+
+.subject {
+    margin-top: 30px;
+}
+
+.subject li .active {
+    background-color: rgb(123, 164, 226) !important;
+    color: white !important;
+}
+
+
+thead tr:first-child {
+    text-align: center;
+}
+
+#postResult {
+    text-align: center;
+}
+
+#postResult a {
+    text-decoration: none;
+}
+
+#postResult tr td:nth-of-type(3) {
+    text-align: left;
+    padding-left: 30px;
+}
+
+#postResult tr td:nth-of-type(3) a label:hover {
+    cursor: pointer;
+}
+
+#postResult tr td:nth-of-type(3) a,
+#postResult tr td:last-child label {
+    display: block;
+}
+
+#postResult tr td:nth-of-type(3) a+label {
+    color: lightgray;
+    height: 48px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.page {
+    text-align: center;
+}

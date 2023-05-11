@@ -1,0 +1,21 @@
+.container_cancelbs {
+    margin-top: 30px;
+}
+table {
+    margin: 0 auto 0 auto;
+}
+.title {
+    text-align: right;
+}
+input[type="file"] {
+    width: 200px;
+}
+textarea {
+    resize: none;
+  }
+#submit {
+    text-align: right;
+}
+#submit button {
+    background-color: white;
+}
