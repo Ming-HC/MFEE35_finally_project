@@ -818,27 +818,3 @@ app.post('/forum/search(/:page)?', express.urlencoded(), (req, res) => {
             break;
     }
 })
-
-app.post('/test/data', express.urlencoded(), (req, res) => {
-    var decode = Buffer.from(req.body.password, 'base64').toString();
-    console.log(decode);
-    const key = "mypasswordaeskey";
-    const iv = key;
-    function encrypt(decode) {
-        var encipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
-        let encrypted = encipher.update(decode, 'utf8', 'hex') + encipher.final('hex');
-        return encrypted;
-    }
-    var encrypted = encrypt(decode);
-    console.log('encrypted:', encrypted);
-    if (encrypted) {
-        console.log(decrypt(encrypted));
-    }
-    function decrypt(encrypted) {
-        var decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
-        let decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
-        return decrypted;
-    }
-
-    res.send(decode);
-})
