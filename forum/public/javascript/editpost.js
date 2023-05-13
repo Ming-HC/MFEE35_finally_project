@@ -12,6 +12,7 @@ $(function () {
                 $.each(req.results, function (index, item) {
                     appendClass(item.class_name_eng, item.class_name);
                 })
+                // console.log(req.logined_user); // get user
                 member.username = req.logined_user;
             }
         })

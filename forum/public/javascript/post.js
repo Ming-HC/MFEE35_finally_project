@@ -5,7 +5,6 @@ $(function () {
             type: 'GET',
             url: window.location.pathname + '/getdata',
             success: function (req) {
-                // console.log(req);
                 $.each(req, function (index, item) {
                     appendFloor(item.floor_exists, item.headshot, item.user, item.class_name, item.title, item.reply_floor, item.post_time_format, item.content, item.likes);
                 })
@@ -43,7 +42,7 @@ $(function () {
                                     <label>${post_time}</label>
                                 </div>
                             </div>
-                            <div>
+                            <div class="function_div">
                                 <!-- function button ex. like reply message -->
                                 ${$(".d-none.d-md-block.button").prop('href').indexOf('login') == -1 ?
                         user == $(".d-none.d-md-block.button").prop('href').split('member/')[1] ? '<input type="button" class="edit" value="編輯"/>' : "" : ""
@@ -51,18 +50,10 @@ $(function () {
                                 ${$(".d-none.d-md-block.button").prop('href').indexOf('login') == -1 ?
                         user == $(".d-none.d-md-block.button").prop('href').split('member/')[1] ? '<input type="button" class="delete" value="刪除"/>' : "" : ""
                     }
-                                <button>喜歡</button>
-                                <button>留言</button>
                                 <input type="button" class="reply" value="回覆" />
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="message">
-                    <!-- message -->
-                    <img src="" />
-                    <a href="/member/login"><label>登入</label></a>
-                    <input type="text" />
                 </div>
             </div>
             `;
@@ -70,7 +61,6 @@ $(function () {
 
                 $(`.floor_${reply_floor} .edit`).click((e) => {
                     var post_id = window.location.pathname.split("post/")[1];
-                    // console.log(e.target.parentNode.parentNode.querySelector("#reply_floor_div label"));
                     var floor = e.target.parentNode.parentNode.querySelector("#reply_floor_div label").innerText.split("F")[0];
                     location.href = `/forum/editpost/${post_id}/${floor}`;
 
@@ -95,7 +85,6 @@ $(function () {
                     var floor = e.target.parentNode.parentNode.querySelector("#reply_floor_div label").innerText.split("F")[0];
                     var hint = "是否確定刪除文章";
                     if (confirm(hint) == true) {
-                        // location.href = `/forum/deletepost/${post_id}/${floor}`;
                         $.ajax({
                             type: "PUT",
                             url: `/forum/deletepost/${post_id}/${floor}`,

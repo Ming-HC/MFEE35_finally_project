@@ -1,35 +1,23 @@
 body {
     padding: 0;
-    /* background-color: lightgray; */
 }
-
 .container {
     margin-top: 30px;
     width: 1000px;
-}
-
-.post a {
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-}
-
-.post label {
-    color: black;
-}
-
-.post label:hover {
-    cursor: pointer;
 }
 
 .search_post div {
     display: inline-block;
 }
 
+.searchResult_div {
+    height: 28px;
+    line-height: 28px;
+}
+
 .search {
     float: right;
 }
-
 .search>input {
     width: 130px;
     border-top: none;
@@ -49,15 +37,10 @@ body {
     border-radius: 10px;
 }
 
-.subject {
+table {
+    border-top: 1px solid lightgray;
     margin-top: 30px;
 }
-
-.subject li .active {
-    background-color: rgb(123, 164, 226) !important;
-    color: white !important;
-}
-
 
 thead tr:first-child {
     text-align: center;
@@ -66,16 +49,9 @@ thead tr:first-child {
 #postResult {
     text-align: center;
 }
-
 a {
     text-decoration: none;
 }
-/* table {
-    margin-top: 10px;
-}
-th:not(:last-child) {
-    border-right: 1px solid lightgray;
-} */
 
 #postResult tr td:nth-of-type(2) {
     text-align: left;
@@ -103,35 +79,4 @@ th:not(:last-child) {
 
 .page {
     text-align: center;
-}
-
-@media only screen and (min-width: 576px) {
-    .container {
-        max-width: 95%;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .container {
-        max-width: 95%;
-    }
-}
-
-@media only screen and (max-width: 800px) {
-    th label {
-        font-size: 14px;
-    }
-    th:nth-of-type(1), td:nth-of-type(1) {
-        min-width: 35px;
-    }
-    th:nth-of-type(3), td:nth-of-type(3), th:nth-of-type(4), td:nth-of-type(4) {
-        min-width: 45px;
-    }
-}
-
-@media only screen and (max-width: 576px) {
-    .container {
-        width: 100%;
-    }
-    
 }

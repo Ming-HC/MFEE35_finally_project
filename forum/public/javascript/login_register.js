@@ -24,15 +24,15 @@ $(function () {
                             data-callback="onSignIn2"></div>
                         <div class="g_id_signin" data-type="standard"></div>
                             <div class="col-12">
-                                <label for="uname" class="form-label"><b>Username：</b></label>
+                                <label for="uname" class="form-label"><b>使用者名稱：</b></label>
                                 <input type="text" placeholder="Enter Username" id="uname" class="form-control" required>
                             </div>
                             <div class="col-12">
-                                <label for="psw"><b>Password：</b></label>
+                                <label for="psw"><b>密碼：</b></label>
                                 <input type="password" placeholder="Enter Password" id="psw" class="form-control" required>
                                 <label></label>
                             </div>
-                            <input type="submit" value="Login" />
+                            <input type="submit" value="登入" />
                         </div>
                     </form>
                     <script>
@@ -45,7 +45,7 @@ $(function () {
                                 headshot: profile.picture,
                                 email: profile.email,
                                 submitfrom: 'google',
-                                thirdtoken: profile.sub
+                                thirdtoken: window.btoa(profile.sub)
                             }
                             $.ajax({
                                 type: 'post',
@@ -58,9 +58,13 @@ $(function () {
                                         $('#psw+label').css('color', 'green');
                                         $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
                                         if (document.referrer.indexOf('register') == -1) {
-                                            setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                            if (req.logined_times < 1) {
+                                                setTimeout(() => { location.href = '/member/'+req.account; }, 1000);
+                                            } else {
+                                                setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                            }
                                         } else {
-                                            setTimeout(() => { location.href = '/forum'; }, 1000);
+                                            setTimeout(() => { location.href = '/member/'+req.account; }, 1000);
                                         }
                                     } else {
                                         $('#psw+label').css('color', 'red');
@@ -76,26 +80,26 @@ $(function () {
                     <form action="/upload_headshot" method="post" enctype="multipart/form-data" class="row">
                         <div class="input_info">
                             <div>
-                                <label><b>Headshot：</b></label>
+                                <label><b>大頭貼：</b></label>
                                 <input type="file" name="headshot" class="form-control">
                             </div>
                             <div>
-                                <label><b>Username：</b></label>
+                                <label><b>使用者名稱：</b></label>
                                 <input type="text" placeholder="Enter Username" name="uname" class="form-control is-invalid" required>
                                 <label>請輸入6-12個英數字</label><br>
                             </div>
                             <div>
-                                <label><b>Password：</b></label>
+                                <label><b>密碼：</b></label>
                                 <input type="password" placeholder="Enter Password" name="psw" class="form-control is-invalid" required>
                                 <label>請輸入6-12個英數字</label>
                             </div>
-                            <input type="button" value="Register" />
+                            <input type="button" value="註冊" />
                         </div>
                     </form>
             `;
             } else if (url == 'logined') {
                 // alert('You are logined.');
-                // location.href = '/';
+                // location.href = $(".d-none.d-md-block.button").prop("href").split("localhost")[1];
             }
 
 
@@ -104,9 +108,13 @@ $(function () {
             if (window.location.pathname.indexOf('register') > -1) {
                 $('input[type=file]').change(function handleFiles() {
                     var img = document.querySelector('.imgcontainer img');
-                    img.src = window.URL.createObjectURL(this.files[0]);
-                    img.onload = function () {
-                        window.URL.revokeObjectURL(this.src);
+                    if ($('input[type=file]').val() != "") {
+                        img.src = window.URL.createObjectURL(this.files[0]);
+                        img.onload = function () {
+                            window.URL.revokeObjectURL(this.src);
+                        }
+                    } else {
+                        img.src = "/image/member/demo.png";
                     }
                 })
 
@@ -129,7 +137,7 @@ $(function () {
                 $('input[name=uname]').on('focusout', function () {
                     if ($('input[name=uname]').val() != "" && $('input[name=uname]').prop('class').indexOf('is-valid') > -1) {
                         var dataToServer = {
-                            UserName: $('input[name=uname]').val()
+                            username: $('input[name=uname]').val()
                         }
                         $.ajax({
                             type: 'post',
@@ -188,12 +196,14 @@ $(function () {
                                     $('#psw').prop('class', 'form-control is-valid');
                                     $('#psw+label').css('color', 'green');
                                     $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
-                                    // setTimeout(() => { location.href = '/forum'; }, 3000);
-                                    // 現在是回上一頁 bug 註冊完跳轉到登入回上一頁會回註冊
                                     if (document.referrer.indexOf('register') == -1) {
-                                        setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                        if (req.logined_times < 1) {
+                                            setTimeout(() => { location.href = `/member/${req.account}`; }, 1000);
+                                        } else {
+                                            setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                        }
                                     } else {
-                                        setTimeout(() => { location.href = '/forum'; }, 1000);
+                                        setTimeout(() => { location.href = `/member/${req.account}`; }, 1000);
                                     }
                                 } else {
                                     $('#uname').prop('class', 'form-control is-invalid');
@@ -236,6 +246,7 @@ $(function () {
             }
             function postRegister(headshot) {
                 if (url = 'register') {
+                    $('input[name=psw]').val(window.btoa($('input[name=psw]').val()));
                     var dataToServer = {
                         username: $('input[name=uname]').val().toLowerCase(),
                         password: $('input[name=psw]').val(),
@@ -262,14 +273,17 @@ $(function () {
 
 
     var login_signup_button = document.querySelectorAll('.header div');
+    var login_signup_label = document.querySelectorAll('.header div label');
     if (url == 'login') {
-        // http://localhost/member/login
-        login_signup_button[0].style.backgroundColor = 'white';
-        login_signup_button[1].style.backgroundColor = 'lightblue';
+        login_signup_button[0].style.borderBottom = '5px solid lightgray';
+        login_signup_label[0].style.color = 'lightgray';
+        login_signup_button[1].style.borderBottom = '5px solid coral';
+        login_signup_label[1].style.color = 'black';
     } else if (url == 'register') {
-        //http://localhost/member/register
-        login_signup_button[0].style.backgroundColor = 'lightblue';
-        login_signup_button[1].style.backgroundColor = 'white';
+        login_signup_button[0].style.borderBottom = '5px solid coral';
+        login_signup_label[0].style.color = 'black';
+        login_signup_button[1].style.borderBottom = '5px solid lightgray';
+        login_signup_label[1].style.color = 'lightgray';
     }
 
     $('.header div').on('click', function () {

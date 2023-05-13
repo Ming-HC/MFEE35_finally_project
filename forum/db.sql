@@ -3,12 +3,13 @@ character set utf8mb4;
 CREATE TABLE member.info (
   `member_id` int not null AUTO_INCREMENT,
   `username` char(30) NOT NULL,
-  `password` char(20) default null,
+  `password` char(35) default null,
   `nickname` varchar(20) default NULL,
   `headshot` varchar(100) default null,
   `email` varchar(30) default NULL,
   `submitfrom` char(10) default 'local',
-  `thirdtoken` char(100) DEFAULT NULL,
+  `thirdtoken` char(70) DEFAULT NULL,
+  `logined_times` int default '0',
   `register_time` timestamp default now(),
   primary key (`member_id`)
 );
@@ -29,7 +30,6 @@ unique(`class_name`)
 create table forum.postlist (
 `post_id` int not null AUTO_INCREMENT,
 `class_name` varchar(20) not null,
-`likes` int(10) default 0,
 `title` varchar(40) not null,
 `imageurl` varchar(50) default null,
 `content` varchar(120) not null,
@@ -51,7 +51,6 @@ create table forum.post_4 (
     -- headshot varchar(20) default null, -- 最好去查會員headshot
     imageurl varchar(50) default null,
     content varchar(1000) not null,
-    likes int(10) default 0,
     post_time timestamp default now(), -- 發文時間
     floor_exists default 1,
     primary key (reply_floor),
@@ -77,12 +76,14 @@ select user, post_time from forum.post_2 ORDER BY post_time desc;
 update forum.postlist set reply = ?, latestReply_user = ?, latestReply_time  = ? where post_id = ${post_id};
 
 
-insert into forum.postlist(class_name, title, content, user) values ('all', '123', '123', 'a');
+insert into forum.postlist(class_name, title, content, user) values ('閒聊', '123', '123', 'a');
 select username, headshot from member.info where username in ('a55688', 'a55688', 'ratuser', 'Testrat', 'beeeee', 'fireman', 'avc2b5kabrgv');
 
 select * from forum.postlist where title = 123 or content = 123 or user = 123;
-SELECT * from forum.postlist where post_exists = 1 and title like '%交換%' or content like '%交換%' or user like '%交換%';
-SELECT * from forum.postlist where title like '%交換%';
+SELECT * from forum.postlist where post_exists = 1 and (title like '%user55688%' or content like '%user55688%' or user like '%user55688%');
+SELECT * from forum.postlist where title like '%交換%' or content like '%交換%' or user like '%交換%';\
+SELECT * , DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format FROM forum.postlist WHERE post_exists = 1 and post_id in (1, 3, 5);
+SELECT reply_floor FROM forum.post_35 WHERE floor_exists = 1 and content like '%sdad%';
 -- drop database member;
 drop table member.info;
 drop table forum.postlist;
@@ -90,7 +91,7 @@ drop table forum.class;
 drop table forum.post_2;
 
 SELECT * FROM forum.post_1
-SELECT *, DATE_FORMAT(post_time, '%Y/%m/%d %H:%i') post_time_format FROM forum.post_1
+SELECT *, DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format FROM forum.postlist WHERE post_exists = 1 and post_id in (1, 3, 5) ORDER BY latestReply_time DESC LIMIT 0, 20;
 
 delete from forum.postlist where post_id < 4;
 SELECT * FROM member.info where UserName = g;
@@ -111,5 +112,7 @@ alter table member.info
 	add column submitfrom char(10) default 'localhost';
 
 -- try GCP SQL
+select * , DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format FROM forum.postlist where class_name != '回收區' and post_exists = true ORDER BY latestReply_time DESC LIMIT 0, 20;
+select * FROM forum.postlist where class_name != '回收區' and post_exists = true;
 select * , DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format FROM forum.postlist where class_name != '回收區' and post_exists = true ORDER BY latestReply_time DESC LIMIT 0, 20;
 select * FROM forum.postlist where class_name != '回收區' and post_exists = true;

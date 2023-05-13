@@ -18,7 +18,13 @@ $(function () {
             }
         })
         function appendClass(class_eng, class_name, index) {
-            if (window.location.pathname.indexOf(class_eng) > -1) {
+            if (window.location.pathname == "/forum" && index == 0) {
+                $('#myTab').append(`
+                <li class="nav-item">
+                    <a class="nav-link active" id="${class_eng}-tab" data-toggle="tab" href="http://localhost/forum/${class_eng}" role="tab" aria-controls="${class_eng}"
+                        aria-selected="true">${class_name}</a>
+                </li>`);
+            } else if (window.location.pathname.indexOf(class_eng) > -1) {
                 $('#myTab').append(`
                 <li class="nav-item">
                     <a class="nav-link active" id="${class_eng}-tab" data-toggle="tab" href="http://localhost/forum/${class_eng}" role="tab" aria-controls="${class_eng}"
@@ -49,14 +55,13 @@ $(function () {
         $('#postResult').html('');
         $.ajax({
             type: 'GET',
-
             url: url + "/getpost",
             success: function (req) {
                 $.each(req.postlist, function (index, item) {
                     var postd = new Date(item.latestReply_time_format);
                     var d = new Date();
                     Math.ceil((d - postd)/1000) < 3600 ? item.latestReply_time_format=`${Math.ceil((d - postd)/60000)}分前` : item.latestReply_time_format;
-                    appendPost(item.post_id, item.class_name, item.likes, item.title, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
+                    appendPost(item.post_id, item.class_name, item.title, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
                 })
                 $('.page').html('');
                 var pattern = /\d+/;
@@ -70,10 +75,9 @@ $(function () {
                 }
             }
         })
-        function appendPost(post_id, post_class, like, title, content, reply, views, user, latestReply_user, latestReply_time) {
+        function appendPost(post_id, post_class, title, content, reply, views, user, latestReply_user, latestReply_time) {
             var newTR = $('<tr>');
             newTR.append(`<td><label>${post_class}</label></td>`);
-            newTR.append(`<td><label>${like}</label></td>`);
             newTR.append(`<td><a href="/forum/post/${post_id}"><label>${title}</label></a>
                             <label>${content}</label></td>`);
             newTR.append(`<td><label>${reply}</label> / <label>${views}</label></td>`);
@@ -85,18 +89,8 @@ $(function () {
     getPostClass();
     getPostList();
     $('#search_submit').click( () => {
-        var dataToServer = {
-            select_target: $('.search_select').val(),
-            select_content: $('.search>input').val()
-        };
-        $.ajax({
-            type: 'post',
-            url: '/forum/search',
-            data: dataToServer,
-            success: (req) => {
-                console.log(req);
-            }
-        })
+        sessionStorage.setItem('select_target', $('.search_select').val());
+        sessionStorage.setItem('select_content', $('.search>input').val());
+        location.href = "/forum/search"
     })
 })
-

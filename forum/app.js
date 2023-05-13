@@ -3,6 +3,7 @@ var app = express();
 var fs = require('fs');
 var multer = require('multer');
 var session = require('express-session');
+var crypto = require('crypto');
 
 app.use(session({
     secret: 'any',
@@ -12,7 +13,7 @@ app.use(session({
         path: '/',
         httpOnly: true,
         secure: false,
-        maxAge: 300 * 1000       // 7 Days = 604800 Secs
+        maxAge: 60 * 1000       // 7 Days = 604800 Secs
     }
 }))
 
@@ -59,14 +60,14 @@ app.get('/member', function (req, res) {
     if (req.session.user) {
         res.send(req.session.user);
     } else {
-        res.redirect('member/login');
+        res.redirect('/member/login');
     }
 })
 app.get('/member/:url', function (req, res) {
     if (req.session.user) {
         res.render('login_register', {
             page: 'login_register',
-            memger: req.session.user.account,
+            member: req.session.user.account,
             url: 'logined'
         })
     } else {
@@ -82,25 +83,46 @@ app.get('/member/:url', function (req, res) {
 
 app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
     var url = req.params.url;
+    var key = "mypasswordaeskey";
+    var iv = key;
+    var dataToWeb = {};
     if (url == 'login') {
-        var sql = 'SELECT * FROM member.info where username = ?;';
-        conn.query(sql, [req.body.username, req.body.password], function (err, results, fidlds) {
+        var sql = 'SELECT * FROM member.info WHERE username = ?;';
+        conn.query(sql, [req.body.username], function (err, results, fidlds) {
             if (err) {
                 console.log('select username error: ' + JSON.stringify(err));
                 res.send('username or password Input error.');
             } else {
                 if (results[0]) {
                     if (req.body.username == results[0].username) {
-                        if (req.body.password == results[0].password) {
+                        var decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+                        let decrypted = decipher.update(results[0].password, 'hex', 'utf8') + decipher.final('utf8');
+                        if (req.body.password == decrypted) {
                             var d = new Date();
                             d.setHours(d.getHours() + 8);
                             req.session.user = {
-                                'account': req.body.username,
+                                'account': results[0].username,
                                 'logined_at': d,
-                                'headshot': results[0].headshot
                             }
-                            console.log('User: ' + req.body.username + ', logined_at: ' + d.toISOString().replace('T', ' ').substr(0, 19));
-                            res.send(req.session.user);
+                            if (results[0].logined_times < 1) {
+                                dataToWeb = {
+                                    account: results[0].username,
+                                    logined_times: results[0].logined_times,
+                                    headshot: results[0].headshot
+                                }
+                            } else {
+                                dataToWeb = {
+                                    account: results[0].username,
+                                    headshot: results[0].headshot
+                                }
+                            }
+                            console.log('User: ' + results[0].username + ', logined_at: ' + d.toISOString().replace('T', ' ').substr(0, 19));
+                            res.send(dataToWeb);
+                            // 增加登入次數
+                            var update_logined_times_sql = `UPDATE member.info set logined_times = ? where username = '${results[0].username}';`;
+                            conn.query(update_logined_times_sql, [results[0].logined_times + 1], (err, results, fields) => {
+                                if (err) throw err;
+                            })
                         } else {
                             res.send('Username or Password Input error.');
                         }
@@ -111,7 +133,7 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
             }
         })
     } else if (url == 'register') {
-        var sql = 'SELECT UserName FROM member.info where UserName = ?;';
+        var sql = 'SELECT username FROM member.info WHERE username = ?;';
         conn.query(sql, [req.body.username], function (err, results, fidlds) {
             if (err) {
                 var replydata = 'select UserName error';
@@ -123,8 +145,11 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
                         res.send('Username already Register.');
                     }
                 } else {
+                    var decode = Buffer.from(req.body.password, 'base64').toString();
+                    var encipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+                    let encrypted = encipher.update(decode, 'utf8', 'hex') + encipher.final('hex');
                     sql = "INSERT INTO member.info (username, password, headshot) VALUES (?, ?, ?);";
-                    conn.query(sql, [req.body.username, req.body.password, req.body.headshot],
+                    conn.query(sql, [req.body.username, encrypted, req.body.headshot],
                         function (err, results, fidlds) {
                             if (err) {
                                 replydata = 'INSERT DataBase error';
@@ -138,7 +163,7 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
             }
         })
     } else if (url == 'chkuser') {
-        var sql = 'SELECT * FROM member.info where username = ?;';
+        var sql = 'SELECT * FROM member.info WHERE username = ?;';
         conn.query(sql, [req.body.username], function (err, results, fidlds) {
             if (err) {
                 console.log('select Username error: ' + JSON.stringify(err));
@@ -156,22 +181,41 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
             }
         })
     } else if (url == 'thirdlogin') {
+        var decode = Buffer.from(req.body.thirdtoken, 'base64').toString();
+        var encipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+        let encrypted = encipher.update(decode, 'utf8', 'hex') + encipher.final('hex');
         var select_member_sql = `select * from member.info where thirdtoken = ?`;
-        conn.query(select_member_sql, [req.body.thirdtoken], (err, results, fields) => {
+        conn.query(select_member_sql, [encrypted], (err, results, fields) => {
             if (err) {
                 console.log(err);
             } else {
                 if (results[0]) {
-                    if (req.body.thirdtoken == results[0].thirdtoken) {
+                    if (encrypted == results[0].thirdtoken) {
                         var d = new Date();
                         d.setHours(d.getHours() + 8);
                         req.session.user = {
                             'account': results[0].username,
                             'logined_at': d,
-                            'headshot': results[0].headshot
+                        }
+                        if (results[0].logined_times < 1) {
+                            dataToWeb = {
+                                account: results[0].username,
+                                logined_times: results[0].logined_times,
+                                headshot: results[0].headshot
+                            }
+                        } else {
+                            dataToWeb = {
+                                account: results[0].username,
+                                headshot: results[0].headshot
+                            }
                         }
                         console.log('User: ' + results[0].username + ', logined_at: ' + d.toISOString().replace('T', ' ').substr(0, 19));
-                        res.send(req.session.user);
+                        res.send(dataToWeb);
+                        // 增加登入次數
+                        var update_logined_times_sql = `UPDATE member.info set logined_times = ? where username = '${results[0].username}';`;
+                        conn.query(update_logined_times_sql, [results[0].logined_times + 1], (err, results, fields) => {
+                            if (err) throw err;
+                        })
                     } else {
                         res.send('Google Login error.');
                     }
@@ -203,22 +247,39 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
                                 }
                             }
                             var third_register_member_sql = `INSERT INTO member.info (username, nickname, headshot, email, submitfrom, thirdtoken) VALUES (?, ?, ?, ?, ?, ?);`;
-                            var third_login_member_sql = `select * from member.info where thirdtoken = ?`;
-                            conn.query(third_register_member_sql + third_login_member_sql, [randomuser, req.body.nickname, req.body.headshot, req.body.email, req.body.submitfrom, req.body.thirdtoken, req.body.thirdtoken], (err, results, fields) => {
+                            var third_login_member_sql = `SELECT * FROM member.info WHERE thirdtoken = ?`;
+                            conn.query(third_register_member_sql + third_login_member_sql, [randomuser, req.body.nickname, req.body.headshot, req.body.email, req.body.submitfrom, encrypted, encrypted], (err, results, fields) => {
                                 if (err) {
                                     console.log("submit third member err:", err);
                                 } else {
                                     if (results[1]) {
-                                        if (req.body.thirdtoken == results[1][0].thirdtoken) {
+                                        // console.log(results[1][0]);
+                                        if (encrypted == results[1][0].thirdtoken) {
                                             var d = new Date();
                                             d.setHours(d.getHours() + 8);
                                             req.session.user = {
                                                 'account': results[1][0].username,
-                                                'logined_at': d,
-                                                'headshot': results[1][0].headshot
+                                                'logined_at': d
+                                            }
+                                            if (results[1][0].logined_times < 1) {
+                                                dataToWeb = {
+                                                    account: results[1][0].username,
+                                                    logined_times: results[1][0].logined_times,
+                                                    headshot: results[1][0].headshot
+                                                }
+                                            } else {
+                                                dataToWeb = {
+                                                    account: results[1][0].username,
+                                                    headshot: results[1][0].headshot
+                                                }
                                             }
                                             console.log('User: ' + results[1][0].username + ', logined_at: ' + d.toISOString().replace('T', ' ').substr(0, 19));
-                                            res.send(req.session.user);
+                                            res.send(dataToWeb);
+                                            // 增加登入次數
+                                            var update_logined_times_sql = `UPDATE member.info set logined_times = ? where username = '${results[1][0].username}';`;
+                                            conn.query(update_logined_times_sql, [results[1][0].logined_times + 1], (err, results, fields) => {
+                                                if (err) throw err;
+                                            })
                                         } else {
                                             res.send('Google Login error.');
                                         }
@@ -301,7 +362,7 @@ app.get('/forum/view/newpost', function (req, res) {
             member: req.session.user.account
         });
     } else {
-        res.redirect('http://localhost/member/login');
+        res.redirect('/member/login');
     }
 })
 
@@ -355,14 +416,14 @@ app.get('/forum/editpost/:id/:floor', function (req, res) {
             member: req.session.user.account
         });
     } else {
-        res.redirect('http://localhost/member/login');
+        res.redirect('/member/login');
     }
 })
 app.get('/forum/editpost/:id/:floor/getdata', function (req, res) {
     if (req.session.user) {
         var post_id = req.params.id;
         var floor = req.params.floor;
-        var sql = `SELECT * FROM forum.post_${post_id} where reply_floor ${floor == 1 ? "= "+floor+";" : "in (1, "+floor+");"}`;
+        var sql = `SELECT * FROM forum.post_${post_id} where reply_floor ${floor == 1 ? "= " + floor + ";" : "in (1, " + floor + ");"}`;
         conn.query(sql, function (err, results, fields) {
             if (err) {
                 console.log("select postid err", err);
@@ -372,7 +433,7 @@ app.get('/forum/editpost/:id/:floor/getdata', function (req, res) {
             }
         })
     } else {
-        res.redirect('http://localhost/member/login');
+        res.redirect('/member/login');
     }
 })
 app.put('/forum/editpost/:id/:floor/edit', express.urlencoded(), function (req, res) {
@@ -407,9 +468,9 @@ app.put('/forum/editpost/:id/:floor/edit', express.urlencoded(), function (req, 
                 }
             })
         }
-        
+
     } else {
-        res.redirect('http://localhost/member/login');
+        res.redirect('/member/login');
     }
 })
 app.post('/forum(/:class)?/getclass', express.urlencoded(), function (req, res) {
@@ -450,8 +511,8 @@ app.post('/forum(/:class)?/getclass', express.urlencoded(), function (req, res) 
 app.post('/forum/newpost/:something', express.urlencoded(), function (req, res) {
     if (req.session.user) {
         if (req.params.something == 'new') {
-            if (req.body.content.length > 50) {
-                var postlist_content = req.body.content.slice(0, 50);
+            if (req.body.content.length > 60) {
+                var postlist_content = req.body.content.slice(0, 60);
             } else {
                 var postlist_content = req.body.content;
             }
@@ -477,7 +538,6 @@ app.post('/forum/newpost/:something', express.urlencoded(), function (req, res) 
                             user varchar(20) not null,
                             imageurl varchar(50) default null,
                             content varchar(1000) not null,
-                            likes int(10) default 0,
                             post_time timestamp default now(),
                             floor_exists int default 1,
                             primary key (reply_floor),
@@ -510,7 +570,7 @@ app.post('/forum/newpost/:something', express.urlencoded(), function (req, res) 
             )
         }
     } else {
-        res.redirect('http://localhost/member/login');
+        res.redirect('/member/login');
     }
 })
 
@@ -568,16 +628,19 @@ app.get('/forum/post/:id/getdata', function (req, res) {
                 }
             })
 
+            // 增加瀏覽數
             var select_post_views_sql = `SELECT views FROM forum.postlist where post_id = ${post_id};`;
             conn.query(select_post_views_sql, function (err, results, fields) {
                 if (err) {
                     console.log("select_post_views error:", err);
                 } else {
                     var add_post_views_sql = `UPDATE forum.postlist set views = ? where post_id = ${post_id};`;
+                    // var oldviews = results[0].views;
                     conn.query(add_post_views_sql, [results[0].views + 1], function (err, results, fields) {
                         if (err) {
                             console.log("update post views error", err);
                         } else {
+                            // console.log(`UPDATE post_${post_id} views = ${oldviews+1} now.`)
                         }
                     })
                 }
@@ -649,33 +712,133 @@ app.put('/forum/deletepost/:id/:floor', function (req, res) {
     }
 })
 
-app.post('/forum/search', express.urlencoded(), (req, res) => {
+app.get('/forum/search(/:page)?', (req, res) => {
+    if (req.session.user) {
+        res.render('searchpost', {
+            page: 'searchpost',
+            member: req.session.user.account,
+        });
+    } else {
+        res.render('searchpost', {
+            page: 'searchpost',
+            member: 'login'
+        });
+    }
+})
+
+app.post('/forum/search(/:page)?', express.urlencoded(), (req, res) => {
+    var targetpage = req.params.page ? req.params.page : 1;
     switch (req.body.select_target) {
         case "all":
-            var search_sql = `SELECT * from forum.postlist where post_exists = 1 and (title like '%${req.body.select_content}%' or content like '%${req.body.select_content}%' or user like '%${req.body.select_content}%') ORDER BY latestReply_time DESC LIMIT 0, 20;`;
-            conn.query(search_sql, (err, results, fields) => {
+            var search_sql = `SELECT *, DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format from forum.postlist where post_exists = 1 and (title like '%${req.body.select_content}%' or content like '%${req.body.select_content}%' or user like '%${req.body.select_content}%') ORDER BY latestReply_time DESC LIMIT ${(targetpage - 1) * 20}, 20;`;
+            var search_page_sql = `SELECT * from forum.postlist where post_exists = 1 and (title like '%${req.body.select_content}%' or content like '%${req.body.select_content}%' or user like '%${req.body.select_content}%');`;
+            conn.query(search_sql + search_page_sql, (err, results, fields) => {
                 if (err) {
                     console.log("search err:", err);
                 } else {
-                    console.log(results);
-                    res.send(results);
+                    var dataToWeb = {
+                        postlist: results[0],
+                        page: Math.ceil(results[1].length / 20),
+                        reslength: results[1].length
+                    }
+                    res.send(dataToWeb);
                 }
             })
             break;
         case "title":
             var search_sql = `SELECT * from forum.postlist where post_exists = 1 and title like '%${req.body.select_content}%' ORDER BY latestReply_time DESC LIMIT 0, 20;`;
-            conn.query(search_sql, (err, results, fields) => {
+            var search_page_sql = `SELECT * from forum.postlist where post_exists = 1 and title like '%${req.body.select_content}%';`;
+            conn.query(search_sql + search_page_sql, (err, results, fields) => {
                 if (err) {
                     console.log("search err:", err);
                 } else {
-                    console.log(results);
-                    res.send(results);
+                    var dataToWeb = {
+                        postlist: results[0],
+                        page: Math.ceil(results[1].length / 20),
+                        reslength: results[1].length
+                    }
+                    res.send(dataToWeb);
                 }
             })
             break;
         case "content":
-            var search_sql = `SELECT post_id from forum.postlist;`;
-            // 先搜出所有文章id 再去各文章搜尋內文 紀錄符合的文章id 再select postlist 符合的文章id 傳送至前端
+            var dataToWeb = { post_id: [] };
+            var search_allpostid_sql = `SELECT post_id FROM forum.postlist WHERE post_exists = 1;`;
+            conn.query(search_allpostid_sql, (err, results, fields) => {
+                if (err) {
+                    console.log("search postid err:", err);
+                } else {
+                    const promises = results.map((result) => {
+                        const search_content_sql = `SELECT reply_floor FROM forum.post_${result.post_id} WHERE floor_exists = 1 and content like '%${req.body.select_content}%';`;
+                        return new Promise((resolve, reject) => {
+                            conn.query(search_content_sql, (err, results2, fields) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve(results2[0] ? result.post_id : "");
+                                }
+                            })
+                        })
+                    })
+                    Promise.all(promises).then((results2) => {
+                        var search_res = [];
+                        results2.forEach((item) => {
+                            item != "" ? search_res.push(item) : null;
+                        })
+                        if (search_res.length) {
+                            targetpage = Math.ceil(search_res.length / 20);
+                            console.log(targetpage);
+                            var seach_res_sql = `SELECT *, DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format FROM forum.postlist WHERE post_exists = 1 and post_id in (?) ORDER BY latestReply_time DESC LIMIT ${targetpage - 1}, 20;`;
+                            console.log(seach_res_sql);
+                            conn.query(seach_res_sql, [search_res], (err, results, fields) => {
+                                if (err) {
+                                    console.log("search result err:", err);
+                                } else {
+                                    dataToWeb = {
+                                        postlist: results,
+                                        page: targetpage,
+                                        reslength: search_res.length
+                                    }
+                                    res.send(dataToWeb);
+                                }
+                            })
+                        } else {
+                            dataToWeb = {
+                                postlist: [],
+                                page: 1,
+                                reslength: 0
+                            }
+                            res.send(dataToWeb);
+                        }
+                    }).catch((err) => {
+                        console.error(err);
+                    });
+                }
+            })
             break;
     }
+})
+
+app.post('/test/data', express.urlencoded(), (req, res) => {
+    var decode = Buffer.from(req.body.password, 'base64').toString();
+    console.log(decode);
+    const key = "mypasswordaeskey";
+    const iv = key;
+    function encrypt(decode) {
+        var encipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+        let encrypted = encipher.update(decode, 'utf8', 'hex') + encipher.final('hex');
+        return encrypted;
+    }
+    var encrypted = encrypt(decode);
+    console.log('encrypted:', encrypted);
+    if (encrypted) {
+        console.log(decrypt(encrypted));
+    }
+    function decrypt(encrypted) {
+        var decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+        let decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
+        return decrypted;
+    }
+
+    res.send(decode);
 })

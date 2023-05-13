@@ -5,7 +5,6 @@ body {
 .container {
     margin-top: 30px;
     width: 1000px;
-    /* height: 2000px; */
     border: 1px solid black;
 }
 
@@ -31,18 +30,19 @@ h3 {
 
 #user_info {
     text-align: center;
-    border: 1px solid lightblue;
+    border: 1px solid lightgray;
     border-radius: 10px;
 }
 
 #user_info img {
     width: 200px;
     height: 200px;
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 
 #user_info+div {
     vertical-align: top;
+    margin-left: 20px;
 }
 
 #reply_floor_div {
@@ -56,8 +56,9 @@ h3 {
 pre {
     width: 100%;
     min-height: 200px;
-    white-space: pre-wrap;  /*pre換行*/
-    word-wrap: break-word;  /*pre換行*/
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 18px;
 }
 
 pre+label {
@@ -66,19 +67,8 @@ pre+label {
     color: lightgray;
 }
 
-#message {
-    display: flex;
-    align-items: center;
-}
-
-#message img {
-    width: 50px;
-    height: 50px;
-}
-
-#message input {
-    margin-left: 50px;
-    width: 70%;
+.function_div {
+    text-align: right;
 }
 
 .reply_div {
@@ -136,3 +126,39 @@ div.reply_post_submit_div {
 }
 
 /* 已刪除文章css */
+
+@media only screen and (max-width: 770px) {
+    #user_info{
+        width: 172px;
+        height: 207px;
+    }
+    #user_info img {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .container {
+        width: 100%;
+    }
+    .col-12 label {
+        display: block;
+    }
+    h3 {
+        margin-left: 0;
+    }
+    .reply_floor .col-4 {
+        margin: 10px auto;
+    }
+    #user_info+div {
+        margin: 0 auto;
+    }
+    #user_info,
+    #user_info+div {
+        display: block;
+    }
+    #user_info+div {
+        width: 90%;
+    }
+}
