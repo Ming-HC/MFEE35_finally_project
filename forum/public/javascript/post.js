@@ -6,11 +6,11 @@ $(function () {
             url: window.location.pathname + '/getdata',
             success: function (req) {
                 $.each(req, function (index, item) {
-                    appendFloor(item.floor_exists, item.headshot, item.user, item.class_name, item.title, item.reply_floor, item.post_time_format, item.content, item.likes);
+                    appendFloor(item.floor_exists, item.headshot, item.user, item.class_name, item.title, item.reply_floor, item.post_time_format, item.content, item.imageurl);
                 })
             }
         })
-        function appendFloor(exists, headshot, user, class_name, title, reply_floor, post_time, content, likes) {
+        function appendFloor(exists, headshot, user, class_name, title, reply_floor, post_time, content, imageurl) {
             if (exists) {
                 if (headshot) {
                     if (headshot.indexOf("headshot") > -1) {
@@ -38,6 +38,7 @@ $(function () {
                                 <!-- content -->
                                 <div id="reply_floor_div"><label>${reply_floor}F</label></div>
                                 <div>
+                                    ${appendimage(imageurl)}
                                     <pre>${content}</pre>
                                     <label>${post_time}</label>
                                 </div>
@@ -57,6 +58,18 @@ $(function () {
                 </div>
             </div>
             `;
+                function appendimage(imageurl) {
+                    if (imageurl) {
+                        var imageres = [];
+                        imageres = imageurl.split(',');
+                        for (let i = 0; i < imageres.length; i++) {
+                            imageres[i] = `<img src="/image/forum/upload/${imageres[i]}"/>`;
+                        }
+                        return imageres.join().replaceAll(',', '');
+                    } else {
+                        return '';
+                    }
+                }
                 $('#floorResult').append(newFloor);
 
                 $(`.floor_${reply_floor} .edit`).click((e) => {
@@ -65,16 +78,11 @@ $(function () {
                     location.href = `/forum/editpost/${post_id}/${floor}`;
 
                 })
-                $("#message img").prop("src", $(".d-none.d-md-block.button img").prop("src"));
-                $("#message a").prop("href", $(".d-none.d-md-block.button").prop("href"));
-                if ($(".d-none.d-md-block.button").prop("href").indexOf("login") == -1) {
-                    $("#message a label").text($("#message a").prop("href").split("member/")[1]);
-                }
                 $(`.floor_${reply_floor} .reply`).click(() => {
                     if ($(".d-none.d-md-block.button").prop("href").indexOf('login') > -1) {
                         var hint = "需登入才可回覆，是否登入？"
                         if (confirm(hint) == true) {
-                            location.href = "http://localhost/member/login";
+                            location.href = "/member/login";
                         }
                     } else {
                         $("textarea").focus();
@@ -91,7 +99,7 @@ $(function () {
                             success: (req) => {
                                 if (req.indexOf("success") > -1) {
                                     if (floor == 1) {
-                                        location.href = "http://localhost/forum";
+                                        location.href = "/forum";
                                     } else {
                                         window.location.reload();
                                     }
@@ -138,24 +146,63 @@ $(function () {
             }
         }
     });
-    $(".reply_post_submit").click(() => {
-        if ($(".reply_content textarea").val()) {
-            var dataToServer = {
-                user: $(".d-none.d-md-block.button").prop("href").split("member/")[1],
-                content: $("textarea").val()
-            }
-            $.ajax({
-                type: "post",
-                url: window.location.pathname + "/reply",
-                data: dataToServer,
-                success: function (req) {
-                    if (req.indexOf("success") > -1) {
-                        window.location.reload();
-                    }
-                }
-            })
-        } else {
-            $("textarea").focus();
-        }
-    })
+    $('.reply_form').prop('action', window.location.pathname + "/reply");
 })
+function handleFiles(e) {
+    if (e.value != "") {
+        $('.img_block img').eq($('.img_block img').length - 1).prop("src", window.URL.createObjectURL(e.files[0]));
+        $('.img_block img').eq($('.img_block img').length - 1).onload = function () {
+            window.URL.revokeObjectURL(e.src);
+        }
+        e.style.display = "none";
+        $('.img_tip').eq($('.img_tip').length - 1).text(e.value.split("\\").reverse()[0]);
+        $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this)>`);
+        $('.img_group').append(`<div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
+    }
+}
+var flag = 1;
+function hoverimg(e) {
+    if (e.value != '點擊刪除' && flag) {
+        e.value = e.innerText;
+        flag = !flag;
+    }
+    e.style.opacity = 0.9;
+    e.innerText = "點擊刪除";
+    e.style.color = "red";
+}
+function leaveimg(e) {
+    e.innerText = e.value;
+    e.style.opacity = 0.7;
+    e.style.color = "white";
+    flag = !flag;
+}
+function delimg(e) {
+    $(e.parentNode).remove();
+    for (let i = 0; i < $('input[type=file]').length; i++) {
+        if ($('input[type=file]').eq(i).val().indexOf(`${e.value}`) > -1) {
+            $('input[type=file]').eq(i).remove();
+            break;
+        }
+    }
+    flag = 1;
+}
+// $(".reply_post_submit").click(() => {
+//     if ($(".reply_content textarea").val()) {
+//         var dataToServer = {
+//             user: $(".d-none.d-md-block.button").prop("href").split("member/")[1],
+//             content: $("textarea").val()
+//         }
+//         $.ajax({
+//             type: "post",
+//             url: window.location.pathname + "/reply",
+//             data: dataToServer,
+//             success: function (req) {
+//                 if (req.indexOf("success") > -1) {
+//                     window.location.reload();
+//                 }
+//             }
+//         })
+//     } else {
+//         $("textarea").focus();
+//     }
+// })

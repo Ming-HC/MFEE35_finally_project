@@ -4,27 +4,35 @@
 <head>
     <%- include('share/head'); %>
 </head>
+
 <body>
     <div class="header">
         <%- include('share/navbar'); %>
     </div>
     <div class="container">
         <div id="floorResult">
-            
+
         </div>
-        <div class="reply_div">
-            <label>回覆：</label>
-            <div class="reply_img_div">
-                <input type="file" />
-                <!-- <img src="" /> -->
+        <form action="" method="post" enctype="multipart/form-data" class="reply_form">
+            <div class="reply_div">
+                <label>回覆：</label>
+                <div class="reply_img_div">
+                    <div class="inputfile_group">
+                        <input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this) />
+                    </div>
+                    <div class="img_group">
+                        <div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>
+                    </div>
+                </div>
+                <div class="reply_content">
+                    <textarea cols="60" rows="7" name="content"></textarea>
+                </div>
+                <div class="reply_post_submit_div">
+                    <input type="submit" value="送出" />
+                </div>
             </div>
-            <div class="reply_content">
-                <textarea cols="60" rows="7"></textarea>
-            </div>
-            <div class="reply_post_submit_div">
-                <input type="button" class="reply_post_submit" value="送出" />
-            </div>
-        </div>
+        </form>
     </div>
 </body>
+
 </html>

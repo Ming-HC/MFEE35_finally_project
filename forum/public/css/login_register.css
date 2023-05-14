@@ -35,15 +35,19 @@
     width: 75%;
     height: 300px;
     margin: 20px auto;
+    /* border: 1px dashed lightblue; */
     border: 1px solid black;
     border-radius: 10px;
+    /* text-align: center; */
 }
 
 .input_info div label {
     display: inline-block;
+    /* width: 95px; */
 }
 
 input[type="file"] {
+    /* width: 182px; */
     font-size: 14px;
 }
 
@@ -51,6 +55,7 @@ input[name="uname"]+label,
 input[name="psw"]+label,
 #psw+label {
     width: auto;
+    /* display: block; */
     color: red;
     font-size: 14px;
 }

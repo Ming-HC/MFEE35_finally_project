@@ -13,7 +13,7 @@ $(function () {
                     var classname = e.target.getAttribute("aria-controls");
                     e.preventDefault();
                     $(this).tab('show');
-                    location.href = "http://localhost/forum/" + classname;
+                    location.href = "/forum/" + classname;
                 })
             }
         })
@@ -60,8 +60,8 @@ $(function () {
                 $.each(req.postlist, function (index, item) {
                     var postd = new Date(item.latestReply_time_format);
                     var d = new Date();
-                    Math.ceil((d - postd)/1000) < 3600 ? item.latestReply_time_format=`${Math.ceil((d - postd)/60000)}分前` : item.latestReply_time_format;
-                    appendPost(item.post_id, item.class_name, item.title, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
+                    (d - postd)/1000 < 3600 ? (d - postd)/60000 < 1? item.latestReply_time_format='1分內' : item.latestReply_time_format=`${Math.floor((d - postd)/60000)}分前` : item.latestReply_time_format.split('/')[0] == 2023 ? item.latestReply_time_format = item.latestReply_time_format.split('2023/')[1]: item.latestReply_time_format;
+                    appendPost(item.post_id, item.class_name, item.title, item.imageurl, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
                 })
                 $('.page').html('');
                 var pattern = /\d+/;
@@ -75,9 +75,10 @@ $(function () {
                 }
             }
         })
-        function appendPost(post_id, post_class, title, content, reply, views, user, latestReply_user, latestReply_time) {
+        function appendPost(post_id, post_class, title, imageurl, content, reply, views, user, latestReply_user, latestReply_time) {
             var newTR = $('<tr>');
             newTR.append(`<td><label>${post_class}</label></td>`);
+            newTR.append(`<td><img src="${imageurl? "/image/forum/upload/"+imageurl : ""}"></td>`);
             newTR.append(`<td><a href="/forum/post/${post_id}"><label>${title}</label></a>
                             <label>${content}</label></td>`);
             newTR.append(`<td><label>${reply}</label> / <label>${views}</label></td>`);
@@ -89,8 +90,12 @@ $(function () {
     getPostClass();
     getPostList();
     $('#search_submit').click( () => {
-        sessionStorage.setItem('select_target', $('.search_select').val());
-        sessionStorage.setItem('select_content', $('.search>input').val());
-        location.href = "/forum/search"
+        if ($(".search input").val() != "") {
+            sessionStorage.setItem('select_target', $('.search_select').val());
+            sessionStorage.setItem('select_content', $('.search>input').val());
+            location.href = "/forum/search"
+        } else {
+            $(".search input").focus();
+        }
     })
 })

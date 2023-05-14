@@ -17,7 +17,6 @@ $(function () {
             select_target: $('.search_select').val(),
             select_content: $('.search>input').val()
         };
-        console.log(dataToServer);
         $.ajax({
             type: 'post',
             url: url,
@@ -58,6 +57,10 @@ $(function () {
     }
 
     $('#search_submit').click(() => {
-        search("reset");
+        if ($(".search input").val() != "") {
+            search("reset");
+        } else {
+            $(".search input").focus();
+        }
     })
 })

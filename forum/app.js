@@ -13,7 +13,7 @@ app.use(session({
         path: '/',
         httpOnly: true,
         secure: false,
-        maxAge: 60 * 1000       // 7 Days = 604800 Secs
+        maxAge: 300 * 1000       // 7 Days = 604800 Secs
     }
 }))
 
@@ -40,7 +40,7 @@ app.listen(80, function () {
 })
 
 app.get('/', function (req, res) {
-    res.redirect('forum');
+    res.redirect('/forum');
 })
 
 app.get('/navbar_headshot', function (req, res) {
@@ -63,7 +63,7 @@ app.get('/member', function (req, res) {
         res.redirect('/member/login');
     }
 })
-app.get('/member/:url', function (req, res) {
+app.get('/member/:url(login|register)?', function (req, res) {
     if (req.session.user) {
         res.render('login_register', {
             page: 'login_register',
@@ -253,7 +253,6 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
                                     console.log("submit third member err:", err);
                                 } else {
                                     if (results[1]) {
-                                        // console.log(results[1][0]);
                                         if (encrypted == results[1][0].thirdtoken) {
                                             var d = new Date();
                                             d.setHours(d.getHours() + 8);
@@ -393,6 +392,7 @@ app.get('/forum(/:class)?/:page/getpost', function (req, res) {
                         } else {
                             for (let i = 0; i < results[0].length; i++) {
                                 results[0][i].title = "首篇已刪";
+                                results[0][i].imageurl = "";
                                 results[0][i].content = `此文章已由原作者(${results[0][i].user})刪除。`;
                             }
                             var dataToWeb = {
@@ -436,7 +436,38 @@ app.get('/forum/editpost/:id/:floor/getdata', function (req, res) {
         res.redirect('/member/login');
     }
 })
-app.put('/forum/editpost/:id/:floor/edit', express.urlencoded(), function (req, res) {
+
+var post_upload_img = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public/image/forum/upload");
+    },
+    filename: async function (req, file, cb) {
+        fs.readdir('public/image/forum/upload', function (err, data) {
+            if (err) throw err;
+            if (data[0]) {
+                data.forEach(function (filename, index) {
+                    data[index] = filename.split('.png')[0].split('_')[1];
+                })
+                data = data.sort(function (a, b) { return a - b });
+                var userFileName = `img_${Number(data[data.length - 1]) + 1}.png`;
+            } else {
+                var userFileName = `img_0.png`;
+            }
+            cb(null, userFileName);
+        })
+    }
+})
+var post_upload = multer({
+    storage: post_upload_img,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype != 'image/png') {
+            return cb(new Error('檔案類型錯誤123'))
+        }
+        cb(null, true);
+    }
+});
+
+app.post('/forum/editpost/:id/:floor/edit', express.urlencoded(), post_upload.any('imageurl'), function (req, res) {
     var post_id = req.params.id;
     var floor = req.params.floor;
     if (req.body.content.length > 50) {
@@ -444,27 +475,51 @@ app.put('/forum/editpost/:id/:floor/edit', express.urlencoded(), function (req, 
     } else {
         var postlist_content = req.body.content;
     }
+    var imageurl = [];
+    if (req.body.oldimageurl) {
+        var original = req.body.oldimageurl.split(',');
+        for (let i = 0; i < original.length; i++) {
+            imageurl.push(original[i]);
+        }
+    }
+    for (let i = 0; i < req.files.length; i++) {
+        imageurl.push(req.files[i].path.split('upload\\')[1]);
+    }
+    switch (req.body.class_name) {
+        case 'complex':
+            req.body.class_name = '綜合討論';
+            break;
+        case 'gossip':
+            req.body.class_name = '閒聊';
+            break;
+        case 'ask':
+            req.body.class_name = '新手發問';
+            break;
+        case 'system':
+            req.body.class_name = '系統公告';
+            break;
+    }
     if (req.session.user) {
         if (floor == 1) {
-            var update_post_sql = `update forum.post_${post_id} set class_name = ?, title = ?, content = ? where reply_floor = ${floor};`;
-            var update_postlist_sql = `update forum.postlist set class_name = ?, title = ?, content = ? where post_id = ${post_id};`
-            conn.query(update_post_sql + update_postlist_sql, [req.body.class, req.body.title, req.body.content, req.body.class, req.body.title, postlist_content], function (err, results, fields) {
+            var update_post_sql = `update forum.post_${post_id} set class_name = ?, title = ?, imageurl = ?, content = ? where reply_floor = ${floor};`;
+            var update_postlist_sql = `update forum.postlist set class_name = ?, title = ?, imageurl = ?, content = ? where post_id = ${post_id};`
+            conn.query(update_post_sql + update_postlist_sql, [req.body.class_name, req.body.title, imageurl.join(), req.body.content, req.body.class_name, req.body.title, imageurl[0], postlist_content], function (err, results, fields) {
                 if (err) {
                     console.log("update post error:", err);
                     res.send("update post error");
                 } else {
-                    res.send("update post success");
+                    res.redirect(`/forum/post/${post_id}`);
                 }
             })
         } else {
-            var update_post_sql = `update forum.post_${post_id} set content = ? where reply_floor = ${floor};`;
-            var update_postlist_sql = `update forum.postlist set content = ? where post_id = ${post_id};`
-            conn.query(update_post_sql + update_postlist_sql, [req.body.content, postlist_content], function (err, results, fields) {
+            var update_post_sql = `update forum.post_${post_id} set imageurl = ?, content = ? where reply_floor = ${floor};`;
+            var update_postlist_sql = `update forum.postlist set imageurl = ?, content = ? where post_id = ${post_id};`
+            conn.query(update_post_sql + update_postlist_sql, [imageurl.join(), req.body.content, imageurl[0], postlist_content], function (err, results, fields) {
                 if (err) {
                     console.log("update post error:", err);
                     res.send("update post error");
                 } else {
-                    res.send("update post success");
+                    res.redirect(`/forum/post/${post_id}`);
                 }
             })
         }
@@ -508,24 +563,42 @@ app.post('/forum(/:class)?/getclass', express.urlencoded(), function (req, res) 
     }
 })
 
-app.post('/forum/newpost/:something', express.urlencoded(), function (req, res) {
+app.post('/forum/newpost/:something', express.urlencoded(), post_upload.any('imageurl'), function (req, res) {
+    var imageurl = [];
+    for (let i = 0; i < req.files.length; i++) {
+        imageurl.push(req.files[i].path.split('upload\\')[1]);
+    }
+    switch (req.body.class_name) {
+        case 'complex':
+            req.body.class_name = '綜合討論';
+            break;
+        case 'gossip':
+            req.body.class_name = '閒聊';
+            break;
+        case 'ask':
+            req.body.class_name = '新手發問';
+            break;
+        case 'system':
+            req.body.class_name = '系統公告';
+            break;
+    }
     if (req.session.user) {
         if (req.params.something == 'new') {
-            if (req.body.content.length > 60) {
-                var postlist_content = req.body.content.slice(0, 60);
+            if (req.body.content.length > 70) {
+                var postlist_content = req.body.content.slice(0, 70);
             } else {
                 var postlist_content = req.body.content;
             }
-            var create_postlist_sql = `insert into forum.postlist(class_name, title, content, user) values (?, ?, ?, ?);`;
+            var create_postlist_sql = `insert into forum.postlist(class_name, title, imageurl, content, user) values (?, ?, ?, ?, ?);`;
             var checkdata = {
                 flag: false,
                 post_id: ""
             };
             conn.query(create_postlist_sql,
-                [req.body.class_name, req.body.title, postlist_content, req.body.member],
+                [req.body.class_name, req.body.title, imageurl[0], postlist_content, req.session.user.account],
                 function (err, results, fields) {
                     if (err) {
-                        res.send('select error', err);
+                        res.send('create postlist error', err);
                     } else {
                         checkdata.flag = true;
                         checkdata.post_id = results.insertId
@@ -536,7 +609,7 @@ app.post('/forum/newpost/:something', express.urlencoded(), function (req, res) 
                             class_name varchar(20) default null,
                             title varchar(40) default null,
                             user varchar(20) not null,
-                            imageurl varchar(50) default null,
+                            imageurl varchar(200) default null,
                             content varchar(1000) not null,
                             post_time timestamp default now(),
                             floor_exists int default 1,
@@ -550,8 +623,9 @@ app.post('/forum/newpost/:something', express.urlencoded(), function (req, res) 
                                     console.log('select error', err);
                                     res.send('select error', err);
                                 } else {
-                                    var insert_post_sql = `INSERT INTO forum.post_${checkdata.post_id} (class_name, title, content, user) values (?, ?, ?, ?);`
-                                    conn.query(insert_post_sql, [req.body.class_name, req.body.title, req.body.content, req.body.member],
+                                    imageurl = imageurl.join();
+                                    var insert_post_sql = `INSERT INTO forum.post_${checkdata.post_id} (class_name, title, imageurl, content, user) values (?, ?, ?, ?, ?);`
+                                    conn.query(insert_post_sql, [req.body.class_name, req.body.title, imageurl, req.body.content, req.session.user.account],
                                         function (err, results, fields) {
                                             if (err) {
                                                 console.log('insert into error:', err);
@@ -635,12 +709,10 @@ app.get('/forum/post/:id/getdata', function (req, res) {
                     console.log("select_post_views error:", err);
                 } else {
                     var add_post_views_sql = `UPDATE forum.postlist set views = ? where post_id = ${post_id};`;
-                    // var oldviews = results[0].views;
                     conn.query(add_post_views_sql, [results[0].views + 1], function (err, results, fields) {
                         if (err) {
                             console.log("update post views error", err);
                         } else {
-                            // console.log(`UPDATE post_${post_id} views = ${oldviews+1} now.`)
                         }
                     })
                 }
@@ -649,33 +721,42 @@ app.get('/forum/post/:id/getdata', function (req, res) {
         }
     })
 })
-app.post('/forum/post/:id/reply', express.urlencoded(), function (req, res) {
-    var post_id = req.params.id;
-    var sql = `INSERT INTO forum.post_${post_id}(user, content) values(?, ?);`;
-    conn.query(sql, [req.body.user, req.body.content], function (err, results, fields) {
-        if (err) {
-            console.log("reply post error", err);
-            res.send("reply post error");
-        } else {
-            var select_latestreply_sql = `select user, post_time from forum.post_${post_id} ORDER BY post_time desc;`;
-            conn.query(select_latestreply_sql, function (err, results, fields) {
-                if (err) {
-                    console.log("search latestreply err:", err);
-                    res.send("search latestreply error");
-                } else {
-                    var update_latestreply_sql = `update forum.postlist set reply = ?, latestReply_user = ?, latestReply_time  = ? where post_id = ${post_id};`;
-                    conn.query(update_latestreply_sql, [results.length - 1, results[0].user, results[0].post_time], function (err, results, fields) {
-                        if (err) {
-                            console.log("update_latestreply err:", err);
-                            res.send("update_latestreply err");
-                        } else {
-                            res.send("reply post success.");
-                        }
-                    })
-                }
-            })
+app.post('/forum/post/:id/reply', express.urlencoded(), post_upload.any('imageurl'), function (req, res) {
+    if (req.session.user) {
+        var imageurl = [];
+        for (let i = 0; i < req.files.length; i++) {
+            imageurl.push(req.files[i].path.split('upload\\')[1]);
         }
-    })
+        var post_id = req.params.id;
+        imageurl = imageurl.join();
+        var sql = `INSERT INTO forum.post_${post_id}(user, imageurl, content) values(?, ?, ?);`;
+        conn.query(sql, [req.session.user.account, imageurl, req.body.content], function (err, results, fields) {
+            if (err) {
+                console.log("reply post error", err);
+                res.send("reply post error");
+            } else {
+                var select_latestreply_sql = `select user, post_time from forum.post_${post_id} ORDER BY post_time desc;`;
+                conn.query(select_latestreply_sql, function (err, results, fields) {
+                    if (err) {
+                        console.log("search latestreply err:", err);
+                        res.send("search latestreply error");
+                    } else {
+                        var update_latestreply_sql = `update forum.postlist set reply = ?, latestReply_user = ?, latestReply_time  = ? where post_id = ${post_id};`;
+                        conn.query(update_latestreply_sql, [results.length - 1, results[0].user, results[0].post_time], function (err, results, fields) {
+                            if (err) {
+                                console.log("update_latestreply err:", err);
+                                res.send("update_latestreply err");
+                            } else {
+                                res.redirect(`/forum/post/${post_id}`);
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    } else {
+        res.redirect('/member/login');
+    }
 })
 
 app.put('/forum/deletepost/:id/:floor', function (req, res) {
@@ -817,4 +898,42 @@ app.post('/forum/search(/:page)?', express.urlencoded(), (req, res) => {
             })
             break;
     }
+})
+
+app.post('/test/data', express.urlencoded(), (req, res) => {
+    var decode = Buffer.from(req.body.password, 'base64').toString();
+    console.log(decode);
+    const key = "mypasswordaeskey";
+    const iv = key;
+    function encrypt(decode) {
+        var encipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+        let encrypted = encipher.update(decode, 'utf8', 'hex') + encipher.final('hex');
+        return encrypted;
+    }
+    var encrypted = encrypt(decode);
+    console.log('encrypted:', encrypted);
+    if (encrypted) {
+        console.log(decrypt(encrypted));
+    }
+    function decrypt(encrypted) {
+        var decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+        let decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
+        return decrypted;
+    }
+
+    res.send(decode);
+})
+
+
+app.post('/test/data2', express.urlencoded(), post_upload.any('imageurl'), (req, res) => {
+    console.log(req.files);
+    console.log(req.body);
+    var imageurl = [];
+    for (let i = 0; i < req.files.length; i++) {
+        console.log(req.files[i].path);
+        console.log(req.files[i].path.split('upload\\')[1])
+        imageurl.push(req.files[i].path.split('upload\\')[1]);
+    }
+    console.log(imageurl);
+    res.redirect("/forum");
 })

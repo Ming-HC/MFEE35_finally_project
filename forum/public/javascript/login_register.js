@@ -98,8 +98,8 @@ $(function () {
                     </form>
             `;
             } else if (url == 'logined') {
-                // alert('You are logined.');
-                // location.href = $(".d-none.d-md-block.button").prop("href").split("localhost")[1];
+                alert('You are logined.');
+                location.href = $(".d-none.d-md-block.button").prop("href").split("localhost")[1];
             }
 
 
