@@ -589,13 +589,13 @@ app.post('/forum/newpost/:something', express.urlencoded(), post_upload.any('ima
             } else {
                 var postlist_content = req.body.content;
             }
-            var create_postlist_sql = `insert into forum.postlist(class_name, title, imageurl, content, user) values (?, ?, ?, ?, ?);`;
+            var create_postlist_sql = `insert into forum.postlist(class_name, title, imageurl, content, user, latestReply_user) values (?, ?, ?, ?, ?, ?);`;
             var checkdata = {
                 flag: false,
                 post_id: ""
             };
             conn.query(create_postlist_sql,
-                [req.body.class_name, req.body.title, imageurl[0], postlist_content, req.session.user.account],
+                [req.body.class_name, req.body.title, imageurl[0], postlist_content, req.session.user.account, req.session.user.account],
                 function (err, results, fields) {
                     if (err) {
                         res.send('create postlist error', err);
@@ -900,40 +900,11 @@ app.post('/forum/search(/:page)?', express.urlencoded(), (req, res) => {
     }
 })
 
-app.post('/test/data', express.urlencoded(), (req, res) => {
-    var decode = Buffer.from(req.body.password, 'base64').toString();
-    console.log(decode);
-    const key = "mypasswordaeskey";
-    const iv = key;
-    function encrypt(decode) {
-        var encipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
-        let encrypted = encipher.update(decode, 'utf8', 'hex') + encipher.final('hex');
-        return encrypted;
-    }
-    var encrypted = encrypt(decode);
-    console.log('encrypted:', encrypted);
-    if (encrypted) {
-        console.log(decrypt(encrypted));
-    }
-    function decrypt(encrypted) {
-        var decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
-        let decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
-        return decrypted;
-    }
-
-    res.send(decode);
-})
-
-
-app.post('/test/data2', express.urlencoded(), post_upload.any('imageurl'), (req, res) => {
-    console.log(req.files);
-    console.log(req.body);
-    var imageurl = [];
-    for (let i = 0; i < req.files.length; i++) {
-        console.log(req.files[i].path);
-        console.log(req.files[i].path.split('upload\\')[1])
-        imageurl.push(req.files[i].path.split('upload\\')[1]);
-    }
-    console.log(imageurl);
-    res.redirect("/forum");
+app.get('/test/getdata', (req, res) => {
+    var sql = `SELECT * FROM product.product_list;`;
+    conn.query(sql, (err, results, fields) => {
+        if (err) throw err;
+        // console.log(results);
+        res.send(results);
+    })
 })

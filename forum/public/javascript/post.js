@@ -140,7 +140,7 @@ $(function () {
             var hint = "需登入才可回覆，是否登入？"
             if (confirm(hint) == true) {
                 $("textarea").blur();
-                location.href = "http://localhost/member/login";
+                location.href = "/member/login";
             } else {
                 $("textarea").blur();
             }
@@ -150,12 +150,12 @@ $(function () {
 })
 function handleFiles(e) {
     if (e.value != "") {
-        $('.img_block img').eq($('.img_block img').length - 1).prop("src", window.URL.createObjectURL(e.files[0]));
-        $('.img_block img').eq($('.img_block img').length - 1).onload = function () {
+        $('.img_group .img_block img').eq($('.img_group .img_block img').length - 1).prop("src", window.URL.createObjectURL(e.files[0]));
+        $('.img_group .img_block img').eq($('.img_group .img_block img').length - 1).onload = function () {
             window.URL.revokeObjectURL(e.src);
         }
         e.style.display = "none";
-        $('.img_tip').eq($('.img_tip').length - 1).text(e.value.split("\\").reverse()[0]);
+        $('.img_group .img_block .img_tip').eq($('.img_group .img_block .img_tip').length - 1).text(e.value.split("\\").reverse()[0]);
         $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this)>`);
         $('.img_group').append(`<div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
     }
@@ -186,23 +186,3 @@ function delimg(e) {
     }
     flag = 1;
 }
-// $(".reply_post_submit").click(() => {
-//     if ($(".reply_content textarea").val()) {
-//         var dataToServer = {
-//             user: $(".d-none.d-md-block.button").prop("href").split("member/")[1],
-//             content: $("textarea").val()
-//         }
-//         $.ajax({
-//             type: "post",
-//             url: window.location.pathname + "/reply",
-//             data: dataToServer,
-//             success: function (req) {
-//                 if (req.indexOf("success") > -1) {
-//                     window.location.reload();
-//                 }
-//             }
-//         })
-//     } else {
-//         $("textarea").focus();
-//     }
-// })

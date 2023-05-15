@@ -33,7 +33,7 @@ create table forum.postlist (
 `reply` int(10) default 0,
 `views` int(10) default 0,
 `post_time` timestamp default now(), -- 發文時間
-`latestReply_user` varchar(20) default (`user`),
+`latestReply_user` varchar(20) default null,
 `latestReply_time` timestamp default now(),
 `post_exists` int default 1,
 primary key (`post_id`),

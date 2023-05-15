@@ -3,6 +3,10 @@
 
 <head>
     <%- include('share/head'); %>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="/javascript/footer.js"></script>
+        <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
@@ -21,7 +25,10 @@
                         <input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this) />
                     </div>
                     <div class="img_group">
-                        <div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>
+                        <div class="img_block"><img src="">
+                            <div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this)
+                                onclick=delimg(this)></div>
+                        </div>
                     </div>
                 </div>
                 <div class="reply_content">
@@ -33,6 +40,7 @@
             </div>
         </form>
     </div>
+    <%- include('share/footer'); %>
 </body>
 
 </html>
