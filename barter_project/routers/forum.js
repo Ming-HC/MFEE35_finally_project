@@ -598,11 +598,10 @@ router.post('/search(/:page)?', express.urlencoded(), (req, res) => {
             break;
     }
 })
-router.get('/test/getdata', (req, res) => {
+router.get('/get_productdata', (req, res) => {
     var sql = `SELECT * FROM product_page.product;`;
     conn.query(sql, (err, results, fields) => {
         if (err) throw err;
-        console.log("results.length", results.length);
         if (results.length >= 12) {
             var dataToWeb = [];
             var randomindex = 0;

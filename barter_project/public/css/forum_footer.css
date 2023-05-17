@@ -1,0 +1,99 @@
+html {
+    scroll-behavior: smooth;
+}
+.random_recommend {
+    margin-top: 20px;
+}
+.random_recommend .outsidediv {
+    box-sizing: border-box;
+    width: 600px;
+    height: 250px;
+    border-radius: 10px;
+    background-color: lightsalmon;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+}
+.random_recommend span {
+    height: 45px;
+    line-height: 45px;
+    font-weight: 900;
+    font-size: 32px;
+}
+
+.random_recommend .insidediv {
+    box-sizing: border-box;
+    width: 590px;
+    height: 200px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0 20px;
+    margin: 0 0 5px 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+
+.random_recommend .insidediv::-webkit-scrollbar {
+    display: none;
+}
+
+.random_recommend .insidediv a {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 10px;
+    flex: 0 0 140px;
+    position: relative;
+}
+
+.random_recommend .insidediv a:not(:last-child) {
+    margin-right: 30px;
+}
+
+.random_recommend .insidediv a img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.random_recommend .img_tip {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: gray;
+    color: white;
+    opacity: 0.7;
+    display: none;
+}
+
+.random_recommend .img_block:hover .img_tip {
+    display: block;
+}
+
+.random_recommend .prevbtn,
+.random_recommend .nextbtn {
+    text-align: center;
+    width: 25px;
+    position: absolute;
+    bottom: 90px;
+
+}
+
+/* .random_recommend .prevbtn:hover,
+.random_recommend .nextbtn:hover {
+    background-color: rgb(128, 128, 128, 0.4);
+} */
+
+.random_recommend .prevbtn {
+    left: 20px;
+}
+
+.random_recommend .nextbtn {
+    right: 20px;
+}

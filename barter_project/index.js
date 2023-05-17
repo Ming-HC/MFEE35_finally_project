@@ -25,7 +25,7 @@ app.use(express.json());
 const conn = require('./routers/database');
 
 
-app.listen(3000, function () {
+app.listen(80, function () {
     console.log('Server Running.');
 })
 
