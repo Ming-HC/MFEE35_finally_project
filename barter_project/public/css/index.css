@@ -1,0 +1,378 @@
+/* 字體設定 */
+* {
+  font-family: 'Microsoft JhengHei', 'Heiti TC', sans-serif;
+}
+/* 字體設定 end*/
+
+/* 卡片設定 */
+    /* 卡片漸變色背景 */
+    .gradient-background{
+      background: linear-gradient(to top, rgb(223, 212, 212,0.5), transparent);
+    }
+    /* 卡片漸變色背景 end*/
+
+    /* 卡片外觀設定 */
+    .card {
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* 卡片外觀設定 end*/
+    /* 卡片陰影 */
+    .box_shadow {
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+      transition: box-shadow 0.3s;
+    }
+
+    .box_shadow:hover {
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+    /* 卡片陰影end */
+
+    /* 討論區卡片 */
+    .box{
+      /* 圖片超過隱藏 */
+      overflow: hidden;
+      height: 300px;
+    }
+      /* 討論區最後三筆設定 */
+    @media (max-width: 1350px) {
+      .box{
+        height: 250px;
+      }
+    
+    }
+    @media (max-width: 991px) {
+      .box{
+        height: initial;
+      }
+    }
+/* 卡片設定 end*/
+
+/* 導覽列 */
+
+      .navbar {
+
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        z-index: 1;  
+      }
+      /* navbar_bottom 導覽列底部線條 */
+      .navbar_bottom {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        transition: border-bottom 1s;
+      }
+      .navbar_bottom:hover {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+      }
+
+      /* 漢堡條 */
+   
+          /* 裡面線條設定 */
+          .bar1,
+          .bar2,
+          .bar3 {
+            width: 35px;
+            height: 5px;
+            background-color: #333;
+            margin: 6px 0;
+            transition: 0.4s;
+          }
+
+          /* 漢堡條動畫 */
+
+            .change .bar1 {
+              -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+              transform: rotate(-45deg) translate(-9px, 6px);
+            }
+
+            .change .bar2 {
+              opacity: 0;
+            }
+
+            .change .bar3 {
+              -webkit-transform: rotate(45deg) translate(-8px, -8px);
+              transform: rotate(45deg) translate(-8px, -8px);
+            }
+            
+          /* 漢堡條動畫 end*/
+
+      /* 漢堡條 end*/
+
+/* 導覽列 end*/
+
+
+
+/* 最新刊登 */
+
+      /* 設定高度與超過邊界隱藏 */
+      #announcement-list {
+        height: 200px;
+        overflow-y: hidden;
+      }
+
+      /* 讓字由上往下移動 */
+
+          #announcement-list ul {
+            animation: scroll 20s linear infinite;
+          }
+
+          @keyframes scroll {
+            0% {
+              transform: translateY(0%);
+            }
+
+            100% {
+              transform: translateY(-100%);
+            }
+          }
+
+          /* 滑鼠移動到字體停止播放 */
+          #announcement-list ul:hover {
+            animation-play-state: paused;
+          }
+
+      /* 讓字由上往下移動 end */
+
+ 
+      /* 圖片 */
+
+        /* 定位圖片位置 */
+        .announcement-link {
+          position: relative;
+        }
+
+        .announcement-link img {
+          position: absolute;
+          top: 2px;
+          left: -20px;
+          display: none;
+        }
+
+        /* 移動到字才顯示圖片 */
+        .hover-img {
+          display: none;
+        }
+        
+        li:hover .hover-img {
+          display: inline;
+        }
+        /* 定位圖片位置 end*/
+
+      /* 圖片 end*/
+
+
+/* 最新刊登 end */
+
+
+/* 產品介紹 */
+
+      /* 滾動條 */
+
+          /* 滾動條容器 */
+          .scrollbar-container::-webkit-scrollbar {
+            width: 8px;
+            background-color: #f5f5f5;
+          }
+
+          /* 滾動條滑塊 */
+          .scrollbar-container::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 4px;
+            transition:  background-color 5s;
+          }
+
+          /* 滾動條滑塊懸停效果 */
+          .scrollbar-container::-webkit-scrollbar-thumb:hover {
+            background-color: #8d6d6d;
+          }
+
+          /* 滾動條按鈕（可選） */
+          .scrollbar-container::-webkit-scrollbar-button {
+            display: none;
+          }
+
+      /* 滾動條 end */
+
+          /* radio 樣式 */
+          .form-check-input:checked{
+            background-color:  rgba(185, 185, 185, 0.1);
+            border-color: rgba(185, 185, 185, 0.1);
+          }
+   
+          /* 選取商品有底色 */
+          .list-group-item:hover {
+            background-color: #bebdbd;
+            cursor: pointer;
+          }
+        
+          /* 圖片調整 */
+            .card-img-top {
+              object-fit: cover;
+              /* 保持圖片比例，但覆蓋容器 */
+              height: 200px;
+              /* 你希望的高度 */
+              width: 100%;
+              /* 確保圖片寬度與卡片相同 */
+            }
+        /* 圖片調整 end*/
+        /* 內容調整 */
+
+      @media (max-width: 667px) {
+        /* .card-body h4,h5 {
+          font-size: 20px;
+          } */
+               .card-body .border_hover .card-text {
+            font-size: 12px;
+          }
+        } 
+        /* 內容調整 dnd*/ 
+        /* 卡片與上面間距 */
+        .card_spacing{
+          margin-top: 10px;
+        }
+      
+
+
+        @media (max-width: 767px) {
+          .card_spacing{
+            margin-top: -20px;
+          }
+        
+        }
+        /* 卡片與上面間距end */
+
+        
+/* 產品介紹 end*/
+
+
+/* 精選商品 */
+      /* 輪播按鈕 */
+      .carousel-control-prev {
+        left: -100px;
+      }
+
+      .carousel-control-next {
+        right: -100px;
+      }
+      @media (max-width: 991px) {
+        .carousel-control-prev {
+          left: -75px;
+        }
+  
+        .carousel-control-next {
+          right: -75px;
+        }
+      } 
+      @media (max-width: 680px) {
+        .carousel-control-prev {
+          left: -55px;
+        }
+  
+        .carousel-control-next {
+          right: -55px;
+        }
+      } 
+
+      .carousel-control-next-icon {
+        width: 20px;
+        background-image: url(/img/next.png);
+      }
+
+      .carousel-control-prev-icon {
+        width: 20px;
+        background-image: url(/img/prev.png);
+      }
+      /* 輪播按鈕 end*/
+/* 精選商品 end*/
+
+
+
+/* 最新商品 */
+
+    /* 指示器按鈕的容器 */
+    .carousel-indicators {
+      margin-bottom: -1rem;
+    }
+    /* 卡片敘述的外框 */
+
+    .card-body .card_border {
+      position: relative;
+      border: rgba(0, 0, 0, 0.1) 1px solid;
+      transition: all 2s;
+    }
+    .card-body .card_border .card-text{
+      /* width: 85%; */
+      padding-left: 15px;
+      padding-right: 5px;
+
+    }
+
+    .card-body .card_border:hover {
+      cursor: pointer;
+      border: rgba(0, 0, 0, 1) 1px solid;
+    }
+   /* 卡片敘述的外框end */
+    /* .card-body .card_border .icon {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: -15px;
+      left: -12px;
+      background-image: url(/最新測試資料庫版本/img/Badge.png);
+      background-size: 25px 25px;
+      background-repeat: no-repeat;
+      position: absolute;
+    } */
+
+/* 最新商品 end*/
+
+/* 討論區 */
+ 
+  /*文章容器高度 */
+    #article .forum_height{
+      height: 500px;
+      overflow-y: scroll;
+    }
+
+    @media (max-width: 768px) {
+      #article .forum_height{
+       height: 300px;
+      }
+    } 
+
+    /* 文章容器高度 end*/
+/* md 以下縮小字體大小 */
+@media (max-width: 970px) {
+  #article span{
+    font-size: calc(0.7rem + .3vw);
+  }
+
+}
+
+
+/* 討論區 end*/
+
+
+
+/* ----------- */
+
+/* @media (max-width: 613px) {
+  .col-12.d-flex-sm .row .col-12 {
+    width: 250px;
+    }
+} */
+
+/* 討論區 內容變版*/
+/* @media (max-width: 436px) {
+  .col-12 .row .col-lg-12 .box_shadow p{
+    flex-direction: column;
+    text-align: center;
+ 
+    }
+    .col-12 .row .col-lg-12 .box_shadow p span{
+      margin-right: auto;
+      margin-left: auto;
+      }
+} */
