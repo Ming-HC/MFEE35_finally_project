@@ -25,7 +25,7 @@ app.use(express.json());
 const conn = require('./routers/database');
 
 
-app.listen(80, function () {
+app.listen(3000, function () {
     console.log('Server Running.');
 })
 
@@ -364,7 +364,7 @@ app.use(bodyParser.json());
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ================================================================個人檔案================================================================
-app.get('/:user/personal', function (req, res) {
+app.get('/member/:user/personal', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
         var sql = 'SELECT * FROM membercenter.personal where username = ?';
@@ -382,7 +382,7 @@ app.get('/:user/personal', function (req, res) {
     }
 });
 
-app.post('/:user/personal', express.urlencoded(), function (req, res) {
+app.post('/member/:user/personal', express.urlencoded(), function (req, res) {
     // console.log(req.body);
     // var req1=  Object.values(req.body);
     // console.log(req1);
@@ -501,7 +501,7 @@ app.post('/:user/personal', express.urlencoded(), function (req, res) {
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ================================================================更新密碼================================================================
-app.get('/:user/password', function (req, res) {
+app.get('/member/:user/password', function (req, res) {
     var user = req.params.user;
     if (req.session.user) {
         var sql = 'SELECT * FROM membercenter.personal where username = ?'
@@ -521,7 +521,7 @@ app.get('/:user/password', function (req, res) {
         res.send("error.404");
     }
 });
-app.post('/:user/password', function (req, res) {
+app.post('/member/:user/password', function (req, res) {
     var user = req.params.user;
     var oldPassword = req.body.oldPassword;
     var key = "mypasswordaeskey";
@@ -546,7 +546,7 @@ app.post('/:user/password', function (req, res) {
                     res.send('更新密碼發生錯誤', err);
                 } else {
                     // res.redirect('/personal/' + user);
-                    res.send("<script>alert('密碼更新成功！');window.location.href='/" + user + "/personal'</script>");
+                    res.send("<script>alert('密碼更新成功！');window.location.href='/member/" + user + "/personal'</script>");
                 }
             });
         }
@@ -557,7 +557,7 @@ app.post('/:user/password', function (req, res) {
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ==========================================================我的物品(上傳)================================================================
-app.get('/:user/puton', function (req, res) {
+app.get('/member/:user/puton', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
         var sql = 'SELECT * FROM la2.product';
@@ -579,10 +579,10 @@ app.get('/:user/puton', function (req, res) {
 
 var z1 = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "public/image/Myproduct/upload");
+        cb(null, "public/image/MYproduct/upload");
     },
     filename: function (req, file, cb) {
-        fs.readdir('public/image/Myproduct/upload', function (err, data) {
+        fs.readdir('public/image/MYproduct/upload', function (err, data) {
             if (err) throw err;
             if (data[0]) {
                 data.forEach(function (filename, index) {
@@ -610,7 +610,7 @@ var z2 = multer({
 
 
 
-app.post('/:user/puton', z2.single('productimage'), function (req, res) {
+app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
     var user = req.params.user;
     // console.log(req.file)
     // console.log(req.body.productname)
@@ -619,12 +619,12 @@ app.post('/:user/puton', z2.single('productimage'), function (req, res) {
     // console.log(req.body.city)
     // console.log(user)
 
-    var sql = 'INSERT INTO la2.product(product_image, product_name, product_detail, city, user_name) VALUES (?,?,?,?,?)'
-    conn.query(sql, ['../image/Myproduct/upload/' + req.file.filename, req.body.productname, req.body.productdetail, req.body.city, user], function (err, results, fields) {
+    var sql = 'INSERT INTO membercenter.myproduct(MYproductimage, MYproductname, MYproductdetail, MYproductcity, MYproductuser_name) VALUES (?,?,?,?,?)'
+    conn.query(sql, ['/image/MYproduct/upload/' + req.file.filename, req.body.productname, req.body.productdetail, req.body.city, user], function (err, results, fields) {
         if (err) {
             res.send('上架商品發生錯誤', err.message);
         } else {
-            res.send("<script>alert('上傳成功！');window.location.href='/" + user + "/puton'</script>");
+            res.send("<script>alert('上傳成功！');window.location.href='/member/"+ user +"/puton'</script>");
         }
     })
 })
@@ -634,14 +634,15 @@ app.post('/:user/puton', z2.single('productimage'), function (req, res) {
 // =======================================================================================================================================
 // ===========================================================我的物品=====================================================================
 
-app.get('/:user/MYproduct', function (req, res) {
+app.get('/member/:user/MYproduct', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
-        var sql = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted FROM la2.product WHERE user_name = ?';
+        var sql = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted FROM membercenter.myproduct WHERE MYproductuser_name = ?';
         conn.query(sql, [user], function (err, results, fields) {
             if (err) {
                 res.send('select发生错误', err);
             } else {
+                // console.log(results);
                 res.render('MYproduct', {
                     user: user,
                     MYproduct: results
@@ -652,11 +653,11 @@ app.get('/:user/MYproduct', function (req, res) {
         res.send("error.404");
     }
 });
-app.delete('/:user/MYproduct', function (req, res) {
+app.delete('/member/:user/MYproduct', function (req, res) {
     var user = req.params.user;
-    // console.log(req.body);
-    var sql = "DELETE FROM la2.product WHERE product_id = ?;";
-    conn.query(sql, [req.body.product_id], function (err, results, fields) {
+    console.log(req.body);
+    var sql = "DELETE FROM membercenter.myproduct WHERE MYproductid = ?;";
+    conn.query(sql, [req.body.MYproductid], function (err, results, fields) {
         if (err) {
             res.send('刪除商品發生錯誤', err.message)
         }
@@ -670,12 +671,13 @@ app.delete('/:user/MYproduct', function (req, res) {
 
 
 
+
 // =======================================================================================================================================
 // =======================================================================================================================================
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ================================================================與我交換================================================================
-app.get('/:user/iwant', function (req, res) {
+app.get('/member/:user/iwant', function (req, res) {
     user = req.params.user
     sql = 'select * from membercenter.bwc where BWC_user_name = ?'
     conn.query(sql, [user], function (err, results, fields) {
@@ -696,7 +698,7 @@ app.get('/:user/iwant', function (req, res) {
         }
     });
 })
-app.get('/:user/withme', function (req, res) {
+app.get('/member/:user/withme', function (req, res) {
     user = req.params.user
     sql = 'select * from membercenter.bwc where WC_user_name = ?'
     conn.query(sql, [user], function (err, results, fields) {
@@ -718,7 +720,7 @@ app.get('/:user/withme', function (req, res) {
         }
     });
 })
-app.post('/:user/withme', function (req, res) {
+app.post('/member/:user/withme', function (req, res) {
     user = req.params.user
     // console.log(req.body);
     sql = 'INSERT INTO membercenter.record(memberid, product, id2, product2) VALUES (?,?,?,?)'
@@ -745,7 +747,7 @@ app.post('/:user/withme', function (req, res) {
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ================================================================交易紀錄================================================================
-app.get('/:user/record', function (req, res) {
+app.get('/member/:user/record', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
         var sql = "SELECT memberid, product, product2, success, DATE_FORMAT(time, '%Y/%m/%d %H:%i')time FROM membercenter.record WHERE id2 = ?;"

@@ -27,3 +27,12 @@ create table membercenter.record(
 `success` varchar(10) NOT NULL,
 `time` timestamp default now()  );
 
+--我的商品
+create table membercenter.MYproduct(
+`MYproductid` int primary key auto_increment,
+`MYproductimage` varchar(200) NOT NULL, 
+`MYproductname` varchar(200) NOT NULL, 
+`MYproductdetail` varchar(200) NOT NULL,
+`MYproductcity` varchar(200) NOT NULL,
+`MYproductuser_name` varchar(50) NOT NULL,
+`time` timestamp default now()  );

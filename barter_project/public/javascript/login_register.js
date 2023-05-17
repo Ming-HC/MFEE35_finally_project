@@ -198,16 +198,16 @@ $(function () {
                                     $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
                                     if (document.referrer.indexOf('register') == -1) {
                                         if (req.logined_times < 1) {
-                                            setTimeout(() => { location.href = `/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                         } else {
-                                            setTimeout(() => { window.location.href = `/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { window.location.href = `/member/${req.account}/personal`; }, 1000);
                                         }
                                     } else {
                                         if (req.logined_times < 1) {
-                                            setTimeout(() => { location.href = `/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                         } else {
                                             if (document.referrer.indexOf('login') == -1) {
-                                                setTimeout(() => { location.href = `/${req.account}/personal`; }, 1000);
+                                                setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                             } else {
                                                 setTimeout(() => { window.location.href = document.referrer; }, 1000);
                                             }
