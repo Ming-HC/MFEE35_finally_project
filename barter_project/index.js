@@ -1,43 +1,9 @@
-// ================================================
 var express = require('express');
 var app = express();
-// 上傳檔案
-var multer = require('multer');
-// var upload = multer({ dest: 'uploads/' })
-// 路由????
-var page = express.Router();
-var crypto = require('crypto');
-// 引用public
-app.use(express.static('public'));
-app.set('view engine', 'ejs')
 var fs = require('fs');
+var multer = require('multer');
 var session = require('express-session');
-var bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(bodyParser.json());
-// ================================================
-// 連線資料庫
-var apple = require('mysql');
-const { log } = require('console');
-// const { log } = require('console');
-// const { get } = require('http');
-var conn = apple.createConnection({
-    host: 'localhost',
-    port: 8889,
-    user: 'root',
-    password: 'root',
-    multipleStatements: true
-});
-conn.connect(function (err) {
-    if (err) {
-        console.log('資料庫連線錯誤', err.sqlMessage);
-    } else {
-        console.log('資料庫連線成功');
-    }
-})
-// ============================================
 app.use(session({
     secret: 'any',
     resave: true,
@@ -49,6 +15,341 @@ app.use(session({
         maxAge: 604800 * 1000       // 7 Days = 604800 Secs
     }
 }))
+app.use(express.static('public'));
+app.set('view engine', 'ejs')
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
+// 引用檔案
+const conn = require('./routers/database');
+
+
+app.listen(80, function () {
+    console.log('Server Running.');
+})
+
+// navbar_headshot
+app.get('/navbar_headshot', function (req, res) {
+    if (req.session.user) {
+        var sql = `SELECT * FROM member.info WHERE username = ?`;
+        conn.query(sql, [req.session.user.account], function (err, results, fields) {
+            if (err) {
+                console.log('select headshot error:', err);
+                res.send("err");
+            } else {
+                res.send(results[0]);
+            }
+        })
+    }
+})
+
+// Router
+const forumRouter = require('./routers/forum');
+app.use('/forum', forumRouter);
+
+// =======================================================================================================================================
+// =======================================================================================================================================
+// =======================================================================================================================================
+// =======================================================================================================================================
+// ==================================================================首頁==================================================================
+app.get('/', (req, res) => {
+    res.render('index');
+})
+app.get('/api/data', (req, res) => {
+    //使用 app.get() 方法註冊一個 GET 路由，用於處理客戶端發送到 /api/data 路徑的 GET 請求
+    //當你收到一個 HTTP 請求時，你需要使用 res 這個對象來構建和發送一個 HTTP 回應給客戶端。
+    //req 這個對象來接收和解析客戶端發送的請求。然後，你會使用 res 這個對象來構建一個回應，包括設定狀態碼、回應頭部以及傳回的資料 
+    connection.query('SELECT * FROM items.items', (err, results, fields) => {
+        //connection.query() 方法向 MySQL 資料庫發送一個 SQL 查詢語句。
+        if (err) {
+            res.status(500).json({ error: 'Error fetching data from the database' });
+            return;
+        }
+        res.json(results);
+        // 如果沒有錯誤發生（即 err 不存在），程序會執行到這一行。這行代碼會把數據庫查詢結果 results 作為 JSON 格式發送給客戶端。
+
+    });
+});
+//err：操作失敗時的錯誤訊息，如果操作成功，則為 null 或 undefined。
+//results：從資料庫中獲取的資料。
+//fields：查詢結果中每個字段的附加資訊。
+
+
+// ------------------------------------------商品-----------------------------------------------------------------
+// ------------------------------------------商品-----------------------------------------------------------------
+
+// 測試 開一個網址丟資料庫資料上去，再用別的網頁從這網址載入資料
+app.get('/productList', function (req, res) {
+    var sql = "SELECT product_id, product_name, product_image , user_name, city , DATE_FORMAT(lunch_date, '%Y/%m/%d %H:%i')lunch_date FROM product_page.product ORDER BY lunch_date DESC;";
+    conn.query(sql,
+        function (err, results, fields) {
+            // console.log(results);
+            if (err) {
+                res.send('select發生錯誤', err);
+            } else {
+                res.json(results);
+            }
+        })
+})
+
+// 商品主頁
+app.get('/product(/:page)?', function (req, res) {
+    if (req.session.user) {
+        res.render('product', {
+            // 傳入product.ejs 供head.ejs使用的變數
+            page: 'product',
+            link: 1,
+            member: req.session.user.account,
+        })
+    } else {
+        res.render('product', {
+            // 傳入product.ejs 供head.ejs使用的變數
+            page: 'product',
+            link: 1,
+            member: 'login',
+        })
+    }
+
+})
+
+
+// 商品名搜尋資料
+app.get('/product/Search/Search', function (req, res) {
+    var sql = "SELECT product_id, product_name, product_image , user_name, city , DATE_FORMAT(lunch_date, '%Y/%m/%d %H:%i')lunch_date FROM product_page.product WHERE product_name LIKE ?";
+    var data = [`%${req.query.product_name}%`];
+    // console.log(data);
+    conn.query(sql, data,
+        function (err, results, fields) {
+            // console.log(results);
+            if (err) {
+                res.send('select發生錯誤', err);
+            } else {
+                console.log(data)
+                // console.log(results)
+                res.json(results);
+            }
+        })
+    // console.log(req.query.product_name)
+    // res.send('XD');
+})
+
+// 地區搜尋商品
+app.get('/product/citySearch/citySearch', function (req, res) {
+    var length = req.query.city.length;
+    var array = req.query.city;
+    // 用字串組合法解決
+    // if(length !== 0){
+    //     var data= '';
+
+    //     var i=0;
+    //     if(length == 1){
+    //         // var data = [`${array[0]}`];
+    //         data = `('${array[0]}')`;
+    //         console.log(data);
+    //     }else{
+    //          data="(";
+    //         for(i=0;i<length;i++){
+    //             // console.log(array.length);
+    //             data+=`"${array[i]}"`+",";
+    //         }
+    //         data = data.slice(0, -1)+")";
+    //         console.log(data);
+    //     }
+    //     // console.log([`%${data}%`]);
+    //     // data = `%${data}%`;
+    // }
+    // 用(?)解決 可以直接丟陣列進去
+    if (length !== 0) {
+        var data = array
+        sql = "SELECT product_id, product_name, product_image , user_name, city , DATE_FORMAT(lunch_date, '%Y/%m/%d %H:%i')lunch_date FROM product_page.product WHERE city IN (?)";
+        // console.log(data);
+    }
+
+    conn.query(sql, [data],
+        function (err, results, fields) {
+            // console.log(results);
+            if (err) {
+                res.send('select發生錯誤', err);
+            } else {
+                // console.log(data)
+                res.json(results);
+            }
+        })
+
+})
+
+
+
+
+
+// 商品詳細頁面接收的資料來源
+app.get('/product/:product_detail/detail/product_detail', function (req, res) {
+    var sql = "SELECT product_id, product_name, product_image , user_name, city , user_image , product_detail , DATE_FORMAT(lunch_date, '%Y/%m/%d %H:%i')lunch_date , method FROM product_page.product WHERE product_id = ?";
+    var data = [req.params.product_detail];
+    conn.query(sql, data,
+        function (err, results, fields) {
+            // console.log(results);
+            if (err) {
+                res.send('select發生錯誤', err);
+            } else {
+                //     res.render('product_detail',{
+                //     page: 'product_detail',
+                //     proid: req.params.product_detail,
+                //     sqlresults: JSON.stringify(results)
+                // })
+                // console.log(data);
+                // 回傳資藥庫選出來的符合點選商品ID的資料
+                res.json(results[0]);
+            }
+        })
+})
+
+// 商品詳細頁面    
+app.get('/product/:product_detail/detail', function (req, res) {
+    if (req.session.user) {
+        res.render('product_detail', {
+            // 傳入product.ejs 供head.ejs使用的變數
+            page: 'product_detail',
+            link: 1,
+            member: req.session.user.account,
+            proid: req.params.product_detail
+        })
+    } else {
+        res.render('product_detail', {
+            // 傳入product.ejs 供head.ejs使用的變數
+            page: 'product_detail',
+            link: 1,
+            member: 'login',
+            proid: req.params.product_detail
+        })
+    }
+
+})
+
+
+
+// 登入者去抓取可以交換的商品資料
+app.post('/product/:product_detail/detail/product_detail', function (req, res) {
+    var sql = "SELECT product_image , product_name , product_id , DATE_FORMAT(lunch_date, '%Y/%m/%d %H:%i')lunch_date FROM product_page.product WHERE user_name = ?";
+    var data = req.body.user_name;
+    // console.log(data)
+    conn.query(sql, data, function (err, results, fields) {
+        if (err) {
+            res.send('select發生錯誤', err);
+        } else {
+            // console.log(data)
+            res.json(results);
+        }
+    }
+
+    )
+
+
+
+
+
+})
+
+// 我要交換送出後
+// 要將送來的兩個商品ID分別從商品表搜尋出來，並分別輸入到BWC表中的BWC跟WC欄位選項
+app.post('/member/wannaChange', function (req, res) {
+    var insertid = req.body.wannaChange[0];
+    var updateid = req.body.wannaChange[1];
+    var sqlinsert = `INSERT INTO product_page.bwc (BWC_user_name, BWC_product_id, BWC_product_name, BWC_product_image, BWC_city, BWC_lunch_date, BWC_method ) SELECT user_name , product_id , product_name , product_image , city , lunch_date , method FROM product_page.product WHERE product_id = ${insertid};`;
+    var updatesql = `UPDATE product_page.bwc INNER JOIN product_page.product ON product_page.product.product_id = ${updateid} SET bwc.WC_user_name = product.user_name, bwc.WC_product_id = product.product_id, bwc.WC_product_name = product.product_name, bwc.WC_product_image = product.product_image, bwc.WC_city = product.city, bwc.WC_lunch_date = product.lunch_date , bwc.WC_method = product.method WHERE product_page.bwc.BWC_product_id = ${insertid};`;
+    // console.log(sqlinsert+updatesql)
+    // console.log(updatesql)
+    conn.query(sqlinsert + updatesql, function (err, results, fields) {
+        if (err) {
+            res.send('select發生錯誤', err);
+        } else {
+            console.log(results)
+            res.json(results);
+        }
+    })
+})
+
+
+// 想與我交換
+// 顯示想與此商品交換的會員資料
+app.post('/product/WCPinfo', function (req, res) {
+    var sql = "SELECT BWC_user_name,BWC_product_id,BWC_product_name,BWC_product_image,BWC_city,BWC_lunch_date,WC_product_id,BWC_method FROM product_page.bwc WHERE WC_product_id = ?;";
+    var data = req.body.product_id;
+    // console.log(data);
+    conn.query(sql, data, function (err, results, fields) {
+        if (err) {
+            res.send('select發生錯誤', err);
+        } else {
+            if (undefined) {
+                res.send(undefined);
+            } else {
+                // console.log(results)
+                res.json(results);
+            }
+        }
+    })
+})
+
+
+
+// 問與答
+app.get('/product/:product_detail/detail/QA', function (req, res) {
+    var sql = "INSERT INTO product_page.qa(`product_name`, `product_id` , `username`, `member_id` , `content`) VALUES ( ? , ? , ? , ? , ? );"
+    // var data = req.query.content; 
+    // console.log(req.params.product_detail); 
+    console.log(req.query.username);
+    console.log(req.query.product_name);
+    console.log(req.query.content);
+    conn.query(sql, [req.query.product_name, req.query.product_id, req.query.username, req.query.user_id, req.query.content], function (err, results, fields) {
+        if (err) {
+            res.send('select發生錯誤', err);
+        } else {
+            if (undefined) {
+                res.send(undefined);
+            } else {
+                console.log(results)
+                res.json(results);
+            }
+        }
+    })
+
+})
+
+
+// 約定網址顯示訊息內容
+app.get('/member/QA', function (req, res) {
+    var sql = "SELECT `id`, `product_id`, `product_name`, `member_id`, `username`, `content`, `reply`,DATE_FORMAT(Question_date, '%Y/%m/%d %H:%i')Question_date FROM product_page.qa WHERE product_id = ?;"
+    var data = req.query.product_id;
+    conn.query(sql, data, function (err, results, fields) {
+        if (err) {
+            res.send('select發生錯誤', err);
+        } else {
+            if (undefined) {
+                res.send(undefined);
+            } else {
+                // console.log(results)
+                res.json(results);
+            }
+        }
+    })
+})
+
+
+
+// ------------------------------------------商品-----------------------------------------------------------------
+// ------------------------------------------商品-----------------------------------------------------------------
+
+
+
+
+// 會員中心
+var crypto = require('crypto');
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+
 
 // app.get('/iwant', function (req, res) {
 //     // res.send('交換紀錄');
@@ -58,9 +359,6 @@ app.use(session({
 //         bobo1: '烏龜2'
 //     })
 // });
-app.listen(80, function () {
-    console.log('Server Running.');
-})
 // =======================================================================================================================================
 // =======================================================================================================================================
 // =======================================================================================================================================
@@ -226,9 +524,15 @@ app.get('/:user/password', function (req, res) {
 app.post('/:user/password', function (req, res) {
     var user = req.params.user;
     var oldPassword = req.body.oldPassword;
-    var Password = req.body.Password;
-    var sql = 'SELECT * FROM membercenter.personal where username = ? AND Password = ?';
-    conn.query(sql, [user, oldPassword], function (err, result) {
+    var key = "mypasswordaeskey";
+    var iv = key;
+    var oldencipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+    let oldencrypted = oldencipher.update(oldPassword, 'utf8', 'hex') + oldencipher.final('hex');
+    var password = req.body.Password;
+    var newencipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(key, "utf-8"), Buffer.from(iv, "utf-8"));
+    let newencrypted = newencipher.update(password, 'utf8', 'hex') + newencipher.final('hex');
+    var sql = 'SELECT * FROM membercenter.personal where username = ? AND password = ?';
+    conn.query(sql, [user, oldencrypted], function (err, result) {
         if (err) {
             res.send('更新密碼發生錯誤', err);
         } else if (result.length == 0) {
@@ -236,13 +540,13 @@ app.post('/:user/password', function (req, res) {
             res.send("<script>alert('舊密碼錯誤');window.location.href='/" + user + "/password'</script>");
         } else {
             // 如果舊密碼正確，更新新密碼
-            var sql = 'UPDATE membercenter.personal SET Password = ? where username = ?';
-            conn.query(sql, [Password, user], function (err, result) {
+            var sql = 'UPDATE membercenter.personal SET password = ? where username = ?';
+            conn.query(sql, [newencrypted, user], function (err, result) {
                 if (err) {
                     res.send('更新密碼發生錯誤', err);
                 } else {
                     // res.redirect('/personal/' + user);
-                    res.send("<script>alert('密码更新成功！');window.location.href='/" + user + "/personal'</script>");
+                    res.send("<script>alert('密碼更新成功！');window.location.href='/" + user + "/personal'</script>");
                 }
             });
         }
@@ -466,11 +770,9 @@ app.get('/logout', function (req, res) {
     req.session.user = null
     res.send("<script>alert('已登出！');window.location.href='/member/login'</script>");
 })
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// ================================================================註冊登入================================================================
+
+//==================================
+// 註冊/登入
 app.get('/member/:url(login|register)?', function (req, res) {
     if (req.session.user) {
         res.render('login_register', {
@@ -735,35 +1037,3 @@ var x = multer({
 app.post('/upload_headshot', x.single('headshot'), function (req, res) {
     res.send(req.file.path);
 })
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// ================================================================商品頁面================================================================
-
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// =======================================================================================================================================
-// ==================================================================首頁==================================================================
-app.get('/', (req, res) => {
-    res.render('index');
-})
-app.get('/api/data', (req, res) => {
-    //使用 app.get() 方法註冊一個 GET 路由，用於處理客戶端發送到 /api/data 路徑的 GET 請求
-    //當你收到一個 HTTP 請求時，你需要使用 res 這個對象來構建和發送一個 HTTP 回應給客戶端。
-    //req 這個對象來接收和解析客戶端發送的請求。然後，你會使用 res 這個對象來構建一個回應，包括設定狀態碼、回應頭部以及傳回的資料 
-    connection.query('SELECT * FROM items.items', (err, results, fields) => {
-        //connection.query() 方法向 MySQL 資料庫發送一個 SQL 查詢語句。
-        if (err) {
-            res.status(500).json({ error: 'Error fetching data from the database' });
-            return;
-        }
-        res.json(results);
-        // 如果沒有錯誤發生（即 err 不存在），程序會執行到這一行。這行代碼會把數據庫查詢結果 results 作為 JSON 格式發送給客戶端。
-
-    });
-});
-    //err：操作失敗時的錯誤訊息，如果操作成功，則為 null 或 undefined。
-    //results：從資料庫中獲取的資料。
-    //fields：查詢結果中每個字段的附加資訊。
