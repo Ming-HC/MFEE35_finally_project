@@ -374,6 +374,8 @@ app.get('/member/:user/personal', function (req, res) {
             } else {
                 res.render('personal', {
                     personal: results,
+                    page: "personal",
+                    member: req.session.user.account
                 });
             }
         });
@@ -513,7 +515,9 @@ app.get('/member/:user/password', function (req, res) {
                     // console.log('success');
                     res.render('password', {
                         user: user,
-                        personal: results
+                        personal: results,
+                        page: "password",
+                        member: req.session.user.account
                     })
                 }
             });
@@ -568,7 +572,9 @@ app.get('/member/:user/puton', function (req, res) {
                 // console.log(results)
                 res.render('puton', {
                     user: user,
-                    puton: results
+                    puton: results,
+                    page: "puton",
+                    member: req.session.user.account
                 });
             }
         });
@@ -624,7 +630,7 @@ app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
         if (err) {
             res.send('上架商品發生錯誤', err.message);
         } else {
-            res.send("<script>alert('上傳成功！');window.location.href='/member/"+ user +"/puton'</script>");
+            res.send("<script>alert('上傳成功！');window.location.href='/member/" + user + "/puton'</script>");
         }
     })
 })
@@ -645,7 +651,9 @@ app.get('/member/:user/MYproduct', function (req, res) {
                 // console.log(results);
                 res.render('MYproduct', {
                     user: user,
-                    MYproduct: results
+                    MYproduct: results,
+                    page: "MYproduct",
+                    member: req.session.user.account
                 });
             }
         });
@@ -688,10 +696,14 @@ app.get('/member/:user/iwant', function (req, res) {
             if (results.length == 0) {
                 res.render('iwant', {
                     iwant: "nothing",
+                    page: "iwant",
+                    member: req.session.user.account
                 })
             } else {
                 res.render('iwant', {
                     iwant: results,
+                    page: "iwant",
+                    member: req.session.user.account
                     // data
                 })
             }
@@ -709,10 +721,14 @@ app.get('/member/:user/withme', function (req, res) {
             if (results.length == 0) {
                 res.render('withme', {
                     withme: "nothing",
+                    page: "withme",
+                    member: req.session.user.account
                 })
             } else {
                 res.render('withme', {
                     withme: results,
+                    page: "withme",
+                    member: req.session.user.account,
                     user: user
                     // data
                 })
@@ -756,7 +772,11 @@ app.get('/member/:user/record', function (req, res) {
             if (err) {
                 res.send('select發生錯誤', err);
             } else {
-                res.render('record', { record: results });
+                res.render('record', { 
+                    record: results,
+                    page: "record",
+                    member: req.session.user.account 
+                });
             }
         })
     } else {

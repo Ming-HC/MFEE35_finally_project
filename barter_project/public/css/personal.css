@@ -1,0 +1,38 @@
+.container {
+    max-width: 1200px;
+}
+
+body {
+    overflow-y: scroll;
+}
+table {
+    font-size: 20px;
+}
+
+table tr td:nth-child(1) {
+    width: 125px;
+    text-align: end;
+}
+
+table tr td:nth-child(2) {
+    width: 300px;
+}
+
+div>button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+input {
+    height: 34.09px;
+}
+
+#gd span {
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+div>select:nth-child(2),
+div>select:nth-child(3) {
+    margin-left: 5px;
+}
