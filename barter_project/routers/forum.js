@@ -15,7 +15,7 @@ router.get('/:class(all|complex|gossip|ask|system|delete)?/:page(\\d+)?', functi
                 if (req.session.user) {
                     res.render('forum', {
                         page: 'forum',
-                        member: req.session.user.account,
+                        member: req.session.user.account + '/personal/',
                     });
                 } else {
                     res.render('forum', {

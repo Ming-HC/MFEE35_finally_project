@@ -1009,7 +1009,7 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
                     }
                 } else {
                     // 未註冊過 > 註冊+登入
-                    var select_userN_sql = `SELECT username from membercenter.;`;
+                    var select_userN_sql = `SELECT username from membercenter.personal;`;
                     conn.query(select_userN_sql, (err, results, fields) => {
                         if (err) {
                             console.log("select username err:", err);

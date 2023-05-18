@@ -59,12 +59,12 @@ $(function () {
                                         $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
                                         if (document.referrer.indexOf('register') == -1) {
                                             if (req.logined_times < 1) {
-                                                setTimeout(() => { location.href = '/member/'+req.account; }, 1000);
+                                                setTimeout(() => { location.href = '/member/'+req.account+'/personal/'; }, 1000);
                                             } else {
                                                 setTimeout(() => { window.location.href = document.referrer; }, 1000);
                                             }
                                         } else {
-                                            setTimeout(() => { location.href = '/member/'+req.account; }, 1000);
+                                            setTimeout(() => { location.href = '/member/'+req.account+'/personal/'; }, 1000);
                                         }
                                     } else {
                                         $('#psw+label').css('color', 'red');
