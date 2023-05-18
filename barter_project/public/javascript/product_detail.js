@@ -1,4 +1,8 @@
 $(function(){
+var dataToServer = {
+    user_name:"三玖"
+};
+
     function getProductList(){
         var myPath = window.location.pathname;
         // console.log(myPath);
@@ -76,7 +80,11 @@ $(function(){
                 }
 // 商品詳細資訊
                 $('#tabs1-1').html('');
-                $('#tabs1-1').append(`${productList.product_detail}`)
+                if(productList.product_detail !== null){
+                    $('#tabs1-1').append(`${productList.product_detail}`)
+                }else{
+                    $('#tabs1-1').append(``)
+                }
 // 想交換此商品對象
                     $.ajax({
                         type: "post",
@@ -186,7 +194,7 @@ $(function(){
                                     }
                                 })
                             }else{
-                                alert('沒有輸入請送出喔>_0')
+                                alert('沒有輸入請勿送出喔>_0')
                             }
     
                             
@@ -239,9 +247,7 @@ $('#comfirmchange').bind({
 
 // 接下來要傳遞到後端的資料
 var wannaChange = [];
-var dataToServer = {
-    user_name: "三玖"
-}
+
 // 確認使用者有無勾選的判斷基準布林宣告
 var checkboxS = false;
 
@@ -277,85 +283,101 @@ var closedialog = () => {
 // 點選我要交換後，dialog顯示內容重新渲染
 var change = ()=>{
     wannaChange = [];
-
     if ($(".navbar-brand").prop("href").indexOf("login") !== -1) {
         window.open("/member/login", "_self");
         // document.querySelector('#makeSure').showModal();
 
     }else{
             // 有登入才會重新渲染
-                document.querySelector('#cat').showModal();
+                
+// 先檢查登入資料取得使用者名稱
                 $.ajax({
-                    type:"post",
-                    url: "/product/:product_detail/detail/product_detail",
-                    data: dataToServer,
-                    success: (e) => {
-                        $('#userproduct').html('');
-                        // console.log(e)
-                        $.each(e,function(index,item){
-                            $('#userproduct').append(`<div class="d-flex flex-row changedialog">
-                            <div id="" class="wannaChangeItem${index} dialog_product">
-                                <input type="checkbox" id="wannaChangeItem_${index}" class="dialogcheck wannaChangeItem${index}" data-id=${index}>
-                            </div>
-                            <div class="dialogIMG border-start wannaChangeItem${index}">
-                                <img id="product_id_${e[index].product_id}" src="${e[index].product_image}" >
-                            </div>
-                            <div class="border-start wannaChangeItem${index}">
-                            ${e[index].product_name}
-                            </div>
-                            <div class="border-start wannaChangeItem${index}">
-                            ${e[index].lunch_date}
-                            </div>
-                        </div>`);
-        
+                    type: 'get',
+                    url: '/navbar_headshot',
+                    success: (req) =>{
+                        console.log(req);
+                        dataToServer = {user_name:req.username} ;
+// 再用登入的使用者指定給dataToServer傳回後端搜尋
+                        $.ajax({
+                            type:"post",
+                            url: "/product/:product_detail/detail/product_detail",
+                            data: dataToServer,
+                            success: (e) => {
+                                $('#userproduct').html('');
+                                // console.log(e)
+                                if(e.length == 0){
+                                    alert('您並沒有可以交換的物品喔~')
+                                }else{
+                                    document.querySelector('#cat').showModal();
+                                    $.each(e,function(index,item){
+                                        $('#userproduct').append(`<div class="d-flex flex-row changedialog">
+                                        <div id="" class="wannaChangeItem${index} dialog_product">
+                                            <input type="checkbox" id="wannaChangeItem_${index}" class="dialogcheck wannaChangeItem${index}" data-id=${index}>
+                                        </div>
+                                        <div class="dialogIMG border-start wannaChangeItem${index}">
+                                            <img id="product_id_${e[index].product_id}" src="${e[index].product_image}" >
+                                        </div>
+                                        <div class="border-start wannaChangeItem${index}">
+                                        ${e[index].product_name}
+                                        </div>
+                                        <div class="border-start wannaChangeItem${index}">
+                                        ${e[index].lunch_date}
+                                        </div>
+                                    </div>`);
+                    
+                                    })
+                                }
+
+                
+                             
+                // 讓使用者一次只能勾選一個商品交換
+                                $('.dialogcheck').on('change', function() {
+                                    $('.dialogcheck').not(this).prop('checked', false);
+                                    // wannaChange = [];
+                                 });
+                
+                // 確認哪一個checkbox送出當下被勾選並且準備好資料傳輸到後台
+                                 $('.changedialog').on('change', '.dialogcheck' , function() {            
+                                    // const checked2 = $('#userproduct').find('.dialogcheck:checked');
+                                    const checked = $('#userproduct').find('.dialogcheck:checked');
+                
+                                    
+                // 判斷使用者有無勾選
+                                if ($(".dialogcheck:checked").length !== 0) {
+                                    checkboxS = true;
+                                    checked.each(function(index,item) {
+                                        const id = $(this).data('id');
+                                      //   console.log(`Checkbox with data-id=${id} is checked`);
+                // 取使用者勾選的商品的ID，讓後續可以依照物品ID繼續搜尋
+                                      var x = $('.dialogIMG')[id].querySelector('img').id.substring(11);
+                                      // console.log(x)
+                                      // console.log($('.dialogcheck')[id].checked)
+                                      if ($('.dialogcheck')[id].checked !== false) {
+                                          wannaChange[0] = x;
+                                          var testid = document.querySelector('img[id^="WCPID"]').id.substring(6);
+                                          wannaChange[1] = testid;
+                                        // console.log(testid);
+                                        //   console.log(wannaChange);
+                                      }else{
+                                          checkboxS = false;
+                                          console.log('取消了')
+                                      }
+                  
+                  
+                                  });
+                                }else{
+                // 若使用者取消勾選，把原本要送出的資料也清空
+                                    checkboxS = false;
+                                    wannaChange = [];
+                                }    
+                                  });
+                
+                
+                            } 
                         })
-        
-                     
-        // 讓使用者一次只能勾選一個商品交換
-                        $('.dialogcheck').on('change', function() {
-                            $('.dialogcheck').not(this).prop('checked', false);
-                            // wannaChange = [];
-                         });
-        
-        // 確認哪一個checkbox送出當下被勾選並且準備好資料傳輸到後台
-                         $('.changedialog').on('change', '.dialogcheck' , function() {            
-                            // const checked2 = $('#userproduct').find('.dialogcheck:checked');
-                            const checked = $('#userproduct').find('.dialogcheck:checked');
-        
-                            
-        // 判斷使用者有無勾選
-                        if ($(".dialogcheck:checked").length !== 0) {
-                            checkboxS = true;
-                            checked.each(function(index,item) {
-                                const id = $(this).data('id');
-                              //   console.log(`Checkbox with data-id=${id} is checked`);
-        // 取使用者勾選的商品的ID，讓後續可以依照物品ID繼續搜尋
-                              var x = $('.dialogIMG')[id].querySelector('img').id.substring(11);
-                              // console.log(x)
-                              // console.log($('.dialogcheck')[id].checked)
-                              if ($('.dialogcheck')[id].checked !== false) {
-                                  wannaChange[0] = x;
-                                  var testid = document.querySelector('img[id^="WCPID"]').id.substring(6);
-                                  wannaChange[1] = testid;
-                                // console.log(testid);
-                                //   console.log(wannaChange);
-                              }else{
-                                  checkboxS = false;
-                                  console.log('取消了')
-                              }
-          
-          
-                          });
-                        }else{
-        // 若使用者取消勾選，把原本要送出的資料也清空
-                            checkboxS = false;
-                            wannaChange = [];
-                        }    
-                          });
-        
-        
-                    } 
+                    }
                 })
+
     }
     
 }

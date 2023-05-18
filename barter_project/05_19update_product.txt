@@ -1,0 +1,23 @@
+修正NAV影響到商品頁A連結部分
+
+更改原本每個商品的刊登者字體顏色
+增加QAusername的類別
+
+新增if判斷商品詳細資料是否為null來append相對應內容上去
+
+新增假的真資料
+商品頁 還有QA都有資料大更動! 
+
+新增一堆使用者帳號
+hornet
+hansan
+kurumi
+mikudayo
+yutsuba
+itsuki
+naruto
+
+
+
+
+
