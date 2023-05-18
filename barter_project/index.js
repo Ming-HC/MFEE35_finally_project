@@ -32,7 +32,7 @@ app.listen(80, function () {
 // navbar_headshot
 app.get('/navbar_headshot', function (req, res) {
     if (req.session.user) {
-        var sql = `SELECT * FROM member.info WHERE username = ?`;
+        var sql = `SELECT * FROM membercenter.personal WHERE username = ?`;
         conn.query(sql, [req.session.user.account], function (err, results, fields) {
             if (err) {
                 console.log('select headshot error:', err);
@@ -54,7 +54,15 @@ app.use('/forum', forumRouter);
 // =======================================================================================================================================
 // ==================================================================首頁==================================================================
 app.get('/', (req, res) => {
-    res.render('index');
+    if (req.session.user) {
+        res.render('index', {
+            member: req.session.user.account + "/personal"
+        });
+    } else {
+        res.render('index', {
+            member: 'login'
+        });
+    }
 })
 app.get('/api/data', (req, res) => {
     //使用 app.get() 方法註冊一個 GET 路由，用於處理客戶端發送到 /api/data 路徑的 GET 請求
@@ -100,7 +108,7 @@ app.get('/product(/:page)?', function (req, res) {
             // 傳入product.ejs 供head.ejs使用的變數
             page: 'product',
             link: 1,
-            member: req.session.user.account,
+            member: req.session.user.account + "/personal",
         })
     } else {
         res.render('product', {
@@ -212,7 +220,7 @@ app.get('/product/:product_detail/detail', function (req, res) {
             // 傳入product.ejs 供head.ejs使用的變數
             page: 'product_detail',
             link: 1,
-            member: req.session.user.account,
+            member: req.session.user.account + "/personal",
             proid: req.params.product_detail
         })
     } else {
@@ -253,7 +261,7 @@ app.post('/product/:product_detail/detail/product_detail', function (req, res) {
 
 // 我要交換送出後
 // 要將送來的兩個商品ID分別從商品表搜尋出來，並分別輸入到BWC表中的BWC跟WC欄位選項
-app.post('/member/wannaChange', function (req, res) {
+app.post('/product/member/wannaChange', function (req, res) {
     var insertid = req.body.wannaChange[0];
     var updateid = req.body.wannaChange[1];
     var sqlinsert = `INSERT INTO product_page.bwc (BWC_user_name, BWC_product_id, BWC_product_name, BWC_product_image, BWC_city, BWC_lunch_date, BWC_method ) SELECT user_name , product_id , product_name , product_image , city , lunch_date , method FROM product_page.product WHERE product_id = ${insertid};`;
@@ -318,7 +326,7 @@ app.get('/product/:product_detail/detail/QA', function (req, res) {
 
 
 // 約定網址顯示訊息內容
-app.get('/member/QA', function (req, res) {
+app.get('/product/member/QA', function (req, res) {
     var sql = "SELECT `id`, `product_id`, `product_name`, `member_id`, `username`, `content`, `reply`,DATE_FORMAT(Question_date, '%Y/%m/%d %H:%i')Question_date FROM product_page.qa WHERE product_id = ?;"
     var data = req.query.product_id;
     conn.query(sql, data, function (err, results, fields) {
@@ -346,6 +354,7 @@ app.get('/member/QA', function (req, res) {
 // 會員中心
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
+const { log } = require('console');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
@@ -374,6 +383,8 @@ app.get('/member/:user/personal', function (req, res) {
             } else {
                 res.render('personal', {
                     personal: results,
+                    page: "personal",
+                    member: req.session.user.account + "/personal"
                 });
             }
         });
@@ -513,7 +524,9 @@ app.get('/member/:user/password', function (req, res) {
                     // console.log('success');
                     res.render('password', {
                         user: user,
-                        personal: results
+                        personal: results,
+                        page: "password",
+                        member: req.session.user.account + "/personal"
                     })
                 }
             });
@@ -560,7 +573,7 @@ app.post('/member/:user/password', function (req, res) {
 app.get('/member/:user/puton', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
-        var sql = 'SELECT * FROM la2.product';
+        var sql = 'SELECT * FROM membercenter.myproduct';
         conn.query(sql, function (err, results, fields) {
             if (err) {
                 res.send('select发生错误', err);
@@ -568,7 +581,9 @@ app.get('/member/:user/puton', function (req, res) {
                 // console.log(results)
                 res.render('puton', {
                     user: user,
-                    puton: results
+                    puton: results,
+                    page: "puton",
+                    member: req.session.user.account + "/personal"
                 });
             }
         });
@@ -624,7 +639,7 @@ app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
         if (err) {
             res.send('上架商品發生錯誤', err.message);
         } else {
-            res.send("<script>alert('上傳成功！');window.location.href='/member/"+ user +"/puton'</script>");
+            res.send("<script>alert('上傳成功！');window.location.href='/member/" + user + "/puton'</script>");
         }
     })
 })
@@ -634,25 +649,142 @@ app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
 // =======================================================================================================================================
 // ===========================================================我的物品=====================================================================
 
+// app.get('/member/:user/MYproduct', function (req, res) {
+//     if (req.session.user) {
+//         var user = req.params.user;
+//         var sql = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
+//         var sql2 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
+//         var combinedSql = '(' + sql + ') UNION ALL (' + sql2 + ')';
+//         conn.query(combinedSql, [user, user], function (err, results, fields) {
+//             if (err) {
+//                 res.send('select发生错误', err);
+//             } else {
+//                 console.log(results);
+//                 res.render('MYproduct', {
+//                     user: user,
+//                     MYproduct: results,
+//                     page: "MYproduct",
+//                     member: req.session.user.account + "/personal"
+//                 });
+//             }
+//         });
+//     } else {
+//         res.send("error.404");
+//     }
+// });
 app.get('/member/:user/MYproduct', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
-        var sql = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted FROM membercenter.myproduct WHERE MYproductuser_name = ?';
-        conn.query(sql, [user], function (err, results, fields) {
-            if (err) {
-                res.send('select发生错误', err);
+        var sql1 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
+        var sql2 = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
+        conn.query(sql1, [user], function (err1, results1, fields1) {
+            if (err1) {
+                res.send('select发生错误', err1);
             } else {
-                // console.log(results);
-                res.render('MYproduct', {
-                    user: user,
-                    MYproduct: results
-                });
+                // console.log(results1);
+                switch (results1.length) {
+                    case 0:
+                        conn.query(sql2, [user], function (err2, results2, fields2) {
+                            if (results2.length == 0) {
+                                // console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: "nothing",
+                                    MYproduct: "nothing",
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            } else {
+                                // console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: "nothing",
+                                    MYproduct: results2,
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            }
+                        });
+                        break;
+
+                    default:
+                        conn.query(sql2, [user], function (err2, results2, fields2) {
+                            if (results2.length == 0) {
+                                console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: results1,
+                                    MYproduct: "nothing",
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            } else {
+                                // console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: results1,
+                                    MYproduct: results2,
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            }
+                        });
+                        break;
+                }
             }
         });
     } else {
         res.send("error.404");
     }
 });
+
+// app.get('/member/:user/MYproduct', function (req, res) {
+//     if (req.session.user) {
+//         var user = req.params.user;
+//         var sql = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted FROM product_page.product WHERE user_name = ?';
+//         conn.query(sql, [user], function (err, results, fields) {
+//             if (err) {
+//                 res.send('select发生错误', err);
+//             } else {
+//                 res.render('MYproduct', {
+//                     user: user,
+//                     product: results,
+//                     page: "MYproduct",
+//                     member: req.session.user.account + "/personal"
+//                 });
+//             }
+//         });
+//     } else {
+//         res.send("error.404");
+//     }
+// });
+
+
+
+app.post('/member/:user/MYproduct', function (req, res) {
+    var user = req.params.user;
+    // console.log(req.body);
+    var sql = "insert into product_page.product(product_name, product_image, product_detail, user_name, city) values (?,?,?,?,?)";
+    conn.query(sql, [req.body.MYproductname, req.body.MYproductimage, req.body.MYproductdetail, user, req.body.MYproductcity], function (err, results, fields) {
+        if (err) {
+            res.send('上架商品發生錯誤', err.message)
+        }
+        else {
+            console.log("成功");
+            var sql2 = "DELETE FROM membercenter.myproduct WHERE MYproductid = ?;";
+            conn.query(sql2, [req.body.MYproductid], function (err, results, fields) {
+                if (err) {
+                    res.send('上架商品發生錯誤')
+                } else {
+                    res.send("<script>alert('上架成功！'); location.reload();window.location.href='/member/" + user + "/MYproduct'</script>");
+                    // console.log("123");
+                }
+            })
+        }
+    });
+
+})
+
 app.delete('/member/:user/MYproduct', function (req, res) {
     var user = req.params.user;
     console.log(req.body);
@@ -679,7 +811,7 @@ app.delete('/member/:user/MYproduct', function (req, res) {
 // ================================================================與我交換================================================================
 app.get('/member/:user/iwant', function (req, res) {
     user = req.params.user
-    sql = 'select * from membercenter.bwc where BWC_user_name = ?'
+    sql = 'select * from product_page.bwc where BWC_user_name = ?'
     conn.query(sql, [user], function (err, results, fields) {
         if (err) {
             res.send("err", err.message)
@@ -688,10 +820,14 @@ app.get('/member/:user/iwant', function (req, res) {
             if (results.length == 0) {
                 res.render('iwant', {
                     iwant: "nothing",
+                    page: "iwant",
+                    member: req.session.user.account + "/personal"
                 })
             } else {
                 res.render('iwant', {
                     iwant: results,
+                    page: "iwant",
+                    member: req.session.user.account + "/personal"
                     // data
                 })
             }
@@ -700,7 +836,7 @@ app.get('/member/:user/iwant', function (req, res) {
 })
 app.get('/member/:user/withme', function (req, res) {
     user = req.params.user
-    sql = 'select * from membercenter.bwc where WC_user_name = ?'
+    sql = 'select * from product_page.bwc where WC_user_name = ?'
     conn.query(sql, [user], function (err, results, fields) {
         if (err) {
             res.send("err")
@@ -709,10 +845,14 @@ app.get('/member/:user/withme', function (req, res) {
             if (results.length == 0) {
                 res.render('withme', {
                     withme: "nothing",
+                    page: "withme",
+                    member: req.session.user.account + "/personal"
                 })
             } else {
                 res.render('withme', {
                     withme: results,
+                    page: "withme",
+                    member: req.session.user.account + "/personal",
                     user: user
                     // data
                 })
@@ -723,13 +863,13 @@ app.get('/member/:user/withme', function (req, res) {
 app.post('/member/:user/withme', function (req, res) {
     user = req.params.user
     // console.log(req.body);
-    sql = 'INSERT INTO membercenter.record(memberid, product, id2, product2) VALUES (?,?,?,?)'
+    sql = 'INSERT INTO product_page.record(memberid, product, id2, product2) VALUES (?,?,?,?)'
     conn.query(sql, [req.body.BWC_user_name, req.body.BWC_product_name, req.body.WC_user_name, req.body.WC_product_name], function (err, results, fields) {
         if (err) {
             res.send(err.message)
             console.log('交易失敗');
         } else {
-            sql2 = 'DELETE from membercenter.bwc where id = ?'
+            sql2 = 'DELETE from product_page.bwc where id = ?'
             conn.query(sql2, [req.body.id], function (err, results, fields) {
                 if (err) {
                     res.send("err")
@@ -756,7 +896,11 @@ app.get('/member/:user/record', function (req, res) {
             if (err) {
                 res.send('select發生錯誤', err);
             } else {
-                res.render('record', { record: results });
+                res.render('record', {
+                    record: results,
+                    page: "record",
+                    member: req.session.user.account + "/personal"
+                });
             }
         })
     } else {
@@ -779,7 +923,7 @@ app.get('/member/:url(login|register)?', function (req, res) {
     if (req.session.user) {
         res.render('login_register', {
             page: 'login_register',
-            member: req.session.user.account,
+            member: req.session.user.account + "/personal",
             url: 'logined'
         })
     } else {
@@ -933,7 +1077,7 @@ app.post('/member/:url/memberchk', express.urlencoded(), function (req, res) {
                     }
                 } else {
                     // 未註冊過 > 註冊+登入
-                    var select_userN_sql = `SELECT username from membercenter.;`;
+                    var select_userN_sql = `SELECT username from membercenter.personal;`;
                     conn.query(select_userN_sql, (err, results, fields) => {
                         if (err) {
                             console.log("select username err:", err);

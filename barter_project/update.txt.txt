@@ -1,0 +1,21 @@
+拔掉所有可以連結到會員的刊登者連結
+沒有該頁面 回家做
+
+
+detail頁面
+更改問與答部分的ajax
+
+`${myPath}/QA`關鍵字
+更改user_id的屬性值req.member_id
+為
+req.memberid
+
+
+
+更改navbar的連結網址跟index的navbar連結
+
+更改Server端
+回傳的member屬性值
+改成
+member: req.session.user.account + "/personal"
+

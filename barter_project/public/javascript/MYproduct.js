@@ -28,3 +28,4 @@ function deldata(MYproductid) {
         // console.log(product_id)
     }
 }
+

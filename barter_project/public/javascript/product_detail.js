@@ -1,4 +1,11 @@
 $(function(){
+<<<<<<< HEAD
+=======
+var dataToServer = {
+    user_name:"三玖"
+};
+
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
     function getProductList(){
         var myPath = window.location.pathname;
         // console.log(myPath);
@@ -44,7 +51,11 @@ $(function(){
                     </div>
                     <div id=""  class="text-center product_detail_userimage">
                         <img class="rounded-circle" src="${productList.user_image}"></img>
+<<<<<<< HEAD
                         <div><a href="/member/${productList.user_name}"><span>${productList.user_name}</span></a></div>
+=======
+                        <div><span>${productList.user_name}</span></div>
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                     </div>
                     `
                     );
@@ -69,14 +80,26 @@ $(function(){
                     </div>
                     <div id=""  class="text-center product_detail_userimage">
                         <img class="rounded-circle" src="${user_image}"></img>
+<<<<<<< HEAD
                         <div><a href="等待設定"><span>${productList.user_name}</span></a></div>
+=======
+                        <div><span>${productList.user_name}</span></div>
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                     </div>
                     `
                     );
                 }
 // 商品詳細資訊
                 $('#tabs1-1').html('');
+<<<<<<< HEAD
                 $('#tabs1-1').append(`${productList.product_detail}`)
+=======
+                if(productList.product_detail !== null){
+                    $('#tabs1-1').append(`${productList.product_detail}`)
+                }else{
+                    $('#tabs1-1').append(``)
+                }
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
 // 想交換此商品對象
                     $.ajax({
                         type: "post",
@@ -98,7 +121,11 @@ $(function(){
                                         <div id="" class="">刊登時間 | ${productList[index].BWC_lunch_date}</div>
                                         <div id="" class="">地區 | ${productList[index].BWC_city}</div>
                                         <div id="" class="">方式 | ${productList[index].BWC_method}</div><br>
+<<<<<<< HEAD
                                         <div id="" class="">會員 | <a href="/member/${productList[index].BWC_user_name}">${productList[index].BWC_user_name}</a></div>
+=======
+                                        <div id="" class="">會員 | ${productList[index].BWC_user_name}</div>
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                                     </div>
                                 </div>
                                 </div>                                     
@@ -121,7 +148,11 @@ $(function(){
                                         $('.showQA').append(`
                                         <div class="border-bottom">
                                         <div>
+<<<<<<< HEAD
                                             <a href="/member/${e[index].username}"><span>${e[index].username} </span></a>
+=======
+                                            <span>${e[index].username} </span>
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                                             <span> 於 ${e[index].Question_date}</span>
                                         </div>
                                         <div>發問 : ${e[index].content}</div>
@@ -132,7 +163,11 @@ $(function(){
                                         $('.showQA').append(`
                                         <div class="border-bottom">
                                         <div>
+<<<<<<< HEAD
                                             <a href="/member/${e[index].username}"><span>${e[index].username} </span></a>
+=======
+                                            <span>${e[index].username} </span>
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                                             <span>  於 ${e[index].Question_date}</span>
                                         </div>
                                         <div>發問 : ${e[index].content}</div>
@@ -176,7 +211,11 @@ $(function(){
                                                 username: req.username,
                                                 product_name: $('.PDUT1>span').html(),
                                                 product_id: document.querySelector('img[id^="WCPID"]').id.substring(6),
+<<<<<<< HEAD
                                                 user_id: req.member_id
+=======
+                                                user_id: req.memberid
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                                             },
                                             success: function(e){
                                                 window.open( myPath , "_self");
@@ -186,7 +225,11 @@ $(function(){
                                     }
                                 })
                             }else{
+<<<<<<< HEAD
                                 alert('沒有輸入請送出喔>_0')
+=======
+                                alert('沒有輸入請勿送出喔>_0')
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                             }
     
                             
@@ -239,9 +282,13 @@ $('#comfirmchange').bind({
 
 // 接下來要傳遞到後端的資料
 var wannaChange = [];
+<<<<<<< HEAD
 var dataToServer = {
     user_name: "三玖"
 }
+=======
+
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
 // 確認使用者有無勾選的判斷基準布林宣告
 var checkboxS = false;
 
@@ -277,13 +324,17 @@ var closedialog = () => {
 // 點選我要交換後，dialog顯示內容重新渲染
 var change = ()=>{
     wannaChange = [];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
     if ($(".navbar-brand").prop("href").indexOf("login") !== -1) {
         window.open("/member/login", "_self");
         // document.querySelector('#makeSure').showModal();
 
     }else{
             // 有登入才會重新渲染
+<<<<<<< HEAD
                 document.querySelector('#cat').showModal();
                 $.ajax({
                     type:"post",
@@ -356,6 +407,97 @@ var change = ()=>{
         
                     } 
                 })
+=======
+                
+// 先檢查登入資料取得使用者名稱
+                $.ajax({
+                    type: 'get',
+                    url: '/navbar_headshot',
+                    success: (req) =>{
+                        console.log(req);
+                        dataToServer = {user_name:req.username} ;
+// 再用登入的使用者指定給dataToServer傳回後端搜尋
+                        $.ajax({
+                            type:"post",
+                            url: "/product/:product_detail/detail/product_detail",
+                            data: dataToServer,
+                            success: (e) => {
+                                $('#userproduct').html('');
+                                // console.log(e)
+                                if(e.length == 0){
+                                    alert('您並沒有可以交換的物品喔~')
+                                }else{
+                                    document.querySelector('#cat').showModal();
+                                    $.each(e,function(index,item){
+                                        $('#userproduct').append(`<div class="d-flex flex-row changedialog">
+                                        <div id="" class="wannaChangeItem${index} dialog_product">
+                                            <input type="checkbox" id="wannaChangeItem_${index}" class="dialogcheck wannaChangeItem${index}" data-id=${index}>
+                                        </div>
+                                        <div class="dialogIMG border-start wannaChangeItem${index}">
+                                            <img id="product_id_${e[index].product_id}" src="${e[index].product_image}" >
+                                        </div>
+                                        <div class="border-start wannaChangeItem${index}">
+                                        ${e[index].product_name}
+                                        </div>
+                                        <div class="border-start wannaChangeItem${index}">
+                                        ${e[index].lunch_date}
+                                        </div>
+                                    </div>`);
+                    
+                                    })
+                                }
+
+                
+                             
+                // 讓使用者一次只能勾選一個商品交換
+                                $('.dialogcheck').on('change', function() {
+                                    $('.dialogcheck').not(this).prop('checked', false);
+                                    // wannaChange = [];
+                                 });
+                
+                // 確認哪一個checkbox送出當下被勾選並且準備好資料傳輸到後台
+                                 $('.changedialog').on('change', '.dialogcheck' , function() {            
+                                    // const checked2 = $('#userproduct').find('.dialogcheck:checked');
+                                    const checked = $('#userproduct').find('.dialogcheck:checked');
+                
+                                    
+                // 判斷使用者有無勾選
+                                if ($(".dialogcheck:checked").length !== 0) {
+                                    checkboxS = true;
+                                    checked.each(function(index,item) {
+                                        const id = $(this).data('id');
+                                      //   console.log(`Checkbox with data-id=${id} is checked`);
+                // 取使用者勾選的商品的ID，讓後續可以依照物品ID繼續搜尋
+                                      var x = $('.dialogIMG')[id].querySelector('img').id.substring(11);
+                                      // console.log(x)
+                                      // console.log($('.dialogcheck')[id].checked)
+                                      if ($('.dialogcheck')[id].checked !== false) {
+                                          wannaChange[0] = x;
+                                          var testid = document.querySelector('img[id^="WCPID"]').id.substring(6);
+                                          wannaChange[1] = testid;
+                                        // console.log(testid);
+                                        //   console.log(wannaChange);
+                                      }else{
+                                          checkboxS = false;
+                                          console.log('取消了')
+                                      }
+                  
+                  
+                                  });
+                                }else{
+                // 若使用者取消勾選，把原本要送出的資料也清空
+                                    checkboxS = false;
+                                    wannaChange = [];
+                                }    
+                                  });
+                
+                
+                            } 
+                        })
+                    }
+                })
+
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
     }
     
 }

@@ -1,3 +1,7 @@
+nav {
+    position: initial !important;
+}
+
 .container {
     margin-top: 32px;
 }

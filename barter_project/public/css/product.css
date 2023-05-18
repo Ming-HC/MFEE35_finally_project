@@ -6,6 +6,10 @@
 } */
 .card{    
     /* cursor: pointer;     */
+<<<<<<< HEAD
+=======
+    cursor: auto !important;
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
     transition: all 0.6s;    
 }    
 .card:hover{    
@@ -33,5 +37,18 @@
 
 
 
+<<<<<<< HEAD
 
+=======
+a {
+    text-decoration:none;
+}
+.QAusername{
+    color:royalblue ;
+}
+
+nav{
+    position: initial !important;
+}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
 

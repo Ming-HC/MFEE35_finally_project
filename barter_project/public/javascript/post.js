@@ -45,11 +45,11 @@ $(function () {
                             </div>
                             <div class="function_div">
                                 <!-- function button ex. like reply message -->
-                                ${$(".d-none.d-md-block.button").prop('href').indexOf('login') == -1 ?
-                        user == $(".d-none.d-md-block.button").prop('href').split('member/')[1] ? '<input type="button" class="edit" value="編輯"/>' : "" : ""
+                                ${$(".d-none.d-md-block").prop('href').indexOf('login') == -1 ?
+                        user == $(".d-none.d-md-block").prop('href').split('member/')[1] ? '<input type="button" class="edit" value="編輯"/>' : "" : ""
                     }
-                                ${$(".d-none.d-md-block.button").prop('href').indexOf('login') == -1 ?
-                        user == $(".d-none.d-md-block.button").prop('href').split('member/')[1] ? '<input type="button" class="delete" value="刪除"/>' : "" : ""
+                                ${$(".d-none.d-md-block").prop('href').indexOf('login') == -1 ?
+                        user == $(".d-none.d-md-block").prop('href').split('member/')[1] ? '<input type="button" class="delete" value="刪除"/>' : "" : ""
                     }
                                 <input type="button" class="reply" value="回覆" />
                             </div>
@@ -80,7 +80,7 @@ $(function () {
 
                 })
                 $(`.floor_${reply_floor} .reply`).click(() => {
-                    if ($(".d-none.d-md-block.button").prop("href").indexOf('login') > -1) {
+                    if ($(".d-none.d-md-block").prop("href").indexOf('login') > -1) {
                         var hint = "需登入才可回覆，是否登入？"
                         if (confirm(hint) == true) {
                             location.href = "/member/login";
@@ -137,7 +137,7 @@ $(function () {
     }
     getfloor();
     $("textarea").focus(() => {
-        if ($(".d-none.d-md-block.button").prop("href").indexOf('login') > -1) {
+        if ($(".d-none.d-md-block").prop("href").indexOf('login') > -1) {
             var hint = "需登入才可回覆，是否登入？"
             if (confirm(hint) == true) {
                 $("textarea").blur();
