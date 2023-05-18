@@ -1,3 +1,7 @@
+nav {
+    position: initial !important;
+}
+
 input[value="想與我交換"] {
     color: white;
     background-color: blueviolet;

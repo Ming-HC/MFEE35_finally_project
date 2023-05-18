@@ -1,3 +1,7 @@
+nav {
+  position: initial !important;
+}
+
 .container {
   max-width: 1200px;
 }

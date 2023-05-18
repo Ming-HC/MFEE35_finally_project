@@ -1,3 +1,7 @@
+nav {
+    position: initial !important;
+}
+
 .container {
     max-width: 1200px;
 }
@@ -5,6 +9,7 @@
 body {
     overflow-y: scroll;
 }
+
 table {
     font-size: 20px;
 }

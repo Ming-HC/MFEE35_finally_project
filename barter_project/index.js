@@ -649,19 +649,54 @@ app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
 // =======================================================================================================================================
 // ===========================================================我的物品=====================================================================
 
+// app.get('/member/:user/MYproduct', function (req, res) {
+//     if (req.session.user) {
+//         var user = req.params.user;
+//         var sql = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
+//         var sql2 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
+//         var combinedSql = '(' + sql + ') UNION ALL (' + sql2 + ')';
+//         conn.query(combinedSql, [user, user], function (err, results, fields) {
+//             if (err) {
+//                 res.send('select发生错误', err);
+//             } else {
+//                 console.log(results);
+//                 res.render('MYproduct', {
+//                     user: user,
+//                     MYproduct: results,
+//                     page: "MYproduct",
+//                     member: req.session.user.account + "/personal"
+//                 });
+//             }
+//         });
+//     } else {
+//         res.send("error.404");
+//     }
+// });
 app.get('/member/:user/MYproduct', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
-        var sql = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted FROM membercenter.myproduct WHERE MYproductuser_name = ?';
-        conn.query(sql, [user], function (err, results, fields) {
-            if (err) {
-                res.send('select发生错误', err);
+        var sql1 = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
+        var sql2 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
+
+        conn.query(sql1, [user], function (err1, results1, fields1) {
+            if (err1) {
+                res.send('select发生错误', err1);
             } else {
-                res.render('MYproduct', {
-                    user: user,
-                    MYproduct: results,
-                    page: "MYproduct",
-                    member: req.session.user.account + "/personal"
+                conn.query(sql2, [user], function (err2, results2, fields2) {
+                    if (err2) {
+                        res.send('select发生错误', err2);
+                    } else {
+                        console.log(results1);
+                        console.log(results2);
+                        // var combinedResults = results1.concat(results2);
+                        res.render('MYproduct', {
+                            user: user,
+                            MYproduct: results1,
+                            product: results2,
+                            page: "MYproduct",
+                            member: req.session.user.account + "/personal"
+                        });
+                    }
                 });
             }
         });
