@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head class="HD">
+    <%- include('share/head'); %>
+</head>
+<body>
+    <div class="header">
+        <%- include('share/navbar'); %>
+    </div>
+    <header>
+        <div id="product_detail_up_return">
+            <a class="btn">&lt;&lt;主商品頁</a>
+        </div>
+        <section class="py-5 container">
+            <div class="row py-lg-2 border border-2 rounded">
+              <div class="py-3">
+                <div id="product_detail_up">
+                    <div id="" class="product_detail_up_productimage">
+                    <img class="rounded" src="/image/product/106543200_p0.jpg"> 
+                    </div>
+                    <div id="" class="align-self-center product_detail_up_text">
+                        <div id="" class="PDUT1"><span>有沒有人要買女孩!</span></div><br>
+                        <div id="" class="PDUT2">刊登時間 |<span></span></div><br>
+                        <div id="" class="PDUT3">地區 | <span></span></div>
+                        <div id="" class="product_detail_up_button">
+                            <!-- 綁定驗證是否已登入 -->
+                            <button class="btn btn-primary btn-lg" onclick="">我要交換</button>
+                        </div>
+                    </div>
+                    <div id=""  class="text-center product_detail_userimage">
+                        <img class="rounded-circle" src="/image/member/demo.png"></img>
+                        <div><span>小火柴</span></div>
+                    </div>
+                </div>
+                <%- include('share/dialog'); %>
+            </div>
+            </div>
+        </section>
+        <hr>
+    </header>
+    <main>
+        <section class="py-3 container">
+            <div id="down_list_div" class="row py-lg-2 border border-2 rounded">
+                <div class="py-3">
+                    <ul class="down_list nav nav-tabs" id="down_list" role="tablist">
+                        <li class="nav-item d-dp">
+                            <a class="nav-link active border-secondary" id="down_list_detail" data-toggle="tab" href="#" role="tab" aria-controls="detail"
+                                aria-selected="true">物品詳細資訊</a>
+                        </li>
+                        <li class="nav-item d-dp">
+                            <a class="nav-link border-secondary" id="down_list_qa" data-toggle="tab" href="#tabs1-2" role="tab" aria-controls="qa"
+                                aria-selected="false">問與答</a>
+                        </li>
+                        <li class="nav-item d-dp">
+                            <a class="nav-link border-secondary" id="down_list_wc" data-toggle="tab" href="#" role="tab" aria-controls="wc"
+                                aria-selected="false">想交換此物品的對象</a>
+                        </li>
+                    </ul>
+                    <div class="panel-container" style="">	
+
+                        <div id="tabs1-1" class="active d-show" style="">
+                        柳神，是辰東所著東方玄幻小説《完美世界》《聖墟》中的重要人物，無上仙王巨頭，風華絕代，實力通天。號稱祖祭靈，功參造化，一身戰力震古爍今，曾隻身殺入異域，九進九出，殺得異域不朽之王聞風喪膽。
+                        <br>
+                        於一個雷電交加的夜晚，攜萬道雷劫降臨石村，後成為石村的祭靈。常以一棵柳樹的形態紮根石村，偶爾顯化人身，神秘莫測，性別不明 [1]  。《聖墟》結局確認性別為女。
+                        <br>
+                        石昊對她有特殊的感情，自少年時開始，石昊便一直在追尋着柳神的腳步，希冀有朝一日可以與她並肩作戰。
+                            
+                        </div>    
+                        <div id="tabs1-2" class="d-none d-show">
+                            <div class="showQA">
+
+                            </div>
+                        <div class="Blogin d-none">
+                            &nbsp;問與答 :
+                            <form action="">
+                                <div>
+                                    <textarea name="QA" id="QA"></textarea>
+                                    <input type="button" id="QA_send" value="送出問題" class="QA_send"></input>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="Nlogin d-none">
+                            &nbsp;您必須先登入會員才能發問！
+                        </div>					
+                        </div>   
+                        <div id="tabs1-3" class="d-none d-show">
+
+                        </div>
+                        <div id="tabs1-4" class="d-show">
+                        
+                            
+    
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>    
+    </main>
+    <div class="footer text-center">
+    </div>
+</body>
+</html>
