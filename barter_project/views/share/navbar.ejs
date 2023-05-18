@@ -2,6 +2,7 @@
 <a href="member/login">會員登入</a>
 <a href="member/register">會員註冊</a> -->
 
+<<<<<<< HEAD
 <!-- 導覽列 開始 -->
 <nav
   class="navbar navbar_bottom navbar-expand-md navbar-light bg-light rounded"
@@ -61,6 +62,35 @@
         <a href="/member/<%= member %>" class="d-none d-md-block"
           ><img src="/img/login_icon.png" style="width: 30px" alt="Login"
         /></a>
+=======
+        </span>
+      </button>
+
+      <!--d-none d-lg-block 隨寬度顯示隱藏項目-->
+      <!--  -->
+      <div class="collapse navbar-collapse " id="navbarNavDropdown">
+        <ul class="navbar-nav  align-items-center">
+          <li class="nav-item">
+            <a class="nav-link   button rotate" href="/">首頁</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  button rotate" href="/product">以物易物</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  button rotate" href="/member/<%= member %>">會員中心</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  button rotate active" aria-current="page" href="/forum">討論區</a>
+          </li>
+        </ul>
+        <form class="d-flex ms-auto">
+          <!--ms-auto 左邊自動填滿-->
+          <a href="/member/<%= member %>" class="d-none d-md-block button hover-shadow"
+            ><img src="/image/navbar/login_icon.png" style="width: 30px" alt="Login"
+          /></a>
+          <!--d-none d-lg-block 隨寬度顯示隱藏項目-->
+        </form>
+>>>>>>> 228d0d705ad335d4e70e09e2a5ea0b72a1d68c49
       </div>
     </div>
   </div>

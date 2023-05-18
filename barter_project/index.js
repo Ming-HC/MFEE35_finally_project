@@ -572,7 +572,7 @@ app.post('/member/:user/password', function (req, res) {
 app.get('/member/:user/puton', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
-        var sql = 'SELECT * FROM la2.product';
+        var sql = 'SELECT * FROM membercenter.myproduct';
         conn.query(sql, function (err, results, fields) {
             if (err) {
                 res.send('select发生错误', err);
@@ -695,7 +695,7 @@ app.delete('/member/:user/MYproduct', function (req, res) {
 // ================================================================與我交換================================================================
 app.get('/member/:user/iwant', function (req, res) {
     user = req.params.user
-    sql = 'select * from membercenter.bwc where BWC_user_name = ?'
+    sql = 'select * from product_page.bwc where BWC_user_name = ?'
     conn.query(sql, [user], function (err, results, fields) {
         if (err) {
             res.send("err", err.message)
@@ -720,7 +720,7 @@ app.get('/member/:user/iwant', function (req, res) {
 })
 app.get('/member/:user/withme', function (req, res) {
     user = req.params.user
-    sql = 'select * from membercenter.bwc where WC_user_name = ?'
+    sql = 'select * from product_page.bwc where WC_user_name = ?'
     conn.query(sql, [user], function (err, results, fields) {
         if (err) {
             res.send("err")
@@ -747,13 +747,13 @@ app.get('/member/:user/withme', function (req, res) {
 app.post('/member/:user/withme', function (req, res) {
     user = req.params.user
     // console.log(req.body);
-    sql = 'INSERT INTO membercenter.record(memberid, product, id2, product2) VALUES (?,?,?,?)'
+    sql = 'INSERT INTO product_page.record(memberid, product, id2, product2) VALUES (?,?,?,?)'
     conn.query(sql, [req.body.BWC_user_name, req.body.BWC_product_name, req.body.WC_user_name, req.body.WC_product_name], function (err, results, fields) {
         if (err) {
             res.send(err.message)
             console.log('交易失敗');
         } else {
-            sql2 = 'DELETE from membercenter.bwc where id = ?'
+            sql2 = 'DELETE from product_page.bwc where id = ?'
             conn.query(sql2, [req.body.id], function (err, results, fields) {
                 if (err) {
                     res.send("err")
