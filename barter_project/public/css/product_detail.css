@@ -1,0 +1,318 @@
+/* 商品資料區 上半 */
+.product_detail_userimage{
+    flex: 1;
+    /* background-color: red; */
+    align-self: center;
+}
+.product_detail_userimage img{
+    width: 50%;
+    height: 2%;
+}
+.product_detail_userimage div{
+    font-weight: bolder;
+    font-size: 2rem;
+    margin-top: 2.5rem;
+}
+
+.product_detail_up_text{
+    /* background-color: aqua; */
+    /* font-family: ; */
+    font-size: larger;
+    flex: 2;
+    padding-left: 5%;
+    height: 80%;
+    position: relative;
+}
+
+.PDUT1{
+    font-size: 2.5rem;
+    font-weight: bolder;
+}
+.PDUT2{
+    /* font-size: 2.5rem; */
+    font-weight: 600;
+}
+.PDUT3{
+    /* font-size: 2.5rem; */
+    font-weight: 600;
+}
+
+
+.product_detail_up_button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+
+#product_detail_up{
+    display: flex;
+    height: 100%;
+    /* background-color: red; */
+}
+
+.product_detail_up_productimage{
+    flex: 1;
+    align-self: center;
+    object-fit: cover;
+}
+.product_detail_up_productimage img{
+    width: 110%;
+    height: 15rem;
+    
+}
+
+
+
+.product_detail_up_return{
+    /* background-color: red; */
+    position: absolute;
+}
+/* 商品資料區 上半 */
+
+
+
+
+/* dialog */
+.changedialog{
+    min-width: 50rem;
+    min-height: 180px;
+}
+
+/* 第二行題目 */
+.dialog_uptext{
+    /* display:flex ; */
+    font-weight: 600;
+    font-size: 1.5rem;
+    background-color: brown ;
+    text-align: center;
+    border-color: black;
+}
+.dialog_uptext:nth-child(1){
+    flex: 1;
+
+    /* background-color: brown; */
+}
+.dialog_uptext:nth-child(2){
+    flex: 3;
+    border-left: solid 2px gray !important;
+    /* margin-left: 1rem; */
+    /* background-color: brown; */
+}
+.dialog_uptext:nth-child(3){
+    flex: 5;
+    border-left: solid 2px gray !important;
+    /* margin-left: 1rem; */
+    /* background-color: brown; */
+}
+.dialog_uptext:nth-child(4){
+    flex: 2;
+    border-left: solid 2px gray !important;
+    /* margin-left: 1rem; */
+    /* background-color: brown; */
+}
+/* 第二行題目 */
+
+
+
+/* 第三行 */
+.dialogcheck{
+    transform: scale(2);
+}
+
+.changedialog{
+ border-bottom: solid 2px rgba(10 , 10, 10, 0.3);
+    border-left: solid 2px rgba(10 , 10, 10, 0.3);
+    border-right: solid 2px rgba(10 , 10, 10, 0.3);
+}
+
+
+.changedialog div{
+    /* display: flex; */
+    font-weight: 600;
+    font-size: 1.5rem;
+    /* height: 10rem; */
+    /* color: red; */
+    /* align-items: center; */
+    /* background-color: red; */
+    /* border-left: solid 2px gray; */
+    /* margin-left: 1rem; */
+    
+
+}
+
+.changedialog div:nth-child(1){
+    flex: 1;
+    /* background-color: red; */
+    text-align: center;
+    align-self: center;
+}
+.changedialog div:nth-child(2){
+    flex: 3;
+    text-align: center;
+    align-self: center;
+    border-color: rgba(10 , 10, 10, 0.3)!important;
+}
+.changedialog div:nth-child(3){
+    flex: 5;
+    align-self:center ;
+    text-align: center;
+    border-color: rgba(10 , 10, 10, 0.3)!important;
+    /* height: 6rem; */
+    /* padding-left: 0.5rem; */
+}
+.changedialog div:nth-child(4){
+    flex: 2;
+    align-self: center;
+    /* padding-left: 0.5rem; */
+    border-color: rgba(10 , 10, 10, 0.3)!important;
+    text-align: center;
+}
+
+
+div.dialogIMG img{
+    width: 8rem;
+    height: 10rem;
+    /* width: 100%;
+    height: 100%; */
+}
+
+
+/* 第三行 */
+
+
+
+
+
+
+
+
+
+#comfirmchange{
+    position: absolute;
+    right: 0;
+}
+#cancelchange{
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: larger;
+    /* color: black; */
+}
+/* dialog */
+
+
+
+
+/*尚未登入 dialog */
+
+.notLogindialog{
+    min-width: 50rem;
+    min-height: 180px;
+    font-size: 2rem;
+    color: orange;
+    
+}
+
+
+
+
+/*尚未登入 dialog */
+
+
+
+
+
+/* 商品資料區 下半 */
+
+.down_list li{
+    font-size: 1.1rem;
+
+}
+.down_list li .active{
+    background-color: rgb(123, 164, 226) !important;
+    color: white !important;
+}
+
+.panel-container{
+    /* position: relative; */
+    /* background-color: lightcoral; */
+    /* border: solid 1px; */
+    /* border-color: rgb(123, 164, 226); */
+    /* border-top: 0px; */
+    /* padding: 0px 12px 0px; */
+    margin-top: 1%;
+    border-radius: 2%;
+    /* height: 90%; */
+    font-size: 1.1rem;
+    
+}
+/* 物品詳細資訊 待調整 */
+#down_list_div{
+    /* position: relative; */
+    font-weight: 600;
+    min-height: 20rem;
+}
+
+
+
+
+.d-none{
+    display: none;
+}
+
+#tabs1-3{
+    font-size: small;
+    
+    
+}
+.WCPL{
+    display: flex;
+    padding: 0.5rem;
+    border-color: rgba(10 , 10, 10, 0.3 )!important;
+}
+.BWC_IMG{
+    flex: 0.5;
+    align-self: center;
+    object-fit: cover;
+    width: 80%;
+}
+.BWC_IMG img{
+    width: 100%;
+    height: 10rem;
+}
+.BWC_content{
+    font-size: 1.2rem;
+    flex: 2;
+    height: 80%;
+    position: relative;
+    /* background-color: red; */
+
+}
+
+/* .BWC_content_inside{
+   
+    
+} */
+/* 問題發送訊框 */
+#tabs1-2{
+    padding: 0.3rem;
+}
+textarea{
+    width: 90%;
+    height: 7rem;
+}
+/* 問題發送按鈕 */
+.QA_send{
+    position: relative;
+    bottom: 0.5rem;
+}
+
+/* footer */
+.page{
+    /* background-color: red; */
+    margin-top: 30px;
+    margin-bottom: 50px;
+    
+}
+/* footer */

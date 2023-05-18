@@ -32,7 +32,7 @@ app.listen(80, function () {
 // navbar_headshot
 app.get('/navbar_headshot', function (req, res) {
     if (req.session.user) {
-        var sql = `SELECT * FROM member.info WHERE username = ?`;
+        var sql = `SELECT * FROM membercenter.personal WHERE username = ?`;
         conn.query(sql, [req.session.user.account], function (err, results, fields) {
             if (err) {
                 console.log('select headshot error:', err);
@@ -54,7 +54,15 @@ app.use('/forum', forumRouter);
 // =======================================================================================================================================
 // ==================================================================首頁==================================================================
 app.get('/', (req, res) => {
-    res.render('index');
+    if (req.session.user) {
+        res.render('index', {
+            member: req.session.user.account + "/personal"
+        });
+    } else {
+        res.render('index', {
+            member: 'login'
+        });
+    }
 })
 app.get('/api/data', (req, res) => {
     //使用 app.get() 方法註冊一個 GET 路由，用於處理客戶端發送到 /api/data 路徑的 GET 請求
@@ -100,7 +108,7 @@ app.get('/product(/:page)?', function (req, res) {
             // 傳入product.ejs 供head.ejs使用的變數
             page: 'product',
             link: 1,
-            member: req.session.user.account,
+            member: req.session.user.account + "/personal",
         })
     } else {
         res.render('product', {
@@ -212,7 +220,7 @@ app.get('/product/:product_detail/detail', function (req, res) {
             // 傳入product.ejs 供head.ejs使用的變數
             page: 'product_detail',
             link: 1,
-            member: req.session.user.account,
+            member: req.session.user.account + "/personal",
             proid: req.params.product_detail
         })
     } else {
@@ -253,7 +261,7 @@ app.post('/product/:product_detail/detail/product_detail', function (req, res) {
 
 // 我要交換送出後
 // 要將送來的兩個商品ID分別從商品表搜尋出來，並分別輸入到BWC表中的BWC跟WC欄位選項
-app.post('/member/wannaChange', function (req, res) {
+app.post('/product/member/wannaChange', function (req, res) {
     var insertid = req.body.wannaChange[0];
     var updateid = req.body.wannaChange[1];
     var sqlinsert = `INSERT INTO product_page.bwc (BWC_user_name, BWC_product_id, BWC_product_name, BWC_product_image, BWC_city, BWC_lunch_date, BWC_method ) SELECT user_name , product_id , product_name , product_image , city , lunch_date , method FROM product_page.product WHERE product_id = ${insertid};`;
@@ -318,7 +326,7 @@ app.get('/product/:product_detail/detail/QA', function (req, res) {
 
 
 // 約定網址顯示訊息內容
-app.get('/member/QA', function (req, res) {
+app.get('/product/member/QA', function (req, res) {
     var sql = "SELECT `id`, `product_id`, `product_name`, `member_id`, `username`, `content`, `reply`,DATE_FORMAT(Question_date, '%Y/%m/%d %H:%i')Question_date FROM product_page.qa WHERE product_id = ?;"
     var data = req.query.product_id;
     conn.query(sql, data, function (err, results, fields) {
@@ -375,7 +383,7 @@ app.get('/member/:user/personal', function (req, res) {
                 res.render('personal', {
                     personal: results,
                     page: "personal",
-                    member: req.session.user.account
+                    member: req.session.user.account + "/personal"
                 });
             }
         });
@@ -517,7 +525,7 @@ app.get('/member/:user/password', function (req, res) {
                         user: user,
                         personal: results,
                         page: "password",
-                        member: req.session.user.account
+                        member: req.session.user.account + "/personal"
                     })
                 }
             });
@@ -574,7 +582,7 @@ app.get('/member/:user/puton', function (req, res) {
                     user: user,
                     puton: results,
                     page: "puton",
-                    member: req.session.user.account
+                    member: req.session.user.account + "/personal"
                 });
             }
         });
@@ -653,7 +661,7 @@ app.get('/member/:user/MYproduct', function (req, res) {
                     user: user,
                     MYproduct: results,
                     page: "MYproduct",
-                    member: req.session.user.account
+                    member: req.session.user.account + "/personal"
                 });
             }
         });
@@ -697,13 +705,13 @@ app.get('/member/:user/iwant', function (req, res) {
                 res.render('iwant', {
                     iwant: "nothing",
                     page: "iwant",
-                    member: req.session.user.account
+                    member: req.session.user.account + "/personal"
                 })
             } else {
                 res.render('iwant', {
                     iwant: results,
                     page: "iwant",
-                    member: req.session.user.account
+                    member: req.session.user.account + "/personal"
                     // data
                 })
             }
@@ -722,13 +730,13 @@ app.get('/member/:user/withme', function (req, res) {
                 res.render('withme', {
                     withme: "nothing",
                     page: "withme",
-                    member: req.session.user.account
+                    member: req.session.user.account + "/personal"
                 })
             } else {
                 res.render('withme', {
                     withme: results,
                     page: "withme",
-                    member: req.session.user.account,
+                    member: req.session.user.account + "/personal",
                     user: user
                     // data
                 })
@@ -775,7 +783,7 @@ app.get('/member/:user/record', function (req, res) {
                 res.render('record', { 
                     record: results,
                     page: "record",
-                    member: req.session.user.account 
+                    member: req.session.user.account + "/personal" 
                 });
             }
         })
@@ -799,7 +807,7 @@ app.get('/member/:url(login|register)?', function (req, res) {
     if (req.session.user) {
         res.render('login_register', {
             page: 'login_register',
-            member: req.session.user.account,
+            member: req.session.user.account + "/personal",
             url: 'logined'
         })
     } else {
