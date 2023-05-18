@@ -28,3 +28,17 @@ function deldata(MYproductid) {
         // console.log(product_id)
     }
 }
+// function pushdata(MYproductid) {
+//     if (confirm("是否上架")) {
+//         $.ajax({
+//             type: 'get',
+//             url: 'MYproduct',
+//             data: { MYproductid:MYproductid },
+//             success: (req) => {
+//                 console.log(req);
+//             }
+//         })
+//     } else {
+//         // console.log(product_id)
+//     }
+// }

@@ -346,6 +346,7 @@ app.get('/product/member/QA', function (req, res) {
 // 會員中心
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
+const { log } = require('console');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
@@ -648,7 +649,6 @@ app.get('/member/:user/MYproduct', function (req, res) {
             if (err) {
                 res.send('select发生错误', err);
             } else {
-                // console.log(results);
                 res.render('MYproduct', {
                     user: user,
                     MYproduct: results,
@@ -661,6 +661,54 @@ app.get('/member/:user/MYproduct', function (req, res) {
         res.send("error.404");
     }
 });
+
+// app.get('/member/:user/MYproduct', function (req, res) {
+//     if (req.session.user) {
+//         var user = req.params.user;
+//         var sql = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted FROM product_page.product WHERE user_name = ?';
+//         conn.query(sql, [user], function (err, results, fields) {
+//             if (err) {
+//                 res.send('select发生错误', err);
+//             } else {
+//                 res.render('MYproduct', {
+//                     user: user,
+//                     product: results,
+//                     page: "MYproduct",
+//                     member: req.session.user.account + "/personal"
+//                 });
+//             }
+//         });
+//     } else {
+//         res.send("error.404");
+//     }
+// });
+
+
+
+app.post('/member/:user/MYproduct', function (req, res) {
+    var user = req.params.user;
+    // console.log(req.body);
+    var sql = "insert into product_page.product(product_name, product_image, product_detail, user_name, city) values (?,?,?,?,?)";
+    conn.query(sql, [req.body.MYproductname, req.body.MYproductimage, req.body.MYproductdetail, user, req.body.MYproductcity], function (err, results, fields) {
+        if (err) {
+            res.send('上架商品發生錯誤', err.message)
+        }
+        else {
+            console.log("成功");
+            var sql2 = "DELETE FROM membercenter.myproduct WHERE MYproductid = ?;";
+            conn.query(sql2, [req.body.MYproductid], function (err, results, fields) {
+                if (err) {
+                    res.send('上架商品發生錯誤')
+                }else {
+                    res.send("<script>alert('上架成功！'); location.reload();window.location.href='/member/" + user + "/MYproduct'</script>");
+                    // console.log("123");
+                }
+            })
+        }
+    });
+
+})
+
 app.delete('/member/:user/MYproduct', function (req, res) {
     var user = req.params.user;
     console.log(req.body);
@@ -772,10 +820,10 @@ app.get('/member/:user/record', function (req, res) {
             if (err) {
                 res.send('select發生錯誤', err);
             } else {
-                res.render('record', { 
+                res.render('record', {
                     record: results,
                     page: "record",
-                    member: req.session.user.account + "/personal" 
+                    member: req.session.user.account + "/personal"
                 });
             }
         })
