@@ -675,29 +675,62 @@ app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
 app.get('/member/:user/MYproduct', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
-        var sql1 = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
-        var sql2 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
-
+        var sql1 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
+        var sql2 = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
         conn.query(sql1, [user], function (err1, results1, fields1) {
             if (err1) {
                 res.send('select发生错误', err1);
             } else {
-                conn.query(sql2, [user], function (err2, results2, fields2) {
-                    if (err2) {
-                        res.send('select发生错误', err2);
-                    } else {
-                        console.log(results1);
-                        console.log(results2);
-                        // var combinedResults = results1.concat(results2);
-                        res.render('MYproduct', {
-                            user: user,
-                            MYproduct: results1,
-                            product: results2,
-                            page: "MYproduct",
-                            member: req.session.user.account + "/personal"
+                // console.log(results1);
+                switch (results1.length) {
+                    case 0:
+                        conn.query(sql2, [user], function (err2, results2, fields2) {
+                            if (results2.length == 0) {
+                                // console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: "nothing",
+                                    MYproduct: "nothing",
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            } else {
+                                // console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: "nothing",
+                                    MYproduct: results2,
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            }
                         });
-                    }
-                });
+                        break;
+
+                    default:
+                        conn.query(sql2, [user], function (err2, results2, fields2) {
+                            if (results2.length == 0) {
+                                console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: results1,
+                                    MYproduct: "nothing",
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            } else {
+                                // console.log(results2);
+                                res.render('MYproduct', {
+                                    user: user,
+                                    product: results1,
+                                    MYproduct: results2,
+                                    page: "MYproduct",
+                                    member: req.session.user.account + "/personal"
+                                });
+                            }
+                        });
+                        break;
+                }
             }
         });
     } else {
@@ -742,7 +775,7 @@ app.post('/member/:user/MYproduct', function (req, res) {
             conn.query(sql2, [req.body.MYproductid], function (err, results, fields) {
                 if (err) {
                     res.send('上架商品發生錯誤')
-                }else {
+                } else {
                     res.send("<script>alert('上架成功！'); location.reload();window.location.href='/member/" + user + "/MYproduct'</script>");
                     // console.log("123");
                 }

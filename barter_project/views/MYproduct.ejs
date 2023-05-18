@@ -38,90 +38,98 @@
           <div class="tab-content" id="myTabContent">
 
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <% for(var i=0; i<MYproduct.length; i++) {%>
-                <div class="row">
-                  <div class="col-3">
-                    <p class="mb-3 mt-3" width="100%">
-                      <img src="<%= product[i].MYproductimage%>" width="100%" height="150"
-                        style="object-fit:contain; background-color: rgba(207, 199, 199, 0.959)">
-                    </p>
-                  </div>
-                  <div class="col-6">
-                    <div class="mt-3 h3">
-                      <%= product[i].product_name%>
+              <% if(product=="nothing" ){%>
+                <div style="font-size: 100px;opacity: 0.3;">目前並無商品</div>
+                <%}else{%>
+                  <% for(var i=0; i<MYproduct.length; i++) {%>
+                    <div class="row">
+                      <div class="col-3">
+                        <p class="mb-3 mt-3" width="100%">
+                          <img src="<%= product[i].product_image%>" width="100%" height="150"
+                            style="object-fit:contain; background-color: rgba(207, 199, 199, 0.959)">
+                        </p>
+                      </div>
+                      <div class="col-6">
+                        <div class="mt-3 h3">
+                          <%= product[i].product_name%>
+                        </div>
+                        <div>
+                          <%= product[i].product_detail%>
+                        </div>
+                        <div>
+                          地點：
+                          <%= product[i].city%>
+                        </div>
+                        <div>
+                          上傳時間：
+                          <%= product[i].lunch_date_formatted %>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <%= product[i].product_detail%>
-                    </div>
-                    <div>
-                      地點：
-                      <%= product[i].city%>
-                    </div>
-                    <div>
-                      上傳時間：
-                      <%= product[i].lunch_date_formatted %>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <%}%>
+                    <hr>
+                    <%}%>
+                      <%}%>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div class="d-flex justify-content-end">
                 <button class="mt-3 btn btn-secondary mb-1" id="plus" onclick="apple()">上傳</button>
               </div>
               <hr>
-              <% for(var i=0; i<MYproduct.length; i++) {%>
-                <div class="row">
-                  <div class="col-3">
-                    <p class="mb-3 mt-3" width="100%">
-                      <img src="<%= MYproduct[i].MYproductimage%>" width="100%" height="150"
-                        style="object-fit:contain; background-color: rgba(207, 199, 199, 0.959)">
-                    </p>
-                  </div>
-                  <div class="col-6">
-                    <div class="mt-3 h3">
-                      <%= MYproduct[i].MYproductname%>
-                    </div>
-                    <div>
-                      <%= MYproduct[i].MYproductdetail%>
-                    </div>
-                    <div>
-                      地點：
-                      <%= MYproduct[i].MYproductcity%>
-                    </div>
-                    <div>
-                      上傳時間：
-                      <%= MYproduct[i].lunch_date_formatted %>
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <form action="/member/<%= user %>/MYproduct" method="post">
-                      <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
-                      <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">
-                      <input type="hidden" name="MYproductdetail" value="<%= MYproduct[i].MYproductdetail%>">
-                      <input type="hidden" name="MYproductcity" value="<%= MYproduct[i].MYproductcity%>">
-                      <input type="hidden" name="MYproductid" value="<%= MYproduct[i].MYproductid%>">
-                      <input type="submit" value="上架" class="btn-sm btn btn-secondary mt-3">
-                    </form>
-                    <!-- <button class="btn-sm btn btn-secondary mt-3" onclick="pushdata(<%= MYproduct[i].MYproductid %>)">
+              <% if(MYproduct=="nothing" ){%>
+                <div style="font-size: 100px;opacity: 0.3;">目前並無商品</div>
+                <%}else{%>
+                  <% for(var i=0; i<MYproduct.length; i++) {%>
+                    <div class="row">
+                      <div class="col-3">
+                        <p class="mb-3 mt-3" width="100%">
+                          <img src="<%= MYproduct[i].MYproductimage%>" width="100%" height="150"
+                            style="object-fit:contain; background-color: rgba(207, 199, 199, 0.959)">
+                        </p>
+                      </div>
+                      <div class="col-6">
+                        <div class="mt-3 h3">
+                          <%= MYproduct[i].MYproductname%>
+                        </div>
+                        <div>
+                          <%= MYproduct[i].MYproductdetail%>
+                        </div>
+                        <div>
+                          地點：
+                          <%= MYproduct[i].MYproductcity%>
+                        </div>
+                        <div>
+                          上傳時間：
+                          <%= MYproduct[i].lunch_date_formatted %>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <form action="/member/<%= user %>/MYproduct" method="post">
+                          <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
+                          <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">
+                          <input type="hidden" name="MYproductdetail" value="<%= MYproduct[i].MYproductdetail%>">
+                          <input type="hidden" name="MYproductcity" value="<%= MYproduct[i].MYproductcity%>">
+                          <input type="hidden" name="MYproductid" value="<%= MYproduct[i].MYproductid%>">
+                          <input type="submit" value="上架" class="btn-sm btn btn-secondary mt-3">
+                        </form>
+                        <!-- <button class="btn-sm btn btn-secondary mt-3" onclick="pushdata(<%= MYproduct[i].MYproductid %>)">
                       上架
                     </button> -->
-                    <form action="/member/<%= user %>/MYproduct">
-                      <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
-                      <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">
-                      <input type="hidden" name="MYproductdetail" value="<%= MYproduct[i].MYproductdetail%>">
-                      <input type="hidden" name="MYproductcity" value="<%= MYproduct[i].MYproductcity%>">
-                      <input type="hidden" name="MYproductid" value="<%= MYproduct[i].MYproductid%>">
-                      <input type="submit" value="修改" class="btn-sm btn btn-secondary mt-3">
-                    </form>
-                    <button class="btn-sm btn btn-danger mt-3" onclick="deldata(<%= MYproduct[i].MYproductid %>)">
-                      刪除
-                    </button>
-                  </div>
-                </div>
-                <hr>
-                <%}%>
+                        <form action="/member/<%= user %>/MYproduct">
+                          <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
+                          <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">
+                          <input type="hidden" name="MYproductdetail" value="<%= MYproduct[i].MYproductdetail%>">
+                          <input type="hidden" name="MYproductcity" value="<%= MYproduct[i].MYproductcity%>">
+                          <input type="hidden" name="MYproductid" value="<%= MYproduct[i].MYproductid%>">
+                          <input type="submit" value="修改" class="btn-sm btn btn-secondary mt-3">
+                        </form>
+                        <button class="btn-sm btn btn-danger mt-3" onclick="deldata(<%= MYproduct[i].MYproductid %>)">
+                          刪除
+                        </button>
+                      </div>
+                    </div>
+                    <hr>
+                    <%}%>
+                      <%}%>
             </div>
           </div>
         </div>
