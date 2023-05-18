@@ -307,7 +307,7 @@ router.post('/newpost/:something', express.urlencoded(), post_upload.any('imageu
                             foreign key (class_name) references class(class_name)
                             );
                         `;
-                            var select_headshot_sql = `SELECT * FROM member.info WHERE username = ?;`;
+                            var select_headshot_sql = `SELECT * FROM membercenter.personal WHERE username = ?;`;
                             conn.query(create_post_sql + select_headshot_sql, [req.session.user.account], function (err, results, fields) {
                                 if (err) {
                                     console.log('select error', err);
@@ -370,12 +370,11 @@ router.get('/post/:id/getdata', function (req, res) {
                     }
                 }
             }
-
             var selecttarget = [];
             for (let i = 0; i < results.length; i++) {
-                selecttarget.push(results[i].user)
+                selecttarget.push(results[i].user);
             }
-            var select_member_headshot_sql = `SELECT username, headshot FROM member.info WHERE username in (?);`;
+            var select_member_headshot_sql = `SELECT username, headshot FROM membercenter.personal WHERE username in (?);`;
             conn.query(select_member_headshot_sql, [selecttarget], (err, results_headshot, fields) => {
                 if (err) {
                     console.log("select member headshot err:", err);

@@ -1,6 +1,9 @@
 body {
     padding: 0;
 }
+nav {
+    position: initial !important;
+}
 .container {
     margin-top: 30px;
     width: 1000px;

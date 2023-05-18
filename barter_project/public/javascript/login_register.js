@@ -20,9 +20,9 @@ $(function () {
                     <form class="row">
                         <div class="input_info">
                         <script src="https://accounts.google.com/gsi/client" async defer></script>
-                        <div id="g_id_onload" data-client_id="579958787486-c73jlvvk6p4oja02bvbllvelq59alkip.apps.googleusercontent.com"
-                            data-callback="onSignIn2"></div>
-                        <div class="g_id_signin" data-type="standard"></div>
+                            <div id="g_id_onload" data-client_id="579958787486-c73jlvvk6p4oja02bvbllvelq59alkip.apps.googleusercontent.com"
+                                data-callback="onSignIn2"></div>
+                            <div class="g_id_signin" data-type="standard"></div>
                             <div class="col-12">
                                 <label for="uname" class="form-label"><b>使用者名稱：</b></label>
                                 <input type="text" placeholder="Enter Username" id="uname" class="form-control" required>
@@ -200,16 +200,16 @@ $(function () {
                                         if (req.logined_times < 1) {
                                             setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                         } else {
-                                            setTimeout(() => { window.location.href = `/member/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { window.location.href = document.referrer; }, 1000);
                                         }
                                     } else {
                                         if (req.logined_times < 1) {
                                             setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                         } else {
                                             if (document.referrer.indexOf('login') == -1) {
-                                                setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
-                                            } else {
                                                 setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                            } else {
+                                                setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                             }
                                         }
                                     }
