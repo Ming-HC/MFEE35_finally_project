@@ -79,6 +79,9 @@ a {
 th:not(:last-child) {
     border-right: 1px solid lightgray;
 } */
+
+
+/* 2023/05/18 東郁註解 */
 /* img {
     height: 50px;
     width: 50px;
