@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('share/head'); %>
+</head>
+<body>
+    <div class="header">
+      <%- include('share/navbar'); %>
+    </div>
+    <!-- 地區和商品搜尋 -->
+    <section class="py-5 text-center container">
+      
+      <div class="row py-lg-2">
+        <!-- <form action="/product" method="get">      -->
+        <div id="testCRUD" class="col-md-8 mx-auto py-5">
+          <h1 class="fw-light">商品名搜尋</h1>
+          <!-- 把INPUT跟BUTTON同一行 -->
+          <div class="input-group">
+            <input type="text" id="productInput" name="product_name" class="form-control" placeholder="請輸入欲搜尋之商品">
+            <button id="productSearch" type="submit" class="btn btn-outline-success">搜尋</button>
+          </div>
+          <span></span>
+          <!-- 把INPUT跟BUTTON同一行 -->
+        </div>    
+        <!-- </form> -->
+
+        
+        <form action="/" method="PSOT">
+
+
+        <div id="testCRUD" class="col-md-7 mx-auto">
+          <h1 class="fw-light">地區搜尋</h1>
+          <!-- 台灣分區 -->
+          <div id="CitySelect" class="d-flex justify-content-center mt-3">
+            <button id="A0" type="button" class="btn btn-outline-success me-5 CitySelect" value="AllTE" data-selected="false" data-count="0">全台</button>
+            <button id="A1" type="button" class="btn btn-outline-success me-5 CitySelect" value="NorthTW" data-selected="false" data-count="1">北區</button>
+            <button id="A2" type="button" class="btn btn-outline-success me-5 CitySelect" value="MidTW" data-selected="false" data-count="2">中區</button>
+            <button id="A3" type="button" class="btn btn-outline-success me-5 CitySelect" value="SouthTW" data-selected="false" data-count="3">南區</button>
+            <button id="A4" type="button" class="btn btn-outline-success me-5 CitySelect" value="EastTW" data-selected="false" data-count="4">東區</button>
+            <button id="A5" type="button" class="btn btn-outline-success me-5 CitySelect" value="OutTW" data-selected="false" data-count="5">外島</button>
+          </div>
+          <!-- 台灣分區 -->
+          <!-- 預計產生胎灣各區內縣市 -->
+          <!-- 北區 -->
+          <div id="NorthTW" class="mt-5 cityBTN CityNone">
+            <input id="台北市" type="button" class="btn btn-outline-success me-5 mt-2" value="台北市" data-selected="false" data-count="1">
+            <input id="新北市" type="button" class="btn btn-outline-success me-5 mt-2" value="新北市" data-selected="false" data-count="2"></input>
+            <input id="基隆市" type="button" class="btn btn-outline-success me-5 mt-2" value="基隆市" data-selected="false" data-count="3"></input>
+            <input id="桃園市" type="button" class="btn btn-outline-success me-5 mt-2" value="桃園市" data-selected="false" data-count="4"></input>
+            <input id="新竹縣" type="button" class="btn btn-outline-success me-5 mt-2" value="新竹縣" data-selected="false" data-count="5"></input>
+            <input id="新竹市" type="button" class="btn btn-outline-success me-5 mt-2" value="新竹市" data-selected="false" data-count="6"></input>
+            <input id="宜蘭縣" type="button" class="btn btn-outline-success me-5 mt-2" value="宜蘭縣" data-selected="false" data-count="7"></input>
+            <input id="宜蘭市" type="button" class="btn btn-outline-success me-5 mt-2" value="宜蘭市" data-selected="false" data-count="8"></input>           
+          </div>
+          <!-- 北區 -->
+          <!-- 中區 -->
+          <div id="MidTW" class="mt-5 cityBTN CityNone">
+            <input id="台中市" type="button" class="btn btn-outline-success me-5 mt-2" value="台中市" data-selected="false" data-count="1">
+            <input id="苗栗縣" type="button" class="btn btn-outline-success me-5 mt-2" value="苗栗縣" data-selected="false" data-count="2"></input>
+            <input id="彰化縣" type="button" class="btn btn-outline-success me-5 mt-2" value="彰化縣" data-selected="false" data-count="3"></input>
+            <input id="南投縣" type="button" class="btn btn-outline-success me-5 mt-2" value="南投縣" data-selected="false" data-count="4"></input>
+            <input id="雲林縣" type="button" class="btn btn-outline-success me-5 mt-2" value="雲林縣" data-selected="false" data-count="5"></input>
+          </div>
+          <!-- 中區 -->
+          <!-- 南區 -->
+          <div id="SouthTW" class="mt-5 cityBTN CityNone">
+            <input id="嘉義縣" type="button" class="btn btn-outline-success me-5 mt-2" value="嘉義縣" data-selected="false" data-count="1">
+            <input id="嘉義市" type="button" class="btn btn-outline-success me-5 mt-2" value="嘉義市" data-selected="false" data-count="2"></input>
+            <input id="台南市" type="button" class="btn btn-outline-success me-5 mt-2" value="台南市" data-selected="false" data-count="3"></input>
+            <input id="高雄市" type="button" class="btn btn-outline-success me-5 mt-2" value="高雄市" data-selected="false" data-count="4"></input>
+            <input id="屏東縣" type="button" class="btn btn-outline-success me-5 mt-2" value="屏東縣" data-selected="false" data-count="5"></input>
+            <input id="澎湖縣" type="button" class="btn btn-outline-success me-5 mt-2" value="澎湖縣" data-selected="false" data-count="6"></input>
+          </div>
+          <!-- 南區 -->
+          <!-- 東區 -->
+          <div id="EastTW" class="mt-5 cityBTN CityNone">
+            <input id="花蓮縣" type="button" class="btn btn-outline-success me-5 mt-2" value="花蓮縣" data-selected="false" data-count="1">
+            <input id="台東縣" type="button" class="btn btn-outline-success me-5 mt-2" value="台東縣" data-selected="false" data-count="2"></input>
+          </div>
+          <!-- 東區 -->
+          <!-- 外島 -->
+          <div id="OutTW" class="mt-5 cityBTN CityNone">
+            <input id="金門縣" type="button" class="btn btn-outline-success me-5 mt-2" value="金門縣" data-selected="false" data-count="1">
+          </div>
+          <!-- 外島 -->
+          <!-- 預計產生胎灣各區內縣市 -->
+        </div>
+        </form>
+        </div>
+      </div>
+      <hr>
+      <button id="CitySearch" type="button" class="btn btn-outline-success">搜尋</button>
+
+    </section>
+
+    <!-- 商品圖片上架 -->
+    <main>
+      <div class="album py-5 bg-body-tertiary">
+        <div class="container">   
+          <div id="" class="product_main row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+          </div>
+        </div>
+      </div>
+    
+    </main>
+    
+    <div class="footer text-center">
+        <%- include('share/footer'); %>
+    </div>
+</body>
+
+</html>
