@@ -685,6 +685,7 @@ app.get('/member/:user/MYproduct', function (req, res) {
                 switch (results1.length) {
                     case 0:
                         conn.query(sql2, [user], function (err2, results2, fields2) {
+                            if (err2) throw err2;
                             if (results2.length == 0) {
                                 // console.log(results2);
                                 res.render('MYproduct', {
@@ -709,6 +710,7 @@ app.get('/member/:user/MYproduct', function (req, res) {
 
                     default:
                         conn.query(sql2, [user], function (err2, results2, fields2) {
+                            if (err2) throw err2;
                             if (results2.length == 0) {
                                 console.log(results2);
                                 res.render('MYproduct', {
