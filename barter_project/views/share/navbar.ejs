@@ -1,51 +1,71 @@
 <!-- <a href="member/login">會員icon</a>
 <a href="member/login">會員登入</a>
 <a href="member/register">會員註冊</a> -->
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container-fluid">
-       <!--限制寬度--><!-- container 預設justify-content: space-between;-->
-       <a href="/member/<%= member %>" class="navbar-brand d-md-none button hover-shadow"
-       ><img src="/image/navbar/login_icon.png" style="width: 30px" alt="Login"
-     /></a>
-     <!-- lg以上隱藏項目 -->
-      <a class="navbar-brand" href="/">
-        <img src="/image/navbar/Logo.png" alt="" width="80" />
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavDropdown">
-        <span class="navbar-toggler-icon"><!--漢堡菜單圖標-->
-
-        </span>
-      </button>
-
-      <!--d-none d-lg-block 隨寬度顯示隱藏項目-->
-      <!--  -->
-      <div class="collapse navbar-collapse " id="navbarNavDropdown">
-        <ul class="navbar-nav  align-items-center">
-          <li class="nav-item">
-            <a class="nav-link   button rotate" href="/">首頁</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link  button rotate" href="/product">以物易物</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link  button rotate" href="/member/<%= member %>">會員中心</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link  button rotate active" aria-current="page" href="/forum">討論區</a>
-          </li>
-        </ul>
-        <form class="d-flex ms-auto">
-          <!--ms-auto 左邊自動填滿-->
-          <a href="/member/<%= member %>" class="d-none d-md-block button hover-shadow"
-            ><img src="/image/navbar/login_icon.png" style="width: 30px" alt="Login"
-          /></a>
-          <!--d-none d-lg-block 隨寬度顯示隱藏項目-->
-        </form>
+<head>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="/css/index.css" />
+</head>
+<!-- 導覽列 開始 -->
+<nav
+  class="navbar navbar_bottom navbar-expand-md navbar-light bg-light rounded"
+  style="position: fixed;"
+>
+  <!-- navbar-expand-md 導覽列會自動擴展（展開）/折疊（收起）內容；-->
+  <!-- navbar_bottom 導覽列底部線條 -->
+  <div class="container-fluid justify-content-between">
+    <!-- 登入頭像(平板以下) -->
+    <a href="/member/<%= member %>" class="navbar-brand d-md-none ms-2"
+      ><img src="/img/login_icon.png" style="width: 30px" alt="Login"
+    /></a>
+    <!--d-md-none md以上隱藏-->
+    <!--navbar-brand 用於定義導覽列（navbar）中的品牌區塊 -->
+    <!-- LOGO -->
+    <a class="navbar-brand ms-4" href="/">
+      <img src="/img/Logo.png" alt="" width="80" />
+    </a>
+    <!-- 漢堡條 -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+    >
+      <div onclick="myFunction(this)">
+        <!-- navbar-toggler 用於導覽列折疊的按鈕樣式 -->
+        <!-- data-bs-toggle 用於指定按鈕的行為。data-bs-toggle="collapse" 表示點擊按鈕時觸發折疊效果 -->
+        <!-- data-bs-target 用於指定要折疊的目標元素。data-bs-target="#navbarNavDropdown" -->
+        <!-- this 參數為該div元素(父層)本身（表示為"this"）-->
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
       </div>
-      <!--  -->
+    </button>
+    <!-- 導覽列(折疊) -->
+    <!--d-none d-lg-block 隨寬度顯示隱藏項目-->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <!-- collapse 較大的屏幕上顯示完整的導航欄，而在較小的屏幕上，將導航欄收合為一個可以點擊展開的菜單。 -->
+      <!-- navbar-collapse 當螢幕小於某個斷點（預設是768px）時，會將導航欄的內容收合起來-->
+      <ul class="navbar-nav align-items-center">
+        <!-- navbar-nav 表示導覽列的項目清單(無序列表) -->
+        <li class="nav-item">
+          <!-- nav-item 表示導覽列中的一個項目 -->
+          <a class="nav-link" href="/product">以物易物</a>
+          <!-- nav-link 表示導覽列項目的連結樣式 -->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/member/<%= member %>">會員中心</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/forum">討論區</a>
+        </li>
+      </ul>
+      <!-- 登入頭像(平板以上) -->
+      <div class="ms-auto me-4">
+        <a href="/member/<%= member %>" class="d-none d-md-block"
+          ><img src="/img/login_icon.png" style="width: 30px" alt="Login"
+        /></a>
+      </div>
     </div>
-  </nav>
+  </div>
+</nav>
+<!-- 導覽列 end -->

@@ -54,7 +54,15 @@ app.use('/forum', forumRouter);
 // =======================================================================================================================================
 // ==================================================================首頁==================================================================
 app.get('/', (req, res) => {
-    res.render('index');
+    if (req.session.user) {
+        res.render('index', {
+            member: req.session.user.account + "/personal"
+        });
+    } else {
+        res.render('index', {
+            member: 'login'
+        });
+    }
 })
 app.get('/api/data', (req, res) => {
     //使用 app.get() 方法註冊一個 GET 路由，用於處理客戶端發送到 /api/data 路徑的 GET 請求

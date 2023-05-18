@@ -1,755 +1,867 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>以物易物</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="發現你喜歡的" />
+    <meta name="author" content="東東" />
+    <base target="_self" />
+    <!-- 標題欄： -->
+    <link rel="icon" href="/img/Logo.png" type="image/x-icon" />
+    <!-- 收藏夾： -->
+    <link rel="shortcut icon" href="/img/Logo.png" type="image/x-icon" />
+    <!-- CSS only -->
+    <link rel="stylesheet" href="/css/index.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <!-- vue js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+ 
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>以物易物</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="發現你喜歡的" />
-  <meta name="author" content="東東" />
-  <base target="_self" />
-  <!-- 標題欄： -->
-  <link rel="icon" href="/img/Logo.png" type="image/x-icon" />
-  <!-- 收藏夾： -->
-  <link rel="shortcut icon" href="/img/Logo.png" type="image/x-icon" />
-  <!-- CSS only -->
-  <link rel="stylesheet" href="./css/style.css" />
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/6en8XCp+HHAAK5GSLf2xlYtvJ8U2Q4U+9cuEnJoa3" crossorigin="anonymous" />
-  <link rel="stylesheet" href="./css/style.css" />
-  <!-- AOS css -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-
-<body>
-  <div id="app" class="container-fluid g-3">
-    <!-- 導覽列 開始 -->
-    <nav class="navbar navbar_bottom navbar-expand-md navbar-light bg-light rounded">
-      <!-- navbar-expand-md 導覽列會自動擴展（展開）/折疊（收起）內容；-->
-      <!-- navbar_bottom 導覽列底部線條 -->
-      <div class="container-fluid justify-content-between">
-        <!-- 登入頭像(平板以下) -->
-        <a href="" class="navbar-brand d-md-none ms-2"><img src="./img/login_icon.png" style="width: 30px"
-            alt="Login" /></a>
-        <!--d-md-none md以上隱藏-->
-        <!--navbar-brand 用於定義導覽列（navbar）中的品牌區塊 -->
-        <!-- LOGO -->
-        <a class="navbar-brand ms-4" href="/index.html">
-          <img src="./img/Logo.png" alt="" width="80" />
-        </a>
-        <!-- 漢堡條 -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-          <div onclick="myFunction(this)">
-            <!-- navbar-toggler 用於導覽列折疊的按鈕樣式 -->
-            <!-- data-bs-toggle 用於指定按鈕的行為。data-bs-toggle="collapse" 表示點擊按鈕時觸發折疊效果 -->
-            <!-- data-bs-target 用於指定要折疊的目標元素。data-bs-target="#navbarNavDropdown" -->
-            <!-- this 參數為該div元素(父層)本身（表示為"this"）-->
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-          </div>
-        </button>
-
-        <!-- 導覽列(折疊) -->
-        <!--d-none d-lg-block 隨寬度顯示隱藏項目-->
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <!-- collapse 較大的屏幕上顯示完整的導航欄，而在較小的屏幕上，將導航欄收合為一個可以點擊展開的菜單。 -->
-          <!-- navbar-collapse 當螢幕小於某個斷點（預設是768px）時，會將導航欄的內容收合起來-->
-          <ul class="navbar-nav align-items-center">
-            <!-- navbar-nav 表示導覽列的項目清單(無序列表) -->
-            <li class="nav-item">
-              <!-- nav-item 表示導覽列中的一個項目 -->
-              <a class="nav-link" href="#">以物易物</a>
-              <!-- nav-link 表示導覽列項目的連結樣式 -->
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/img/404 04.svg">會員中心</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/img/404 04.svg">討論區</a>
-            </li>
-          </ul>
-          <!-- 登入頭像(平板以上) -->
-          <div class="ms-auto me-4">
-            <a href="" class="d-none d-md-block"><img src="./img/login_icon.png" style="width: 30px" alt="Login" /></a>
-            <!--d-none 預設隱藏-->
-            <!--d-md-block md以上顯示-->
-          </div>
-        </div>
-      </div>
-    </nav>
-    <!-- 導覽列 end -->
-
-    <div class="container-fluid">
-      <!-- 跑馬燈-->
-      <div class="d-flex justify-content-center flex-column">
-        <!-- d-flex justify-content-center flex-column 將所有內容水平垂直置中 -->
-        <div id="announcement-list">
-          <ul class="list-unstyled text-center">
-            <!-- list-unstyled 無序列表樣式 -->
-            <!-- v-for 循環渲染列表 -->
-            <li v-for="(item, index) in items" :key="item.id" class="mb-1" style="font-size: calc(1rem + .3vw); ;">
-              <a :href="" class="text-decoration-none text-muted announcement-img">
-                <!-- text-decoration-none 移除文字的下劃線。 -->
-                <!-- text-muted 表示此超連結的文字將會是柔和的灰色。 -->
-                <img src="./img/arrow.png" class="hover-img" style="width: 10px" />
-                {{ item.product_name }}
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- 跑馬燈 end -->
-
-        <!-- 產品介紹 -->
-        <h2 class="my-3 text-center">產品查詢</h2>
-        <div class="container-fluid">
-          <!-- 外容器設定高度避免點選商品造成下面版面推擠 -->
-          <div class="row d-flex justify-content-center">
-            <!-- 搜尋產品 -->
-            <div class="col-10 col-sm-3 d-flex align-items-end">
-              <input type="text" class="form-control" v-model="searchTerm" @input="search" placeholder="搜尋產品" />
-              <!-- form-contro 美化輸入框 -->
-              <!-- 輸入的搜尋條件（searchTerm）雙向綁定空的字串 -->
-              <!-- 搜尋框中輸入時，將觸發 @input="search" 事件 -->
-            </div>
-            <!-- 搜尋產品 end-->
-
-            <!-- 瀏覽紀錄 -->
-            <div class="col-9 d-none d-sm-block">
-              <div class="form-floating ms-3">
-                <!-- form-floating 浮動標籤。當輸入框或選擇框中有文字時，浮動標籤會浮動在輸入框或選擇框上方，給予用戶對輸入內容的提示。 -->
-                <select class="form-select mt-3 w-75" v-model="selectedHistory" @change="loadSelectedHistory">
-                  <!-- selectedHistory 雙向綁定空。變數將與該下拉選單的值進行雙向綁定。 -->
-                  <!-- loadSelectedHistory 顯示歷史紀錄的商品 -->
-                  <!-- option的value的值給selectedHistory。再透過loadSelectedHistory將值給selectedItem -->
-                  <option disabled>選擇最近瀏覽紀錄</option>
-                  <option v-for="item in history.slice(-10)" :key="item.id" :value="item">
-                    <!-- slice(-10) 最後 10 個元素 -->
-                    {{ item.product_name }}
-                  </option>
-                </select>
-                <label for="selectedHistory">瀏覽紀錄</label>
-              </div>
-            </div>
-            <!-- 瀏覽紀錄 end-->
-          </div>
-          <!-- 列表群組 -->
-          <div class="row">
-            <div class="col-md-3 me-2 mt-2 scrollbar-container" style="height: 200px; overflow-y: auto">
-              <!-- scrollbar-container 滾動條樣式設定 -->
-              <ul class="list-group mt-3">
-                <!-- list-group 定義列表容器的樣式。無序列表來顯示商品 -->
-                <li v-for="item in filteredItems" :key="item.product_id" class="list-group-item"
-                  :class="{ 'bg-secondary bg-gradient bg-opacity-50': selectedItem === item }"
-                  @click="showDetails(item)">
-                  <!-- filteredItems 經過搜尋商品的陣列 -->
-                  <!-- list-group-item 定義列表項目的樣式 -->
-                  <!-- item 是過濾後 filteredItems 陣列中的商品 -->
-                  <!-- 當前遍歷的 item 等於當前點擊到的商品(selectedItem）時，為列表項添加額外的背景顏色類別:class= -->
+  <body>
+    <div id="app" class="container-fluid g-3">
+      <!-- 導覽列 開始 -->
+      <%- include('share/navbar'); %>
+      <!-- 導覽列 end -->
+      <div class="container-fluid">
+        <!-- 跑馬燈-->
+        <div class="d-flex justify-content-center flex-column">
+          <!-- d-flex justify-content-center flex-column 將所有內容水平垂直置中 -->
+          <div id="announcement-list">
+            <ul class="list-unstyled text-center">
+              <!-- list-unstyled 無序列表樣式 -->
+              <!-- v-for 循環渲染列表 -->
+              <li
+                v-for="(item, index) in items"
+                :key="item.id"
+                class="mb-1"
+                style="font-size: calc(1rem + 0.3vw)"
+              >
+                <a
+                  :href=""
+                  class="text-decoration-none text-muted announcement-img"
+                >
+                  <!-- text-decoration-none 移除文字的下劃線。 -->
+                  <!-- text-muted 表示此超連結的文字將會是柔和的灰色。 -->
+                  <img
+                    src="/img/arrow.png"
+                    class="hover-img"
+                    style="width: 10px"
+                  />
                   {{ item.product_name }}
-                </li>
-              </ul>
-            </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- 跑馬燈 end -->
 
-            <!-- 請選擇產品card -->
-            <div class="col-md-8 card  card_spacing
-            h-25 border-0 box_shadow">
-              <!-- box_shadow 卡片陰影 -->
-              <div v-if="selectedItem" class="mt-3">
-                <!-- selectedItem 選定的商品 -->
-                <!-- 如果用戶已選擇商品（selectedItem 不為空），則顯示此區塊。 -->
-                <!-- 否則顯示"請選產品" -->
-                <div class="row">
-                  <div class="col-lg-5">
-                    <img class="card-img-top mb-2" style="height: 300px" :alt="selectedItem.product_name"
-                      :src="selectedItem.product_image" />
-                  </div>
-                  <div class="col-lg-7">
-                    <div class="card-body">
-                      <h4 class="card-title text-center">
-                        {{ selectedItem.product_name }}
-                      </h4>
-                      <hr />
-                      <div class="col-md-3 me-2 mt-2 scrollbar-container" style="width: 100%;;height: 250px; overflow-y: auto">
-                        <p class="card-text" style="font-size: calc(1rem + .3vw);">{{ selectedItem.product_detail }}</p>
-                      </div>
-                    </div>
-                  </div>
+          <!-- 產品介紹 -->
+          <h2 class="my-3 text-center">產品查詢</h2>
+          <div class="container-fluid">
+            <!-- 外容器設定高度避免點選商品造成下面版面推擠 -->
+            <div class="row d-flex justify-content-center">
+              <!-- 搜尋產品 -->
+              <div class="col-10 col-sm-3 d-flex align-items-end">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="searchTerm"
+                  @input="search"
+                  placeholder="搜尋產品"
+                />
+                <!-- form-contro 美化輸入框 -->
+                <!-- 輸入的搜尋條件（searchTerm）雙向綁定空的字串 -->
+                <!-- 搜尋框中輸入時，將觸發 @input="search" 事件 -->
+              </div>
+              <!-- 搜尋產品 end-->
+
+              <!-- 瀏覽紀錄 -->
+              <div class="col-9 d-none d-sm-block">
+                <div class="form-floating ms-3">
+                  <!-- form-floating 浮動標籤。當輸入框或選擇框中有文字時，浮動標籤會浮動在輸入框或選擇框上方，給予用戶對輸入內容的提示。 -->
+                  <select
+                    class="form-select mt-3 w-75"
+                    v-model="selectedHistory"
+                    @change="loadSelectedHistory"
+                  >
+                    <!-- selectedHistory 雙向綁定空。變數將與該下拉選單的值進行雙向綁定。 -->
+                    <!-- loadSelectedHistory 顯示歷史紀錄的商品 -->
+                    <!-- option的value的值給selectedHistory。再透過loadSelectedHistory將值給selectedItem -->
+                    <option disabled>選擇最近瀏覽紀錄</option>
+                    <option
+                      v-for="item in history.slice(-10)"
+                      :key="item.id"
+                      :value="item"
+                    >
+                      <!-- slice(-10) 最後 10 個元素 -->
+                      {{ item.product_name }}
+                    </option>
+                  </select>
+                  <label for="selectedHistory">瀏覽紀錄</label>
                 </div>
               </div>
-              <div v-else class="card-body">請選產品</div>
+              <!-- 瀏覽紀錄 end-->
             </div>
-          </div>
-          <!-- 產品介紹 end -->
-        </div>
+            <!-- 列表群組 -->
+            <div class="row">
+              <div
+                class="col-md-3 me-2 mt-2 scrollbar-container"
+                style="height: 200px; overflow-y: auto"
+              >
+                <!-- scrollbar-container 滾動條樣式設定 -->
+                <ul class="list-group mt-3">
+                  <!-- list-group 定義列表容器的樣式。無序列表來顯示商品 -->
+                  <li
+                    v-for="item in filteredItems"
+                    :key="item.product_id"
+                    class="list-group-item"
+                    :class="{ 'bg-secondary bg-gradient bg-opacity-50': selectedItem === item }"
+                    @click="showDetails(item)"
+                  >
+                    <!-- filteredItems 經過搜尋商品的陣列 -->
+                    <!-- list-group-item 定義列表項目的樣式 -->
+                    <!-- item 是過濾後 filteredItems 陣列中的商品 -->
+                    <!-- 當前遍歷的 item 等於當前點擊到的商品(selectedItem）時，為列表項添加額外的背景顏色類別:class= -->
+                    {{ item.product_name }}
+                  </li>
+                </ul>
+              </div>
 
-        <!-- 最新商品 -->
-        <br />
-        <div class="container">
-          <h2 class="my-3">最新商品</h2>
-          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <!-- id 作目標元素,輪播的前進和後退按鈕 -->
-            <!-- carousel類指定這個元素是一個輪播，slide類則使輪播的過渡效果變為滑動 -->
-            <!-- data-bs-ride 當頁面加載完成後，它會自動開始輪播。 -->
-            <!-- carousel-indicators 包著所有指示器按鈕的容器 -->
-            <div class="carousel-indicators" style="
-                  width: 100px;
-                  overflow: hidden;
-                  left: 25%;
-                  transform: translate(0% -25%);
-                ">
-              <!-- 指示器按鈕 -->
-              <button type="button" data-bs-target="#carouselExampleControls"
-                v-for="(chunk, index) in chunkedFeaturedProducts" style="min-width: 20px" class="bg-secondary"
-                :class="{ active: index === 0 }" :data-bs-slide-to="index" :key="index"></button>
-              <!-- data-bs-target 指定了這個按鈕控制的輪播組件的 ID-->
-              <!-- :data-bs-slide-to="index" 點擊這個按鈕後應該切換到哪個輪播項 -->
-              <!-- Bootstrap 的 JavaScript 插件會監聽這些按鈕的點擊事件，並根據這兩個數據屬性(data-bs-target、data-bs-slide-to)來更新輪播組件的狀態，包括自動管理 "active" 類的賦予與移除。 -->
-              <!-- :class="{ active: index === 0 }" 預設active -->
-              <!-- chunkedFeaturedProducts 回傳分塊後的子數組(chunkedArray) -->
-              <!-- [[1, 2, 3], [4, 5, 6], [7, 8, 9]] -->
-            </div>
-
-            <div class="carousel-inner">
-              <!-- carousel-inner 輪播組件的容器、用於包裹所有的輪播項目。 -->
-              <div class="carousel-item" :class="{ active: index === 0 }"
-                v-for="(chunk, index) in chunkedFeaturedProducts" :key="index">
-                <!-- carousel-item 這個類用於每個單獨的輪播項目。 -->
-                <div class="row d-flex align-items-center">
-
-                  <!-- 渲染一個商品卡片(左)-->
-                  <!-- 選取每個子數組（chunk）的第一個元素 -->
-                  <!-- [1],[4],[7] -->
-                  <div class="col-md-6 col-lg-4 my-2" v-for="item in chunk.slice(0, 1)" :key="item.id">
-                    <div class="card box_shadow">
-                      <img :src="item.product_image" class="card-img-top" :alt="item.product_name" />
-                      <div class="card-body scrollbar-container" style="height: 200px; overflow-y: auto">
-                        <h4 class="card-title ;" style="text-align: center;">{{ item.product_name }}</h4>
+              <!-- 請選擇產品card -->
+              <div
+                class="col-md-8 gradient-background card card_spacing h-25 border-0 box_shadow"
+              >
+                <!-- box_shadow 卡片陰影 -->
+                <div v-if="selectedItem" class="mt-3">
+                  <!-- selectedItem 選定的商品 -->
+                  <!-- 如果用戶已選擇商品（selectedItem 不為空），則顯示此區塊。 -->
+                  <!-- 否則顯示"請選產品" -->
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <img
+                        class="card card-img-top mb-2"
+                        style="height: 300px"
+                        :alt="selectedItem.product_name"
+                        :src="selectedItem.product_image"
+                      />
+                    </div>
+                    <div class="col-lg-7">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">
+                          {{ selectedItem.product_name }}
+                        </h4>
                         <hr />
-                        <h5 class="text-center d-flex align-items-end mx-4 ">       
-                          <span ><img :src="item.user_image" class="me-2"  width="35" height="35" :alt="item.product_name" /></span>
-                          <span class="me-4">{{ item.user_name }}元</span>
-                          <span class="fs-6 ms-auto">{{ item.city }}</span>
-                        </h5>
-                        <div class="card_border d-flex justify-content-center">
-                          <div class="icon"></div>
-                          <p class="card-text my-1" style=" font-size: calc(0.7rem + .4vw);">{{ item.product_detail }}</p>
-                        </div>
-                      </div>
-                      <div class="card-footer bg-transparent border-top-0 text-center">
-                        <a :href="item.link" class="btn btn-outline-secondary">查看商品</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- 渲染兩個商品卡片(中、右)-->
-                  <!-- 選取每個子數組（chunk）的第二和第三個元素 -->
-                  <!-- [[2, 3], [5, 6], [8, 9]] -->
-                  <div class="col-md-6 col-lg-8">
-                    <div class="row">
-                      <div class="col-md-12 col-lg-6 my-2" v-for="item in chunk.slice(1, 3)" :key="item.id">
-                        <div class="card box_shadow">
-                          <img :src="item.product_image" class="card-img-top" :alt="item.title" />
-                          <div class="card-body d-none d-lg-block scrollbar-container"
-                            style="height: 200px; overflow-y: auto">
-                            <h4 class="card-title text-center">{{ item.product_name }}</h4>
-                            <hr />
-                            <h5 class="text-center d-flex align-items-end mx-4">
-                              <span ><img :src="item.user_image" class="me-2"  width="35" height="35" :alt="item.product_name" /></span>
-                              <span class="me-4">{{ item.user_name }}元</span>
-                              <span class="fs-6 ms-auto">{{ item.city }}</span>
-                            </h5>
-                            <!-- <div class="card_border d-none d-lg-block"> -->
-                            <div class="card_border d-flex justify-content-center">
-                              <div class="icon"></div>
-                              <p class="card-text" style=" font-size: calc(0.7rem + .4vw);">{{ item.product_detail }}</p>
-                            </div>
-                          </div>
-                          <div class="card-footer bg-transparent border-top-0 text-center">
-                            <a :href="item.link" class="btn btn-outline-secondary">查看商品</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <!-- 輪播按鈕 -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-              data-bs-slide="prev">
-              <!-- data-bs-target="#carouselExampleControls" 表明當該按鈕被點擊時，應該控制哪個輪播組件進行切換 -->
-              <!-- carousel-control-prev 切換到輪播圖上一張圖片 -->
-              <!-- data-bs-slide="prev" 輪播向前滑動一項  -->
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <!-- carousel-control-prev-icon 向前按鈕圖示-->
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-              data-bs-slide="next">
-              <!-- data-bs-target="#carouselExampleControls" 表明當該按鈕被點擊時，應該控制哪個輪播組件進行切換 -->
-              <!-- carousel-control-next 切換到輪播圖下一張圖片 -->
-              <!-- data-bs-slide="next" 輪播向後滑動一項  -->
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <!-- carousel-control-next-icon 向後按鈕圖示-->
-            </button>
-            <!-- 輪播按鈕 end-->
-          </div>
-        </div>
-
-        <!-- 討論區 -->
-        <div class="container-fluid" id="article">
-          <div class="row mt-5">
-            <div class="col-12">
-
-              <div class="row d-flex justify-content-center align-items-center">
-                <!-- 左邊文章 -->
-                <div class="col-12 col-md-8 col-lg-5 align-items-center">
-                  <div class="box_shadow d-flex flex-column forum_box_container" style="height: 100%;">
-                    <span class="mt-2 ms-2"style="font-size: calc(1rem + .3vw);">{{ articles[0].class_name }}</span>
-                    <hr class="my-2" style="margin: initial" />
-                    <img :src="articles[0].imageurl" class="mb-3 card-img-top img-fluid" alt="文章圖片" />
-                    <!-- img-fluid使圖片在其容器內自動調整大小，以達到響應式設計的效果。 -->
-                    <h4 class="ms-2 justify-content-center text-center">{{ articles[0].title }}</h4>
-                    <div class="scrollbar-container mx-4 my-1" style="height: 150px;overflow-y: auto;">
-                      <span class="ms-2" style="font-size: calc(1rem + .3vw);">{{ articles[0].content }}</span>
-                    </div>
-                  <p class="mx-2 my-2 d-flex justify-content-end flex-wrap" >
-                    <span>{{ articles[0].post_time }}</span>
-                    <span class="ms-4">by {{ articles[0].nickname }}</span>
-                  </p>
-                  </div>
-                </div>
-                <!-- 右邊文章 -->
-                <div class="col-12 col-lg-5 mt-2 ">
-                    <div class="row d-flex justify-content-center scrollbar-container forum_height">
-                      <div class="col-12 col-sm-5 col-lg-12" v-for="(article, index) in articles.slice(1, 8)">
-                        <div class="box_shadow d-flex flex-column justify-content-center  forum_box_container  m-1"
-                          style="height: 120px">
-                          <hr style="border: 1px solid black" />
-                          <h4 class="ms-2">{{ article.title }}</h4>
-                          <p class="ms-2 d-flex justify-content-end align-items-end flex-wrap" style="height: 100%;">
-                            <span>{{ article.post_time }}</span>
-                            <span class="mx-2 ">{{ article.nickname }}</span>
-                            <span class="me-2 float-end">{{ article.class_name }}</span>
+                        <div
+                          class="col-md-3 me-2 mt-2 scrollbar-container"
+                          style="width: 100%; height: 250px; overflow-y: auto"
+                        >
+                          <p
+                            class="card-text"
+                            style="font-size: calc(1rem + 0.3vw)"
+                          >
+                            {{ selectedItem.product_detail }}
                           </p>
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div v-else class="card-body">請選產品</div>
+              </div>
+            </div>
+            <!-- 產品介紹 end -->
+          </div>
+
+          <!-- 最新商品 -->
+          <br />
+          <div class="container">
+            <h2 class="my-3">最新商品</h2>
+            <div
+              id="carouselExampleControls"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <!-- id 作目標元素,輪播的前進和後退按鈕 -->
+              <!-- carousel類指定這個元素是一個輪播，slide類則使輪播的過渡效果變為滑動 -->
+              <!-- data-bs-ride 當頁面加載完成後，它會自動開始輪播。 -->
+              <!-- carousel-indicators 包著所有指示器按鈕的容器 -->
+              <div
+                class="carousel-indicators"
+                style="
+                  width: 100px;
+                  overflow: hidden;
+                  left: 25%;
+                  bottom: -7%;
+                  transform: translate(0% -25%);
+                "
+              >
+                <!-- 指示器按鈕 -->
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleControls"
+                  v-for="(chunk, index) in chunkedFeaturedProducts"
+                  style="min-width: 20px"
+                  class="bg-secondary"
+                  :class="{ active: index === 0 }"
+                  :data-bs-slide-to="index"
+                  :key="index"
+                ></button>
+                <!-- data-bs-target 指定了這個按鈕控制的輪播組件的 ID-->
+                <!-- :data-bs-slide-to="index" 點擊這個按鈕後應該切換到哪個輪播項 -->
+                <!-- Bootstrap 的 JavaScript 插件會監聽這些按鈕的點擊事件，並根據這兩個數據屬性(data-bs-target、data-bs-slide-to)來更新輪播組件的狀態，包括自動管理 "active" 類的賦予與移除。 -->
+                <!-- :class="{ active: index === 0 }" 預設active -->
+                <!-- chunkedFeaturedProducts 回傳分塊後的子數組(chunkedArray) -->
+                <!-- [[1, 2, 3], [4, 5, 6], [7, 8, 9]] -->
+              </div>
+
+              <div class="carousel-inner">
+                <!-- carousel-inner 輪播組件的容器、用於包裹所有的輪播項目。 -->
+                <div
+                  class="carousel-item"
+                  :class="{ active: index === 0 }"
+                  v-for="(chunk, index) in chunkedFeaturedProducts"
+                  :key="index"
+                >
+                  <!-- carousel-item 這個類用於每個單獨的輪播項目。 -->
+                  <div class="row d-flex align-items-center mx-1">
+                    <!-- 渲染一個商品卡片(左)-->
+                    <!-- 選取每個子數組（chunk）的第一個元素 -->
+                    <!-- [1],[4],[7] -->
+                    <div
+                      class="col-md-6 col-lg-4 my-2"
+                      v-for="item in chunk.slice(0, 1)"
+                      :key="item.id"
+                    >
+                      <div class="card border-0 box_shadow gradient-background">
+                        <img
+                          :src="item.product_image"
+                          class="card card-img-top"
+                          :alt="item.product_name"
+                        />
+                        <div
+                          class="card-body scrollbar-container"
+                          style="height: 200px; overflow-y: auto"
+                        >
+                          <h4 class="card-title ;" style="text-align: center">
+                            {{ item.product_name }}
+                          </h4>
+                          <hr />
+                          <h5 class="text-center d-flex align-items-end mx-4">
+                            <span
+                              ><img
+                                :src="item.user_image"
+                                class="me-2"
+                                width="35"
+                                height="35"
+                                :alt="item.product_name"
+                            /></span>
+                            <span class="me-4">{{ item.user_name }}元</span>
+                            <span class="fs-6 ms-auto">{{ item.city }}</span>
+                          </h5>
+                          <div
+                            class="card_border d-flex justify-content-center"
+                          >
+                            <div class="icon"></div>
+                            <p
+                              class="card-text my-1"
+                              style="font-size: calc(0.7rem + 0.4vw)"
+                            >
+                              {{ item.product_detail }}
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="card-footer bg-transparent border-top-0 text-center"
+                        >
+                          <a :href="item.link" class="btn btn-outline-secondary"
+                            >查看商品</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 渲染兩個商品卡片(中、右)-->
+                    <!-- 選取每個子數組（chunk）的第二和第三個元素 -->
+                    <!-- [[2, 3], [5, 6], [8, 9]] -->
+                    <div class="col-md-6 col-lg-8">
+                      <div class="row">
+                        <div
+                          class="col-md-12 col-lg-6 my-2"
+                          v-for="item in chunk.slice(1, 3)"
+                          :key="item.id"
+                        >
+                          <div
+                            class="card border-0 box_shadow gradient-background"
+                          >
+                            <img
+                              :src="item.product_image"
+                              class="card card-img-top"
+                              :alt="item.title"
+                            />
+                            <div
+                              class="card-body d-none d-lg-block scrollbar-container"
+                              style="height: 200px; overflow-y: auto"
+                            >
+                              <h4 class="card-title text-center">
+                                {{ item.product_name }}
+                              </h4>
+                              <hr />
+                              <h5
+                                class="text-center d-flex align-items-end mx-4"
+                              >
+                                <span
+                                  ><img
+                                    :src="item.user_image"
+                                    class="me-2"
+                                    width="35"
+                                    height="35"
+                                    :alt="item.product_name"
+                                /></span>
+                                <span class="me-4">{{ item.user_name }}元</span>
+                                <span class="fs-6 ms-auto">{{
+                                  item.city
+                                }}</span>
+                              </h5>
+                              <!-- <div class="card_border d-none d-lg-block"> -->
+                              <div
+                                class="card_border d-flex justify-content-center"
+                              >
+                                <div class="icon"></div>
+                                <p
+                                  class="card-text"
+                                  style="font-size: calc(0.7rem + 0.4vw)"
+                                >
+                                  {{ item.product_detail }}
+                                </p>
+                              </div>
+                            </div>
+                            <div
+                              class="card-footer bg-transparent border-top-0 text-center"
+                            >
+                              <a
+                                :href="item.link"
+                                class="btn btn-outline-secondary"
+                                >查看商品</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <!-- 輪播按鈕 -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev"
+              >
+                <!-- data-bs-target="#carouselExampleControls" 表明當該按鈕被點擊時，應該控制哪個輪播組件進行切換 -->
+                <!-- carousel-control-prev 切換到輪播圖上一張圖片 -->
+                <!-- data-bs-slide="prev" 輪播向前滑動一項  -->
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <!-- carousel-control-prev-icon 向前按鈕圖示-->
+              </button>
+
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleControls"
+                data-bs-slide="next"
+              >
+                <!-- data-bs-target="#carouselExampleControls" 表明當該按鈕被點擊時，應該控制哪個輪播組件進行切換 -->
+                <!-- carousel-control-next 切換到輪播圖下一張圖片 -->
+                <!-- data-bs-slide="next" 輪播向後滑動一項  -->
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <!-- carousel-control-next-icon 向後按鈕圖示-->
+              </button>
+              <!-- 輪播按鈕 end-->
             </div>
           </div>
 
-          <!-- 最下面三筆 -->
-          <div class="row my-3">
-            <div v-for="article in articles.slice(8)" class="col-lg-4 mt-3">
-              <div class="box_shadow d-flex flex-column forum_box_container">
-                <div class="box mb-1 d-flex flex-column">
-                  <span class=" mt-2 ms-2" style="font-size: calc(1rem + .3vw);">{{ article.class_name }}</span>
-                  <hr class="my-2" />
-                  <img :src="article.imageurl" class="img-fluid card-img-top" alt="文章圖片" />
+          <!-- 討論區 -->
+          <div class="container-fluid" id="article">
+            <div class="row mt-5">
+              <div class="col-12">
+                <div
+                  class="row d-flex justify-content-center align-items-center"
+                >
+                  <!-- 左邊文章 -->
+                  <div class="col-12 col-md-8 col-lg-5 align-items-center">
+                    <div
+                      class="card border-0 gradient-background box_shadow d-flex flex-column forum_box_container"
+                      style="height: 100%"
+                    >
+                      <span
+                        class="mt-2 ms-2"
+                        style="font-size: calc(1rem + 0.3vw)"
+                        >{{ articles[0].class_name }}</span
+                      >
+                      <hr class="my-2" style="margin: initial" />
+                      <img
+                        :src="articles[0].imageurl"
+                        class="mb-3 card card-img-top img-fluid"
+                        alt="文章圖片"
+                      />
+                      <!-- img-fluid使圖片在其容器內自動調整大小，以達到響應式設計的效果。 -->
+                      <h4 class="ms-2 justify-content-center text-center">
+                        {{ articles[0].title }}
+                      </h4>
+                      <div
+                        class="scrollbar-container mx-4 my-1"
+                        style="height: 150px; overflow-y: auto"
+                      >
+                        <span
+                          class="ms-2"
+                          style="font-size: calc(1rem + 0.3vw)"
+                          >{{ articles[0].content }}</span
+                        >
+                      </div>
+                      <p class="mx-2 my-2 d-flex justify-content-end flex-wrap">
+                        <span>{{ articles[0].post_time }}</span>
+                        <span class="ms-4">by {{ articles[0].nickname }}</span>
+                      </p>
+                    </div>
+                  </div>
+                  <!-- 右邊文章 -->
+                  <div class="col-12 col-lg-5 mt-2">
+                    <div
+                      class="row d-flex justify-content-center scrollbar-container forum_height"
+                    >
+                      <div
+                        class="col-12 col-sm-5 col-lg-12"
+                        v-for="(article, index) in articles.slice(1, 8)"
+                      >
+                        <div
+                          class="card border-0 gradient-background box_shadow d-flex flex-column justify-content-center forum_box_container m-1"
+                          style="height: 120px"
+                        >
+                          <hr style="border: 1px solid black" />
+                          <h4 class="ms-2">{{ article.title }}</h4>
+                          <p
+                            class="ms-2 d-flex justify-content-end align-items-end flex-wrap"
+                            style="height: 100%"
+                          >
+                            <span>{{ article.post_time }}</span>
+                            <span class="mx-2">{{ article.nickname }}</span>
+                            <span class="me-2 float-end">{{
+                              article.class_name
+                            }}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h4>{{ article.title }}</h4>
-                <div class="mt-2 ms-2 scrollbar-container" style="height: 75px;overflow-y: auto;">
-                  <span style="font-size: calc(1rem + .3vw);">{{ article.content }}</span>
+              </div>
+            </div>
+
+            <!-- 最下面三筆 -->
+            <div class="row my-3">
+              <div v-for="article in articles.slice(8)" class="col-lg-4 mt-3">
+                <div
+                  class="card border-0 gradient-background box_shadow d-flex flex-column forum_box_container"
+                >
+                  <div class="box mb-1 d-flex flex-column">
+                    <span
+                      class="mt-2 ms-2"
+                      style="font-size: calc(1rem + 0.3vw)"
+                      >{{ article.class_name }}</span
+                    >
+                    <hr class="my-2" />
+                    <img
+                      :src="article.imageurl"
+                      class="card img-fluid card-img-top"
+                      alt="文章圖片"
+                    />
+                  </div>
+                  <h4>{{ article.title }}</h4>
+                  <div
+                    class="mt-2 ms-2 scrollbar-container"
+                    style="height: 75px; overflow-y: auto"
+                  >
+                    <span style="font-size: calc(1rem + 0.3vw)">{{
+                      article.content
+                    }}</span>
+                  </div>
+                  <p
+                    class="mx-2 my-2 d-flex justify-content-end align-items-end"
+                  >
+                    <span>{{ article.post_time }}</span>
+                    <span class="mx-2">{{ article.nickname }}</span>
+                  </p>
                 </div>
-                <p class="mx-2 my-2 d-flex justify-content-end align-items-end" >
-                  <span>{{ article.post_time }}</span>
-                  <span class="mx-2">{{ article.nickname }}</span>
-                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- 頁尾 -->
-  <!-- <footer class="bg-secondary bg-gradient text-white text-center py-3">
+    <!-- 頁尾 -->
+    <!-- <footer class="bg-secondary bg-gradient text-white text-center py-3">
       <p class="mb-0">版權所有 &copy; 2023 iSpan-MFEE35-前端工程師就業養成班</p>
     </footer> -->
-  <!-- 頁尾 -->
-  <footer class="bg-secondary bg-gradient text-white py-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h5>關於我們</h5>
-          <p>我們致力於創建一個友善的物品交換平台，讓你可以輕鬆找到需要的物品，同時讓你不再需要的物品有新的用途。</p>
-        </div>
-        <div class="col-md-6">
-          <h5>聯絡我們</h5>
-          <p>如果你有任何問題或建議，請隨時透過以下方式與我們聯絡：</p>
-          <p><i class="fas fa-envelope"></i> barter_economy@gmail.com</p>
-          <p><i class="fas fa-phone"></i> 123-456-7890</p>
+    <!-- 頁尾 -->
+    <footer class="bg-secondary bg-gradient text-white py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>關於我們</h5>
+            <p>
+              我們致力於創建一個友善的物品交換平台，讓你可以輕鬆找到需要的物品，同時讓你不再需要的物品有新的用途。
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h5>聯絡我們</h5>
+            <p>如果你有任何問題或建議，請隨時透過以下方式與我們聯絡：</p>
+            <p><i class="fas fa-envelope"></i> barter_economy@gmail.com</p>
+            <p><i class="fas fa-phone"></i> 123-456-7890</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="text-center mt-3">
-      <p class="mb-0">版權所有 &copy; 2023 iSpan-MFEE35-前端工程師就業養成班</p>
-    </div>
-  </footer>
-  <script>
-    const app = Vue.createApp({
-      data() {
-        return {
-          chunkSize: 3,
-          searchTerm: "", //搜尋條件 //搜尋框中輸入的值
-          filteredItems: [], //存儲經過搜索過濾後的商品列表
-          selectedHistory: {},
-          selectedItem: null, //選定的商品 //null表示沒有選擇任何產品
-          history: [], //用於存儲瀏覽過的產品列表
-          items: [
-            {
-              product_id: 1,
-              product_name: "二手書籍",
-              product_image: "https://jiasdaily.com/wp-content/uploads/2021/07/20210724-3%E5%80%8B%E9%97%9C%E9%8D%B5%E8%9D%A6%E7%9A%AE%E8%B3%A3%E4%BA%8C%E6%89%8B%E6%9B%B8-%E7%B2%BE%E9%81%B8.png",
-              product_detail: "這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。",
-              user_name: "張三",
-              user_image: "./img/login_icon.png",
-              city: "台北",
-              lunch_date: "2023-05-01"
-            },
-            {
-              product_id: 2,
-              product_name: "植物盆栽",
-              product_image: "https://pcm.trplus.com.tw/650x650/sys-master/productImages/h13/h93/10867907002398/000000000014289090-gallery-01-20220428165126129.jpg",
-              product_detail: "這是一盆健康的盆栽，希望能交換一些園藝用品。",
-              user_name: "李四",
-              user_image: "./img/login_icon.png",
-              city: "台中",
-              lunch_date: "2023-05-02"
-            },
-            {
-              product_id: 3,
-              product_name: "手工陶瓷杯",
-              product_image: "https://cf.shopee.tw/file/5379f944e4d70b119cbb54135cf9c77f",
-              product_detail: "這是一個手工陶瓷杯，希望能交換一些廚房用具。",
-              user_name: "王五",
-              user_image: "./img/login_icon.png",
-              city: "高雄",
-              lunch_date: "2023-05-03"
-            },
-            {
-              product_id: 4,
-              product_name: "野生蜂蜜",
-              product_image: "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/7104338/0/638076571659530000?v=1",
-              product_detail: "這是一瓶野生蜂蜜，希望能交換一些有機食品。",
-              user_name: "張六",
-              user_image: "./img/login_icon.png",
-              city: "台南",
-              lunch_date: "2023-05-04"
-            },
-            {
-              product_id: 5,
-              product_name: "古董收音機",
-              product_image: "https://photo69.mac89.com/180702/JPG-180702_843/m0bgFp5863_small.jpg",
-              product_detail: "這是一台古董收音機，希望能交換一些音樂唱片。",
-              user_name: "陳七",
-              user_image: "./img/login_icon.png",
-              city: "新竹",
-              lunch_date: "2023-05-05"
-            },
-            {
-              product_id: 6,
-              product_name: "手織圍巾",
-              product_image: "https://cdn1.kingstone.com.tw/mag/images/product/20716/2071630568275/2071630568275-01.jpg",
-              product_detail: "這是一條手織的圍巾，希望能交換一些手工藝品。",
-              user_name: "楊八",
-              user_image: "./img/login_icon.png",
-              city: "花蓮",
-              lunch_date: "2023-05-06"
-            }
-          ],
-          // articles: [
-          //   {
-          //     title: "AI與人類未來的共生",
-          //     image:
-          //       "https://x0.ifengimg.com/ucms/2021_01/C276474ADF5505CCB1C8AB8CF45605FDA2080695_size78_w1074_h537.jpg",
-          //     date: "2023-04-01",
-          //     author: "林志明",
-          //     class: "Product",
-          //   },
-          //   {
-          //     title: "氣候變遷：全球應對之道",
-          //     image:
-          //       "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
-          //     date: "2023-04-03",
-          //     author: "王怡文",
-          //     class: "Sales",
-          //   },
-          //   {
-          //     title: "從地球到火星：探索宇宙的無限可能",
-          //     image:
-          //       "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
-          //     date: "2023-04-05",
-          //     author: "陳彥廷",
-          //     class: "News",
-          //   },
-
-          //   {
-          //     title: "網路隱私與安全：如何保護個人資料",
-          //     image:
-          //       "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
-          //     date: "2023-04-06",
-          //     author: "蔡佩珊",
-          //     class: "News",
-          //   },
-
-          //   {
-          //     title: "虛擬貨幣的風險與機遇",
-          //     image:
-          //       "https://imgcdn.cna.com.tw/www/webphotos/WebOg/600/20210924/1920x1008_52347954423.jpg",
-          //     date: "2023-04-11",
-          //     author: "黃建宏",
-          //     class: "News",
-          //   },
-          //   {
-          //     title: "遠程工作的新常態：如何適應與優化",
-          //     image:
-          //       "https://miro.medium.com/v2/resize:fit:828/format:webp/1*no26z4RP1N34Jt5QuT5PVA.jpeg",
-          //     date: "2023-04-15",
-          //     author: "陳彥廷",
-          //     class: "News",
-          //   },
-          //   {
-          //     title: "健康飲食：實現身心靈平衡的關鍵",
-          //     image:
-          //       "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
-          //     date: "2023-04-25",
-          //     author: "陳彥廷",
-          //     class: "News",
-          //   },
-          // ],
-          articles: [
-          {
+      <div class="text-center mt-3">
+        <p class="mb-0">
+          版權所有 &copy; 2023 iSpan-MFEE35-前端工程師就業養成班
+        </p>
+      </div>
+    </footer>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            chunkSize: 3,
+            searchTerm: "", //搜尋條件 //搜尋框中輸入的值
+            filteredItems: [], //存儲經過搜索過濾後的商品列表
+            selectedHistory: {},
+            selectedItem: null, //選定的商品 //null表示沒有選擇任何產品
+            history: [], //用於存儲瀏覽過的產品列表
+            items: [
+              {
+                product_id: 1,
+                product_name: "二手書籍",
+                product_image:
+                  "https://jiasdaily.com/wp-content/uploads/2021/07/20210724-3%E5%80%8B%E9%97%9C%E9%8D%B5%E8%9D%A6%E7%9A%AE%E8%B3%A3%E4%BA%8C%E6%89%8B%E6%9B%B8-%E7%B2%BE%E9%81%B8.png",
+                product_detail:
+                  "這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。這是一本保持良好的二手書籍，希望能交換一些文具。",
+                user_name: "張三",
+                user_image: "./img/login_icon.png",
+                city: "台北",
+                lunch_date: "2023-05-01",
+              },
+              {
+                product_id: 2,
+                product_name: "植物盆栽",
+                product_image:
+                  "https://pcm.trplus.com.tw/650x650/sys-master/productImages/h13/h93/10867907002398/000000000014289090-gallery-01-20220428165126129.jpg",
+                product_detail: "這是一盆健康的盆栽，希望能交換一些園藝用品。",
+                user_name: "李四",
+                user_image: "./img/login_icon.png",
+                city: "台中",
+                lunch_date: "2023-05-02",
+              },
+              {
+                product_id: 3,
+                product_name: "手工陶瓷杯",
+                product_image:
+                  "https://cf.shopee.tw/file/5379f944e4d70b119cbb54135cf9c77f",
+                product_detail: "這是一個手工陶瓷杯，希望能交換一些廚房用具。",
+                user_name: "王五",
+                user_image: "./img/login_icon.png",
+                city: "高雄",
+                lunch_date: "2023-05-03",
+              },
+              {
+                product_id: 4,
+                product_name: "野生蜂蜜",
+                product_image:
+                  "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/7104338/0/638076571659530000?v=1",
+                product_detail: "這是一瓶野生蜂蜜，希望能交換一些有機食品。",
+                user_name: "張六",
+                user_image: "./img/login_icon.png",
+                city: "台南",
+                lunch_date: "2023-05-04",
+              },
+              {
+                product_id: 5,
+                product_name: "古董收音機",
+                product_image:
+                  "https://photo69.mac89.com/180702/JPG-180702_843/m0bgFp5863_small.jpg",
+                product_detail: "這是一台古董收音機，希望能交換一些音樂唱片。",
+                user_name: "陳七",
+                user_image: "./img/login_icon.png",
+                city: "新竹",
+                lunch_date: "2023-05-05",
+              },
+              {
+                product_id: 6,
+                product_name: "手織圍巾",
+                product_image:
+                  "https://cdn1.kingstone.com.tw/mag/images/product/20716/2071630568275/2071630568275-01.jpg",
+                product_detail: "這是一條手織的圍巾，希望能交換一些手工藝品。",
+                user_name: "楊八",
+                user_image: "./img/login_icon.png",
+                city: "花蓮",
+                lunch_date: "2023-05-06",
+              },
+            ],
+            articles: [
+              {
                 nickname: "用戶1",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的手錶換你的耳機",
-                imageurl: "https://x0.ifengimg.com/ucms/2021_01/C276474ADF5505CCB1C8AB8CF45605FDA2080695_size78_w1074_h537.jpg",
-                content: "我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。",
+                imageurl:
+                  "https://x0.ifengimg.com/ucms/2021_01/C276474ADF5505CCB1C8AB8CF45605FDA2080695_size78_w1074_h537.jpg",
+                content:
+                  "我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。我有一只新的手錶，希望能換到一副質量好的耳機。",
                 user: "User1",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶2",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電視換你的冰箱",
-                imageurl: "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
+                imageurl:
+                  "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
                 content: "我有一台全新的電視，希望能換到一台冰箱。",
                 user: "User2",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶3",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電腦換你的平板",
-                imageurl: "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
+                imageurl:
+                  "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
                 content: "我有一台全新的電腦，希望能換到一台平板。",
                 user: "User3",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶4",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的手機換你的相機",
-                imageurl: "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
+                imageurl:
+                  "https://i0.wp.com/salespower.com.tw/wp-content/uploads/2021/07/business-meeting-5395567_640.jpg",
                 content: "我有一部新的手機，希望能換到一台相機。",
                 user: "User4",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶5",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的自行車換你的滑板",
-                imageurl: "https://imgcdn.cna.com.tw/www/webphotos/WebOg/600/20210924/1920x1008_52347954423.jpg",
+                imageurl:
+                  "https://imgcdn.cna.com.tw/www/webphotos/WebOg/600/20210924/1920x1008_52347954423.jpg",
                 content: "我有一台新的自行車，希望能換到一塊滑板。",
                 user: "User5",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶6",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電風扇換你的電暖器",
-                imageurl: "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
-                content: "我有一台新的電風扇，希望能換到一台電暖器。有一台新的電風扇，希望能換到一台電暖器。有一台新的電風扇，希望能換到一台電暖器。有一台新的電風扇，希望能換到一台電暖器。",
+                imageurl:
+                  "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
+                content:
+                  "我有一台新的電風扇，希望能換到一台電暖器。有一台新的電風扇，希望能換到一台電暖器。有一台新的電風扇，希望能換到一台電暖器。有一台新的電風扇，希望能換到一台電暖器。",
                 user: "User6",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶7",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電風扇換你的電暖器",
-                imageurl: "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
+                imageurl:
+                  "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
                 content: "我有一台新的電風扇，希望能換到一台電暖器。",
                 user: "User6",
-                post_time: new Date().toISOString().slice(0,10),
-            },
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶8",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電風扇換你的電暖器",
-                imageurl: "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
+                imageurl:
+                  "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
                 content: "我有一台新的電風扇，希望能換到一台電暖器。",
                 user: "User6",
-                post_time: new Date().toISOString().slice(0,10),
-            }, 
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶9",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電風扇換你的電暖器",
-                imageurl: "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
+                imageurl:
+                  "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
                 content: "我有一台新的電風扇，希望能換到一台電暖器。",
                 user: "User6",
-                post_time: new Date().toISOString().slice(0,10),
-            },    
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶10",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電風扇換你的電暖器",
-                imageurl: "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
+                imageurl:
+                  "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
                 content: "我有一台新的電風扇，希望能換到一台電暖器。",
                 user: "User6",
-                post_time: new Date().toISOString().slice(0,10),
-            },    
-            {
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+              {
                 nickname: "用戶11",
                 class_name: "以物易物",
                 class_name_eng: "Trade",
                 title: "用我的電風扇換你的電暖器",
-                imageurl: "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
+                imageurl:
+                  "https://www.merit-times.com/news_pic/20220227/C20220226215929165.jpg",
                 content: "我有一台新的電風扇，希望能換到一台電暖器。",
                 user: "User6",
-                post_time: new Date().toISOString().slice(0,10),
-            },        
-        ]
-        };
-      },
-
-      methods: {
-        // 根據用戶輸入的搜索條件過濾商品列表
-        search() {
-          this.filteredItems = this.items.filter(
-            (item) => item.product_name.includes(this.searchTerm)
-            // 利用搜尋輸入框(searchTerm)來比對所有產品(items)，最後存在(filteredItems)，
-            // searchTerm 如果沒有輸入。存入所有 items 到 filteredItems 陣列
-            // -----
-            // 使用 this.items.filter() 函數來遍歷 items 陣列中的每個商品對象，
-            //    並檢查商品標題（item.title）是否包含用戶輸入的搜尋條件（this.searchTerm）。
-            // includes() 方法返回 true（標題包含搜索條件）或 false（標題不包含搜索條件）。
-          );
+                post_time: new Date().toISOString().slice(0, 10),
+              },
+            ],
+          };
         },
-        // 設定要顯示詳細資料並加入歷史紀錄列表
-        showDetails(item) {
-          this.selectedItem = item;
-          // 將搜尋商品item(filteredItems)設置為選定的商品
-          if (
-            !this.history.some((historyItem) => historyItem.product_id === item.product_id)
-            // historyItem 是 history 每個元素
-            // 比較瀏覽歷史中的每個商品（historyItem）的 id 是否等於當前選擇的商品（item）的 id
-            // some() 方法將返回 true，否則返回 false。
-            // 如果該產品尚未添加到瀏覽歷史中(false)，則將其添加到歷史陣列中()
-          ) {
-            if (this.history.length >= 5) {
-              // 如果歷史列表已滿（5個項目），則先移除最早的項目
-              this.history.shift();
+
+        methods: {
+          // 根據用戶輸入的搜索條件過濾商品列表
+          search() {
+            this.filteredItems = this.items.filter(
+              (item) => item.product_name.includes(this.searchTerm)
+              // 利用搜尋輸入框(searchTerm)來比對所有產品(items)，最後存在(filteredItems)，
+              // searchTerm 如果沒有輸入。存入所有 items 到 filteredItems 陣列
+              // -----
+              // 使用 this.items.filter() 函數來遍歷 items 陣列中的每個商品對象，
+              //    並檢查商品標題（item.title）是否包含用戶輸入的搜尋條件（this.searchTerm）。
+              // includes() 方法返回 true（標題包含搜索條件）或 false（標題不包含搜索條件）。
+            );
+          },
+          // 設定要顯示詳細資料並加入歷史紀錄列表
+          showDetails(item) {
+            this.selectedItem = item;
+            // 將搜尋商品item(filteredItems)設置為選定的商品
+            if (
+              !this.history.some(
+                (historyItem) => historyItem.product_id === item.product_id
+              )
+              // historyItem 是 history 每個元素
+              // 比較瀏覽歷史中的每個商品（historyItem）的 id 是否等於當前選擇的商品（item）的 id
+              // some() 方法將返回 true，否則返回 false。
+              // 如果該產品尚未添加到瀏覽歷史中(false)，則將其添加到歷史陣列中()
+            ) {
+              if (this.history.length >= 5) {
+                // 如果歷史列表已滿（5個項目），則先移除最早的項目
+                this.history.shift();
+              }
+              // 添加該產品到歷史列表
+              this.history.push(item);
             }
-            // 添加該產品到歷史列表
-            this.history.push(item);
-          }
+          },
+          // 瀏覽紀錄
+          loadSelectedHistory() {
+            this.selectedItem = this.selectedHistory;
+            // 用戶選擇的歷史項目（selectedHistory）賦值給當前選擇的商品（selectedItem）。
+            // 這樣用戶可以通過選擇歷史項目（selectedHistory）來顯示商品。
+          },
+          handleResize() {
+            if (window.innerWidth <= 768) {
+              // window.innerWidth 用於判斷窗口的寬度，根據窗口寬度調整 chunkSize 的值
+              this.chunkSize = 1;
+            } else {
+              this.chunkSize = 3;
+            }
+            // 如果 chunkSize 是 3，那麼 chunkedFeaturedProducts 將是 [[1, 2, 3], [4, 5, 6], [7, 8, 9]]。
+            // 如果 chunkSize 是 1，那麼 chunkedFeaturedProducts 將是 [[1], [2], [3], [4], [5], [6], [7], [8], [9]]。
+          },
         },
-        // 瀏覽紀錄
-        loadSelectedHistory() {
-          this.selectedItem = this.selectedHistory;
-          // 用戶選擇的歷史項目（selectedHistory）賦值給當前選擇的商品（selectedItem）。
-          // 這樣用戶可以通過選擇歷史項目（selectedHistory）來顯示商品。
+
+        mounted() {
+          this.filteredItems = this.items;
+          // Vue.js 組件被掛載（即在 DOM 中呈現）時，會執行這行代碼。
+          this.handleResize();
+          // 初始化時調用 handleResize。
+          window.addEventListener("resize", this.handleResize);
+          // resize 事件是用戶改變瀏覽器窗口大小時觸發的事件。
+          // 給瀏覽器窗口（window）添加了一個事件監聽器，
+          // 當窗口大小發生變化（即 resize 事件被觸發）時，
+          // 就會執行 this.handleResize 方法。
         },
-        handleResize() {
-          if (window.innerWidth <= 768) {
-            // window.innerWidth 用於判斷窗口的寬度，根據窗口寬度調整 chunkSize 的值
-            this.chunkSize = 1;
-          } else {
-            this.chunkSize = 3;
-          }
-          // 如果 chunkSize 是 3，那麼 chunkedFeaturedProducts 將是 [[1, 2, 3], [4, 5, 6], [7, 8, 9]]。
-          // 如果 chunkSize 是 1，那麼 chunkedFeaturedProducts 將是 [[1], [2], [3], [4], [5], [6], [7], [8], [9]]。
+        beforeDestroy() {
+          // 在 Vue 實例被銷毀之前，beforeDestroy 鉤子會被執行。
+          window.removeEventListener("resize", this.handleResize);
+          // 移除了這個事件監聽器。
+          // 如果不移除監聽器，那麼即使組件被銷毀，監聽器仍然存在，這可能會導致錯誤或內存洩露。
         },
-      },
 
-      mounted() {
-        this.filteredItems = this.items;
-        // Vue.js 組件被掛載（即在 DOM 中呈現）時，會執行這行代碼。
-        this.handleResize();
-        // 初始化時調用 handleResize。
-        window.addEventListener("resize", this.handleResize);
-        // resize 事件是用戶改變瀏覽器窗口大小時觸發的事件。
-        // 給瀏覽器窗口（window）添加了一個事件監聽器，
-        // 當窗口大小發生變化（即 resize 事件被觸發）時，
-        // 就會執行 this.handleResize 方法。
-      },
-      beforeDestroy() {
-        // 在 Vue 實例被銷毀之前，beforeDestroy 鉤子會被執行。
-        window.removeEventListener("resize", this.handleResize);
-        // 移除了這個事件監聽器。
-        // 如果不移除監聽器，那麼即使組件被銷毀，監聽器仍然存在，這可能會導致錯誤或內存洩露。
-      },
-
-      computed: {
-        // 計算屬性可以用於處理數據的過濾、排序，或者是其他響應式進行計算。
-        // 當依賴改變時，計算屬性的值才會更新，而 methods 方法則在每次組件渲染時都會執行。
-        chunkedFeaturedProducts() {
-          // 計算屬性 chunkedFeaturedProducts 依賴於 chunkSize 和 featuredProducts。
-          // 當這兩個值中的任何一個發生改變時，chunkedFeaturedProducts 將會重新計算。
-          const chunkSize = this.chunkSize;
-          const chunkedArray = [];
-          // chunkedArray 存放分塊後的子數組。
-          for (let i = 0; i < this.items.length; i += chunkSize) {
-            chunkedArray.push(this.items.slice(i, i + chunkSize));
-            // slice 回傳一個指定索引範圍的新陣列
-            // chunkedArray.push(...);將提取出的子數組添加到 chunkedArray 中。
-            // 如果 chunkSize 是 3，而 this.featuredProducts 是 [1, 2, 3, 4, 5, 6, 7, 8, 9]，
-            // 那麼 chunkedArray 就會是 [[1, 2, 3], [4, 5, 6], [7, 8, 9]]。
-          }
-          return chunkedArray;
+        computed: {
+          // 計算屬性可以用於處理數據的過濾、排序，或者是其他響應式進行計算。
+          // 當依賴改變時，計算屬性的值才會更新，而 methods 方法則在每次組件渲染時都會執行。
+          chunkedFeaturedProducts() {
+            // 計算屬性 chunkedFeaturedProducts 依賴於 chunkSize 和 featuredProducts。
+            // 當這兩個值中的任何一個發生改變時，chunkedFeaturedProducts 將會重新計算。
+            const chunkSize = this.chunkSize;
+            const chunkedArray = [];
+            // chunkedArray 存放分塊後的子數組。
+            for (let i = 0; i < this.items.length; i += chunkSize) {
+              chunkedArray.push(this.items.slice(i, i + chunkSize));
+              // slice 回傳一個指定索引範圍的新陣列
+              // chunkedArray.push(...);將提取出的子數組添加到 chunkedArray 中。
+              // 如果 chunkSize 是 3，而 this.featuredProducts 是 [1, 2, 3, 4, 5, 6, 7, 8, 9]，
+              // 那麼 chunkedArray 就會是 [[1, 2, 3], [4, 5, 6], [7, 8, 9]]。
+            }
+            return chunkedArray;
+          },
         },
-      },
-    });
+      });
 
-    app.mount("#app");
-  </script>
-  <script>
-    // 漢堡條 JS
-    function myFunction(x) {
-      x.classList.toggle("change");
-      // 如果 div 元素(x)已經包含 "change" 類別，則刪除它；
-      // classList 方法，用於獲取該元素的類列表
-      // toggle 方法，如果該元素已經有了這個類，則移除它；如果沒有，則添加它
-    }
-  </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
-</body>
-
+      app.mount("#app");
+    </script>
+    <script>
+      // 漢堡條 JS
+      function myFunction(x) {
+        x.classList.toggle("change");
+        // 如果 div 元素(x)已經包含 "change" 類別，則刪除它；
+        // classList 方法，用於獲取該元素的類列表
+        // toggle 方法，如果該元素已經有了這個類，則移除它；如果沒有，則添加它
+      }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
