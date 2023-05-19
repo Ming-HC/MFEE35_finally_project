@@ -1185,3 +1185,19 @@ var x = multer({
 app.post('/upload_headshot', x.single('headshot'), function (req, res) {
     res.send(req.file.path);
 })
+
+
+
+// 首頁導覽列
+// 首頁跑馬燈
+// 首頁產品查詢
+// 首頁最新商品
+// 首頁討論區
+
+
+
+
+
+
+
+
