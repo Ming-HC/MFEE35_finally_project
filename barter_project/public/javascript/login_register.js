@@ -214,6 +214,8 @@ $(function () {
                                         } else {
                                             setTimeout(() => { location.href = '/'; }, 1000);
                                         }
+                                    } else {
+                                        setTimeout(() => { location.href = document.referrer; }, 1000);
                                     }
                                 } else {
                                     $('#uname').prop('class', 'form-control is-invalid');
