@@ -712,7 +712,7 @@ app.get('/member/:user/MYproduct', function (req, res) {
                         conn.query(sql2, [user], function (err2, results2, fields2) {
                             if (err2) throw err2;
                             if (results2.length == 0) {
-                                console.log(results2);
+                                // console.log(results2);
                                 res.render('MYproduct', {
                                     user: user,
                                     product: results1,
@@ -789,7 +789,7 @@ app.post('/member/:user/MYproduct', function (req, res) {
 
 app.delete('/member/:user/MYproduct', function (req, res) {
     var user = req.params.user;
-    console.log(req.body);
+    // console.log(req.body);
     var sql = "DELETE FROM membercenter.myproduct WHERE MYproductid = ?;";
     conn.query(sql, [req.body.MYproductid], function (err, results, fields) {
         if (err) {

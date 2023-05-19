@@ -1,8 +1,9 @@
 $(function () {
     $('input[type=file]').change(function handleFiles() {
-        var img = document.querySelector('img[src^="/image/Myproduct"]');
+        var img = document.querySelector('.putimage');
         console.log(img);
         img.src = window.URL.createObjectURL(this.files[0]);
+        console.log(img.src);
         img.onload = function () {
             window.URL.revokeObjectURL(this.src);
         }
