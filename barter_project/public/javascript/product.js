@@ -29,7 +29,11 @@ $(function(){
           <div class="card-body">
             <p class="card-text"><a href="/product/${productList[index].product_id}/detail" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
             <div class="">
+<<<<<<< HEAD
+            刊登者 > <a href="./member/${productList[index].user_name}">${productList[index].user_name}</a>
+=======
             刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
             </div>
             <div class="d-flex justify-content-between align-items-center">
             <div class="">
@@ -61,7 +65,11 @@ $(function(){
           <div class="card-body">
             <p class="card-text"><a href="/product/${productList[index].product_id}/detail" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
             <div class="">
+<<<<<<< HEAD
+            刊登者 > <a href="/member/${productList[index].user_name}">${productList[index].user_name}</a>
+=======
             刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
             </div>
             <div class="d-flex justify-content-between align-items-center">
             <div class="">
@@ -146,7 +154,11 @@ $(function(){
         <div class="card-body">
           <p class="card-text"><a href="" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
           <div class="">
+<<<<<<< HEAD
+          刊登者 > <a href="">${productList[index].user_name}</a>
+=======
           刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
           </div>
           <div class="d-flex justify-content-between align-items-center">
           <div class="">
@@ -169,7 +181,11 @@ $(function(){
         <div class="card-body">
           <p class="card-text"><a href="" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
           <div class="">
+<<<<<<< HEAD
+          刊登者 > <a href="">${productList[index].user_name}</a>
+=======
           刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
           </div>
           <div class="d-flex justify-content-between align-items-center">
           <div class="">
@@ -248,7 +264,11 @@ $(function(){
           <div class="card-body">
             <p class="card-text"><a href="" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
             <div class="">
+<<<<<<< HEAD
+            刊登者 > <a href="">${productList[index].user_name}</a>
+=======
             刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
             </div>
             <div class="d-flex justify-content-between align-items-center">
             <div class="">
@@ -271,7 +291,11 @@ $(function(){
           <div class="card-body">
             <p class="card-text"><a href="" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
             <div class="">
+<<<<<<< HEAD
+            刊登者 > <a href="">${productList[index].user_name}</a>
+=======
             刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
             </div>
             <div class="d-flex justify-content-between align-items-center">
             <div class="">
@@ -525,7 +549,11 @@ function changeDisplay (value){
                 <div class="card-body">
                   <p class="card-text"><a href="" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
                   <div class="">
+<<<<<<< HEAD
+                  刊登者 > <a href="">${productList[index].user_name}</a>
+=======
                   刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                   <div class="">
@@ -544,7 +572,11 @@ function changeDisplay (value){
                 <div class="card-body">
                   <p class="card-text"><a href="" id="product_id_${productList[index].product_id}">${productList[index].product_name}</a></p>
                   <div class="">
+<<<<<<< HEAD
+                  刊登者 > <a href="">${productList[index].user_name}</a>
+=======
                   刊登者 > ${productList[index].user_name}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                   <div class="">

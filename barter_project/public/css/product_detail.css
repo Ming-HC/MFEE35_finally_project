@@ -307,6 +307,18 @@ textarea{
     position: relative;
     bottom: 0.5rem;
 }
+<<<<<<< HEAD
+=======
+a {
+    text-decoration:none;
+}
+.QAusername{
+    color:royalblue ;
+}
+nav{
+    position: initial !important;
+}
+>>>>>>> 2025438ae6f9905293a6ddc910b76fef4633e855
 
 /* footer */
 .page{

@@ -17,19 +17,21 @@ create table product_page.product
   );
 
 -- 新增資料
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩1', '柳神，是辰東所著東方玄幻小説《完美世界》《聖墟》中的重要人物，無上仙王巨頭，風華絕代，實力通天。號稱祖祭靈，功參造化，一身戰力震古爍今，曾隻身殺入異域，九進九出，殺得異域不朽之王聞風喪膽。' ,'/image/product/106543200_p0.jpg','台中市','狂三' , '/image/member/member01.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩2', '有沒有人要買女孩?' ,'/image/product/106543200_p1.jpg','台中市','鳶一' , '/image/member/member02.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩3', '我要我要!' ,'/image/product/106543200_p2.jpg','台北市','二乃' , '/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩4', '羅莉控?' ,'/image/product/106543200_p3.jpg','台南市','三玖','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩5', '我大三玖!' ,'/image/product/106543200_p4.jpg','台北市','四糸乃','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩6', '嗯!你說的沒錯!' ,'/image/product/106543200_p5.jpg','高雄市','四葉','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩7', 'aa' ,'/image/product/106543200_p6.jpg','屏東市','五月','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩8', 'bb' ,'/image/product/106543200_p7.jpg','彰化市','一花','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩9', 'cc' ,'/image/product/106543200_p8.jpg','新竹市','八舞','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩10', 'dd' ,'/image/product/106543200_p9.jpg','基隆市','美九','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩11', 'ee' ,'/image/product/106543200_p10.jpg','新北市','崇宮零','/image/member/member03.jpg');
-insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('小女孩12', 'gg' ,'/image/product/106543200_p11.jpg','台東市','柳神','/image/member/member03.jpg');
-INSERT INTO product_page.product ( `product_name`, `product_image`, `product_detail`, `user_name`, `user_image`, `city`, `memo`, `lunch_date`) VALUES ('大美女', '/image/product/106543200_p12.jpg', 'XD' , '測試人員1號', '/image/member/test1.jpg', '彰化縣', NULL, CURRENT_TIMESTAMP);
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('約會大作戰 錢包', '約會大作戰錢包 忍痛割愛' ,'/image/product/S__44769325.jpg','台中市','HORNET' , '/image/member/member01.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('HTML書本', 'HTML、CSS相關用法介紹!
+近全新' ,'/image/product/S__44769327.jpg','台中市','kurumi' , '/image/member/member02.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('JS書本', 'HTML、CSS相關用法介紹!
+近全新' ,'/image/product/S__44769328.jpg','台北市','mikudayo' , '/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('熱敷眼罩', '熱敷眼罩' ,'/image/product/S__44769329.jpg','台南市','yutsuba','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('英梨梨 PVC', '英梨梨PVC 二手 狀況良好' ,'/image/product/S__44769330.jpg','台北市','HANSAN','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('隨身碟', 'ADATA 16GB 全新品' ,'/image/product/S__44769331.jpg','高雄市','123456','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('牛仔褲', '七成新，用半年' ,'/image/product/牛仔褲.jpg','屏東市','itsuki','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('南瓜燈', '可愛南瓜燈! 限定商品~ 忍痛割愛!!!' ,'/image/product/南瓜燈.jpg','彰化市','一花','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('星巴克杯子', '' ,'/image/product/星巴克杯子.jpg','新竹市','八舞','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('憤怒鳥保溫杯', '全新保溫杯!' ,'/image/product/憤怒鳥保溫杯.jpg','基隆市','美九','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('法瑯鍋', '使用半年 外表近全新' ,'/image/product/法瑯鍋.jpg','新北市','崇宮零','/image/member/member03.jpg');
+insert into product_page.product (product_name,product_detail,product_image,city,user_name, user_image) values ('卡娜赫拉玩偶', '全新品 沒用過! 只有拆外塑膠包裝' ,'/image/product/卡娜赫拉玩偶.jpg','台東市','柳神','/image/member/member03.jpg');
+INSERT INTO product_page.product ( `product_name`, `product_image`, `product_detail`, `user_name`, `city`, `memo`, `lunch_date`) VALUES ('小鍵盤', '/image/product/小鍵盤.jpg', '九成新' , 'naruto', , '彰化縣', NULL, CURRENT_TIMESTAMP);
 
 
 -- UPDATE `product` SET `user_image` = '/image/member/member01.jpg' WHERE `product`.`product_id` = 1;
