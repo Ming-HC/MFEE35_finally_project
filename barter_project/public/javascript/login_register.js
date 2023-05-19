@@ -99,7 +99,7 @@ $(function () {
             `;
             } else if (url == 'logined') {
                 alert('You are logined.');
-                location.href = $(".d-none.d-md-block.button").prop("href").split("localhost")[1];
+                location.href = $(".d-none.d-md-block").prop("href").split("localhost")[1];
             }
 
 
@@ -196,22 +196,26 @@ $(function () {
                                     $('#psw').prop('class', 'form-control is-valid');
                                     $('#psw+label').css('color', 'green');
                                     $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
-                                    if (document.referrer.indexOf('register') == -1) {
+                                    if (document.referrer.indexOf('register') > -1) {
                                         if (req.logined_times < 1) {
                                             setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
                                         } else {
-                                            setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                                setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                        }
+                                    } else if (document.referrer == "" || document.referrer.indexOf('login') > -1) {
+                                        if (req.logined_times < 1) {
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
+                                        } else {
+                                            setTimeout(() => { location.href = '/'; }, 1000);
+                                        }
+                                    } else if (document.referrer.indexOf('/logout') > -1) {
+                                        if (req.logined_times < 1) {
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
+                                        } else {
+                                            setTimeout(() => { location.href = '/'; }, 1000);
                                         }
                                     } else {
-                                        if (req.logined_times < 1) {
-                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
-                                        } else {
-                                            if (document.referrer.indexOf('login') == -1) {
-                                                setTimeout(() => { window.location.href = document.referrer; }, 1000);
-                                            } else {
-                                                setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
-                                            }
-                                        }
+                                        setTimeout(() => { location.href = document.referrer; }, 1000);
                                     }
                                 } else {
                                     $('#uname').prop('class', 'form-control is-invalid');
