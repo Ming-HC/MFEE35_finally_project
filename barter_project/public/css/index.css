@@ -249,38 +249,38 @@
 
 /* 精選商品 */
       /* 輪播按鈕 */
-      .carousel-control-prev {
+      button.carousel-control-prev {
         left: -100px;
       }
 
-      .carousel-control-next {
+      button.carousel-control-next {
         right: -100px;
       }
       @media (max-width: 991px) {
-        .carousel-control-prev {
+        button.carousel-control-prev {
           left: -75px;
         }
   
-        .carousel-control-next {
+        button.carousel-control-next {
           right: -75px;
         }
       } 
       @media (max-width: 680px) {
-        .carousel-control-prev {
+        button.carousel-control-prev {
           left: -55px;
         }
   
-        .carousel-control-next {
+        button.carousel-control-next {
           right: -55px;
         }
       } 
 
-      .carousel-control-next-icon {
+      button .carousel-control-next-icon {
         width: 20px;
         background-image: url(/img/next.png);
       }
 
-      .carousel-control-prev-icon {
+      button .carousel-control-prev-icon {
         width: 20px;
         background-image: url(/img/prev.png);
       }
