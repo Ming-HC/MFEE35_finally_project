@@ -103,7 +103,7 @@
                         </div>
                       </div>
                       <div class="col-3">
-                        <form action="/member/<%= user %>/MYproduct" method="post">
+                        <form action="/member/<%= user %>/MYproduct" method="post" onsubmit="return confirmSubmit()">
                           <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
                           <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">
                           <input type="hidden" name="MYproductdetail" value="<%= MYproduct[i].MYproductdetail%>">
@@ -111,9 +111,6 @@
                           <input type="hidden" name="MYproductid" value="<%= MYproduct[i].MYproductid%>">
                           <input type="submit" value="上架" class="btn-sm btn btn-secondary mt-3">
                         </form>
-                        <!-- <button class="btn-sm btn btn-secondary mt-3" onclick="pushdata(<%= MYproduct[i].MYproductid %>)">
-                      上架
-                    </button> -->
                         <form action="/member/<%= user %>/MYproduct">
                           <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
                           <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">

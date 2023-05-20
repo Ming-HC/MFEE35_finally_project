@@ -28,4 +28,8 @@ function deldata(MYproductid) {
         // console.log(product_id)
     }
 }
+function confirmSubmit() {
+    var confirmation = confirm("確認上架");
+    return confirmation;
+  }
 
