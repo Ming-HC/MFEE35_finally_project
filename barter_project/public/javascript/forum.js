@@ -78,7 +78,7 @@ $(function () {
         function appendPost(post_id, post_class, title, imageurl, content, reply, views, user, latestReply_user, latestReply_time) {
             var newTR = $('<tr>');
             newTR.append(`<td><label>${post_class}</label></td>`);
-            newTR.append(`<td><img src="${imageurl? "/image/forum/upload/"+imageurl : ""}"></td>`);
+            newTR.append(`<td><img src="${imageurl? "/image/forum/upload/"+imageurl : "/image/forum/demo.png"}"></td>`);
             newTR.append(`<td><a href="/forum/post/${post_id}"><label>${title}</label></a>
                             <label>${content}</label></td>`);
             newTR.append(`<td><label>${reply}</label> / <label>${views}</label></td>`);

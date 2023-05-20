@@ -78,8 +78,10 @@ th:not(:last-child) {
 } */
 
 #postResult img {
-    height: 50px;
-    width: 50px;
+    width: 150px;
+    aspect-ratio: 16/9;
+	/* 額外確保圖片縮放時會有最好的效果 */
+	object-fit: cover;
 }
 
 #postResult tr td:nth-of-type(3) {
