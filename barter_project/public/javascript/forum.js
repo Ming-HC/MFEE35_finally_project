@@ -60,12 +60,21 @@ $(function () {
                 $.each(req.postlist, function (index, item) {
                     var postd = new Date(item.latestReply_time_format);
                     var d = new Date();
-                    (d - postd)/1000 < 3600 ? (d - postd)/60000 < 1? item.latestReply_time_format='1分內' : item.latestReply_time_format=`${Math.floor((d - postd)/60000)}分前` : item.latestReply_time_format.split('/')[0] == 2023 ? item.latestReply_time_format = item.latestReply_time_format.split('2023/')[1]: item.latestReply_time_format;
+                    var posttime = (d - postd) / 1000;
+                    if (posttime < 60) {
+                        item.latestReply_time_format = `1分內`;
+                    } else if (posttime < (60 * 60)) {
+                        item.latestReply_time_format = `${Math.floor(posttime / 60)}分前`;
+                    } else if (posttime < (60 * 60 * 24)) {
+                        item.latestReply_time_format = `${Math.floor(posttime / 60 / 60)}小時前`;
+                    } else if (posttime >= (60 * 60 * 24)) {
+                        item.latestReply_time_format = `${Math.floor(posttime / 60 / 60 / 24)}天前`;
+                    }
                     appendPost(item.post_id, item.class_name, item.title, item.imageurl, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
                 })
                 $('.page').html('');
                 var pattern = /\d+/;
-                var classname = window.location.pathname.split("/").reverse()[1] != "" ? pattern.test(window.location.pathname.split("/").reverse()[0])? window.location.pathname.split("/").reverse()[1] : window.location.pathname.split("/").reverse()[0] : "all";
+                var classname = window.location.pathname.split("/").reverse()[1] != "" ? pattern.test(window.location.pathname.split("/").reverse()[0]) ? window.location.pathname.split("/").reverse()[1] : window.location.pathname.split("/").reverse()[0] : "all";
                 for (let i = 1; i <= req.page; i++) {
                     if (url.split("/").reverse()[0] == i) {
                         $('.page').append(`<span>${i}</span>`)
@@ -78,7 +87,7 @@ $(function () {
         function appendPost(post_id, post_class, title, imageurl, content, reply, views, user, latestReply_user, latestReply_time) {
             var newTR = $('<tr>');
             newTR.append(`<td><label>${post_class}</label></td>`);
-            newTR.append(`<td><img src="${imageurl? "/image/forum/upload/"+imageurl : "/image/forum/demo.png"}"></td>`);
+            newTR.append(`<td><img src="${imageurl ? "/image/forum/upload/" + imageurl : "/image/forum/demo.png"}"></td>`);
             newTR.append(`<td><a href="/forum/post/${post_id}"><label>${title}</label></a>
                             <label>${content}</label></td>`);
             newTR.append(`<td><label>${reply}</label> / <label>${views}</label></td>`);
@@ -89,7 +98,7 @@ $(function () {
     }
     getPostClass();
     getPostList();
-    $('#search_submit').click( () => {
+    $('#search_submit').click(() => {
         if ($(".search input").val() != "") {
             sessionStorage.setItem('select_target', $('.search_select').val());
             sessionStorage.setItem('select_content', $('.search>input').val());

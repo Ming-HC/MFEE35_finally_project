@@ -26,7 +26,16 @@ $(function () {
                 $.each(req.postlist, (index, item) => {
                     var postd = new Date(item.latestReply_time_format);
                     var d = new Date();
-                    Math.ceil((d - postd) / 1000) < 3600 ? item.latestReply_time_format = `${Math.ceil((d - postd) / 60000)}分前` : item.latestReply_time_format;
+                    var posttime = (d - postd) / 1000;
+                    if (posttime < 60) {
+                        item.latestReply_time_format = `1分內`;
+                    } else if (posttime < (60 * 60)) {
+                        item.latestReply_time_format = `${Math.floor(posttime / 60)}分前`;
+                    } else if (posttime < (60 * 60 * 24)) {
+                        item.latestReply_time_format = `${Math.floor(posttime / 60 / 60)}小時前`;
+                    } else if (posttime >= (60 * 60 * 24)) {
+                        item.latestReply_time_format = `${Math.floor(posttime / 60 / 60 / 24)}天前`;
+                    }
                     appendPost(item.post_id, item.class_name, item.title, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
                 })
                 $('.page').html('');
