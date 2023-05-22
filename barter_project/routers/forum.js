@@ -117,7 +117,7 @@ router.get('/editpost/:id/:floor/getdata', function (req, res) {
         res.redirect('/member/login');
     }
 })
-
+let upload_image_index = 0;
 var post_upload_img = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "public/image/forum/upload");
@@ -125,12 +125,13 @@ var post_upload_img = multer.diskStorage({
     filename: async function (req, file, cb) {
         fs.readdir('public/image/forum/upload', function (err, data) {
             if (err) throw err;
+            upload_image_index++;
             if (data[0]) {
                 data.forEach(function (filename, index) {
                     data[index] = filename.split('.png')[0].split('_')[1];
                 })
                 data = data.sort(function (a, b) { return a - b });
-                var userFileName = `img_${Number(data[data.length - 1]) + 1}.png`;
+                var userFileName = `img_${Number(data[data.length - 1]) + upload_image_index}.png`;
             } else {
                 var userFileName = `img_0.png`;
             }
@@ -148,7 +149,8 @@ var post_upload = multer({
     }
 });
 
-router.post('/editpost/:id/:floor/edit', express.urlencoded(), post_upload.any('imageurl'), function (req, res) {
+router.post('/editpost/:id/:floor/edit', express.urlencoded(), post_upload.array('imageurl'), function (req, res) {
+    upload_image_index = 0;
     var post_id = req.params.id;
     var floor = req.params.floor;
     if (req.body.content.length > 50) {
@@ -248,8 +250,9 @@ router.post('(/:class)?/getclass', express.urlencoded(), function (req, res) {
     }
 })
 
-router.post('/newpost/:something', express.urlencoded(), post_upload.any('imageurl'), function (req, res) {
+router.post('/newpost/:something', express.urlencoded(), post_upload.array('imageurl'), function (req, res) {
     // bug: 需加 權限 限制 發佈 系統公告文章
+    upload_image_index = 0;
     var imageurl = [];
     for (let i = 0; i < req.files.length; i++) {
         if (req.files[0].path.indexOf('\\') > -1) {
@@ -412,7 +415,8 @@ router.get('/post/:id/getdata', function (req, res) {
         }
     })
 })
-router.post('/post/:id/reply', express.urlencoded(), post_upload.any('imageurl'), function (req, res) {
+router.post('/post/:id/reply', express.urlencoded(), post_upload.array('imageurl'), function (req, res) {
+    upload_image_index = 0;
     if (req.session.user) {
         var imageurl = [];
         for (let i = 0; i < req.files.length; i++) {
