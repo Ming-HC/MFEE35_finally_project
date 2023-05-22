@@ -61,7 +61,7 @@ $(function () {
                                             if (req.logined_times < 1) {
                                                 setTimeout(() => { location.href = '/member/'+req.account+'/personal'; }, 5000);
                                             } else {
-                                                    setTimeout(() => { window.location.href = document.referrer; }, 5000);
+                                                setTimeout(() => { location.href = '/'; }, 5000);
                                             }
                                         } else if (document.referrer == "" || document.referrer.indexOf('login') > -1) {
                                             if (req.logined_times < 1) {
@@ -212,7 +212,7 @@ $(function () {
                                         if (req.logined_times < 1) {
                                             setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 5000);
                                         } else {
-                                                setTimeout(() => { window.location.href = document.referrer; }, 5000);
+                                            setTimeout(() => { location.href = `/`; }, 5000);
                                         }
                                     } else if (document.referrer == "" || document.referrer.indexOf('login') > -1) {
                                         if (req.logined_times < 1) {
