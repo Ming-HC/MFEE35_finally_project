@@ -36,7 +36,7 @@ $(function () {
                     } else if (posttime >= (60 * 60 * 24)) {
                         item.latestReply_time_format = `${Math.floor(posttime / 60 / 60 / 24)}天前`;
                     }
-                    appendPost(item.post_id, item.class_name, item.title, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
+                    appendPost(item.post_id, item.class_name, item.title, item.imageurl, item.content, item.reply, item.views, item.user, item.latestReply_user, item.latestReply_time_format);
                 })
                 $('.page').html('');
                 var url = window.location.pathname;
@@ -53,14 +53,20 @@ $(function () {
                 }
             }
         })
-        function appendPost(post_id, post_class, title, content, reply, views, user, latestReply_user, latestReply_time) {
-            var newTR = $('<tr>');
-            newTR.append(`<td><label>${post_class}</label></td>`);
-            newTR.append(`<td><a href="/forum/post/${post_id}"><label>${title}</label></a>
-                        <label>${content}</label></td>`);
-            newTR.append(`<td><label>${reply}</label> / <label>${views}</label></td>`);
-            newTR.append(`<td><a href=""><label>${user}</label></a></td>`);
-            newTR.append(`<td><a href=""><label>${latestReply_user}</label></a><label>${latestReply_time}</label></td>`);
+        function appendPost(post_id, post_class, title, imageurl, content, reply, views, user, latestReply_user, latestReply_time) {
+            var newTR = $('<div>');
+            newTR.append(`<div><label>${post_class}</label></div>`);
+            newTR.append(`<div><img src="${imageurl ? "/image/forum/upload/" + imageurl : "/image/forum/demo.png"}"></div>`);
+            newTR.append(`<div><a href="/forum/post/${post_id}"><label>${title}</label></a>
+                            <label>${content}</label></div>`);
+            newTR.append(`<div>
+                                <div><a href=""><label>${user}</label></a></div>
+                                <div class="views_reply_div">
+                                    <div class="views"><i class="fa fa-eye" style="font-size:20px"></i><label>${views}</label></div>
+                                    <div class="reply"><i class="fa fa-comments-o" style="font-size:20px"></i><label>${reply}</label></div>
+                                </div>
+                            </div>`);
+            newTR.append(`<div><a href=""><label>${latestReply_user}</label></a><label>${latestReply_time}</label></div>`);
             $('#postResult').append(newTR);
         }
     }
