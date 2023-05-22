@@ -2,9 +2,14 @@ nav {
     position: initial !important;
 }
 
-.container {
+/* .container {
     max-width: 1200px;
+} */
+
+.myproduct:hover{
+    border-bottom-color: white;
 }
+
 
 body {
     overflow-y: scroll;
