@@ -12,7 +12,7 @@ CREATE TABLE forum.post_1 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_1_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_10 definition
@@ -29,7 +29,7 @@ CREATE table forum.post_10 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_10_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_11 definition
@@ -46,7 +46,7 @@ CREATE table forum.post_11 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_11_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_12 definition
@@ -63,7 +63,7 @@ CREATE table forum.post_12 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_12_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_13 definition
@@ -80,7 +80,7 @@ CREATE table forum.post_13 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_13_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_14 definition
@@ -97,7 +97,7 @@ CREATE table forum.post_14 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_14_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_15 definition
@@ -114,7 +114,7 @@ CREATE table forum.post_15 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_15_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_16 definition
@@ -131,7 +131,7 @@ CREATE table forum.post_16 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_16_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_17 definition
@@ -148,7 +148,7 @@ CREATE table forum.post_17 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_17_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_18 definition
@@ -165,7 +165,7 @@ CREATE table forum.post_18 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_18_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_19 definition
@@ -182,7 +182,7 @@ CREATE table forum.post_19 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_19_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_2 definition
@@ -199,7 +199,7 @@ CREATE table forum.post_2 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_2_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_20 definition
@@ -216,7 +216,7 @@ CREATE table forum.post_20 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_20_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_21 definition
@@ -233,7 +233,7 @@ CREATE table forum.post_21 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_21_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_22 definition
@@ -250,7 +250,7 @@ CREATE table forum.post_22 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_22_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_23 definition
@@ -267,7 +267,7 @@ CREATE table forum.post_23 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_23_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_24 definition
@@ -284,7 +284,7 @@ CREATE table forum.post_24 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_24_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_25 definition
@@ -301,7 +301,7 @@ CREATE table forum.post_25 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_25_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_26 definition
@@ -318,7 +318,7 @@ CREATE table forum.post_26 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_26_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_27 definition
@@ -335,7 +335,7 @@ CREATE table forum.post_27 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_27_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_28 definition
@@ -352,7 +352,7 @@ CREATE table forum.post_28 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_28_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_3 definition
@@ -369,7 +369,7 @@ CREATE table forum.post_3 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_3_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_4 definition
@@ -386,7 +386,7 @@ CREATE table forum.post_4 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_4_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_5 definition
@@ -403,7 +403,7 @@ CREATE table forum.post_5 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_5_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_6 definition
@@ -420,7 +420,7 @@ CREATE table forum.post_6 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_6_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_7 definition
@@ -437,7 +437,7 @@ CREATE table forum.post_7 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_7_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_8 definition
@@ -454,7 +454,7 @@ CREATE table forum.post_8 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_8_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 -- forum.post_9 definition
@@ -471,7 +471,7 @@ CREATE table forum.post_9 (
   PRIMARY KEY (`reply_floor`),
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_9_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO forum.post_1 (class_name,title,`user`,imageurl,content,post_time,floor_exists) VALUES
 	 ('綜合討論','dsfa','testuser','','dfasfa','2023-05-19 10:30:11',0);

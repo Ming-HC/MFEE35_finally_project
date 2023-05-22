@@ -55,8 +55,8 @@ $(function () {
                     }
                     $("input[type=text]").val(req[0].title);
                     $("input[type=text]").prop("disabled", true);
-                    $('.inputfile_group').append(`<input type="hidden" name="oldimageurl" value="${req[1].imageurl}" />`);
-                    imageurl = req[1].imageurl.split(',');
+                    $('.inputfile_group').append(`<input type="hidden" name="oldimageurl" value="${req[0].imageurl}" />`);
+                    imageurl = req[0].imageurl.split(',');
                     if (imageurl != '') {
                         for (let i = 0; i < imageurl.length; i++) {
                             $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload/${imageurl[i]}"><div class="img_tip original" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this) value="${imageurl[i]}">${imageurl[i]}</div></div>`);
@@ -64,7 +64,7 @@ $(function () {
                     }
                     $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this) />`);
                     $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload_image_demo.png"><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
-                    $("textarea").text(req[1].content);
+                    $("textarea").text(req[0].content);
                 }
             }
 
