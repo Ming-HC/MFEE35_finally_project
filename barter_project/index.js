@@ -546,7 +546,7 @@ app.put('/member/:user/personal', b.single('headshot'), function (req, res) {
     // console.log(user)
 
     var sql = 'UPDATE membercenter.personal SET headshot = ? where username = ?'
-    conn.query(sql, [ req.file.filename, user], function (err, results, fields) {
+    conn.query(sql, [req.file.filename, user], function (err, results, fields) {
         if (err) {
             res.send('更新頭貼發生錯誤', err.message);
             console.log("失敗");
@@ -699,29 +699,6 @@ app.post('/member/:user/puton', z2.single('productimage'), function (req, res) {
 // =======================================================================================================================================
 // ===========================================================我的物品=====================================================================
 
-// app.get('/member/:user/MYproduct', function (req, res) {
-//     if (req.session.user) {
-//         var user = req.params.user;
-//         var sql = 'SELECT MYproductid, MYproductimage, MYproductname, MYproductdetail, MYproductcity, DATE_FORMAT(time, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "MYproduct" AS source FROM membercenter.myproduct WHERE MYproductuser_name = ?';
-//         var sql2 = 'SELECT product_id, product_image, product_name, product_detail, city, DATE_FORMAT(lunch_date, "%Y-%m-%d %H:%i:%s") AS lunch_date_formatted, "product" AS source FROM product_page.product WHERE user_name = ?';
-//         var combinedSql = '(' + sql + ') UNION ALL (' + sql2 + ')';
-//         conn.query(combinedSql, [user, user], function (err, results, fields) {
-//             if (err) {
-//                 res.send('select发生错误', err);
-//             } else {
-//                 console.log(results);
-//                 res.render('MYproduct', {
-//                     user: user,
-//                     MYproduct: results,
-//                     page: "MYproduct",
-//                     member: req.session.user.account + "/personal"
-//                 });
-//             }
-//         });
-//     } else {
-//         res.send("error.404");
-//     }
-// });
 app.get('/member/:user/MYproduct', function (req, res) {
     if (req.session.user) {
         var user = req.params.user;
@@ -861,58 +838,72 @@ app.delete('/member/:user/MYproduct', function (req, res) {
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ================================================================與我交換================================================================
+
 app.get('/member/:user/iwant', function (req, res) {
-    user = req.params.user
-    sql = 'select * from product_page.bwc where BWC_user_name = ?'
-    conn.query(sql, [user], function (err, results, fields) {
-        if (err) {
-            res.send("err", err.message)
-        } else {
-            // console.log(results);
-            if (results.length == 0) {
-                res.render('iwant', {
-                    iwant: "nothing",
-                    page: "iwant",
-                    member: req.session.user.account + "/personal"
-                })
+    if (req.session.user) {
+        var user = req.params.user;
+        var sql1 = 'select * from product_page.bwc where BWC_user_name = ?';
+        var sql2 = 'select * from product_page.bwc where WC_user_name = ?';
+        conn.query(sql1, [user], function (err1, results1, fields1) {
+            if (err1) {
+                res.send('select发生错误', err1);
             } else {
-                res.render('iwant', {
-                    iwant: results,
-                    page: "iwant",
-                    member: req.session.user.account + "/personal"
-                    // data
-                })
+                // console.log(results1);
+                if (results1.length == 0) {
+                    conn.query(sql2, [user], function (err2, results2, fields2) {
+                        if (err2) throw err2;
+                        if (results2.length == 0) {
+                            // console.log(results2);
+                            res.render('iwant', {
+                                user: user,
+                                iwant: "nothing",
+                                withme: "nothing",
+                                page: "iwant",
+                                member: req.session.user.account + "/personal"
+                            });
+                        } else {
+                            // console.log(results2);
+                            res.render('iwant', {
+                                user: user,
+                                iwant: "nothing",
+                                withme: results2,
+                                page: "iwant",
+                                member: req.session.user.account + "/personal"
+                            });
+                        }
+                    });
+                } else {
+                    conn.query(sql2, [user], function (err2, results2, fields2) {
+                        if (err2) throw err2;
+                        if (results2.length == 0) {
+                            // console.log(results2);
+                            res.render('iwant', {
+                                user: user,
+                                iwant: results1,
+                                withme: "nothing",
+                                page: "iwant",
+                                member: req.session.user.account + "/personal"
+                            });
+                        } else {
+                            // console.log(results2);
+                            res.render('iwant', {
+                                user: user,
+                                iwant: results1,
+                                withme: results2,
+                                page: "iwant",
+                                member: req.session.user.account + "/personal"
+                            });
+                        }
+                    });
+                }
             }
-        }
-    });
-})
-app.get('/member/:user/withme', function (req, res) {
-    user = req.params.user
-    sql = 'select * from product_page.bwc where WC_user_name = ?'
-    conn.query(sql, [user], function (err, results, fields) {
-        if (err) {
-            res.send("err")
-        } else {
-            // var data = { message: 'Hello from backend!' };
-            if (results.length == 0) {
-                res.render('withme', {
-                    withme: "nothing",
-                    page: "withme",
-                    member: req.session.user.account + "/personal"
-                })
-            } else {
-                res.render('withme', {
-                    withme: results,
-                    page: "withme",
-                    member: req.session.user.account + "/personal",
-                    user: user
-                    // data
-                })
-            }
-        }
-    });
-})
-app.post('/member/:user/withme', function (req, res) {
+        });
+    } else {
+        res.send("error.404");
+    }
+});
+
+app.post('/member/:user/iwant', function (req, res) {
     user = req.params.user
     // console.log(req.body);
     sql = 'INSERT INTO product_page.record(memberid, product, id2, product2) VALUES (?,?,?,?)'
@@ -944,15 +935,29 @@ app.get('/member/:user/record', function (req, res) {
         var user = req.params.user;
         var sql = "SELECT memberid, product, product2, success, DATE_FORMAT(time, '%Y/%m/%d %H:%i')time FROM membercenter.record WHERE id2 = ?;"
         conn.query(sql, [user], function (err, results, fields) {
-            // console.log(results);
-            if (err) {
-                res.send('select發生錯誤', err);
+            if (results.length == 0) {
+                
+                if (err) {
+                    res.send('select發生錯誤', err);
+                } else {
+                    res.render('record', {
+                        record: "nothing",
+                        page: "record",
+                        member: req.session.user.account + "/personal"
+                    });
+                }
             } else {
-                res.render('record', {
-                    record: results,
-                    page: "record",
-                    member: req.session.user.account + "/personal"
-                });
+                // console.log(results);
+                if (err) {
+                    res.send('select發生錯誤', err);
+                } else {
+                    res.render('record', {
+                        record: results,
+                        page: "record",
+                        member: req.session.user.account + "/personal"
+                    });
+                }
+                
             }
         })
     } else {
