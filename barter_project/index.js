@@ -507,6 +507,56 @@ app.post('/member/:user/personal', express.urlencoded(), function (req, res) {
     }
 });
 
+var a = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public/image/member/upload/headshot");
+    },
+    filename: async function (req, file, cb) {
+        fs.readdir('public/image/member/upload/headshot', function (err, data) {
+            if (err) throw err;
+            if (data[0]) {
+                data.forEach(function (filename, index) {
+                    data[index] = filename.split('.png')[0].split('_')[1];
+                })
+                data = data.sort(function (a, b) { return a - b });
+                var userFileName = `headshot_${Number(data[data.length - 1]) + 1}.png`;
+            } else {
+                var userFileName = `headshot_0.png`;
+            }
+            cb(null, userFileName);
+        })
+    }
+})
+var b = multer({
+    storage: a,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype != 'image/png') {
+            return cb(new Error('檔案類型錯誤123'))
+        }
+        cb(null, true);
+    }
+});
+app.put('/member/:user/personal', b.single('headshot'), function (req, res) {
+    var user = req.params.user;
+    console.log(req.file)
+    // console.log(req.body.productname)
+    // console.log(req.body.productdetail)
+    // console.log(req.body.district)
+    // console.log(req.body.city)
+    // console.log(user)
+
+    var sql = 'UPDATE membercenter.personal SET headshot = ? where username = ?'
+    conn.query(sql, [ req.file.filename, user], function (err, results, fields) {
+        if (err) {
+            res.send('更新頭貼發生錯誤', err.message);
+            console.log("失敗");
+        } else {
+            console.log("成功");
+            res.send("<script>alert('更新成功！');window.location.href='/member/" + user + "/puton'</script>");
+        }
+    })
+})
+
 // =======================================================================================================================================
 // =======================================================================================================================================
 // =======================================================================================================================================

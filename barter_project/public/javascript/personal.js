@@ -1,13 +1,4 @@
 $(function () {
-    $('input[type=file]').change(function handleFiles() {
-        var img = document.querySelector('.chimage');
-        console.log(img);
-        img.src = window.URL.createObjectURL(this.files[0]);
-        console.log(img.src);
-        img.onload = function () {
-            window.URL.revokeObjectURL(this.src);
-        }
-    })
     // 連結路由
     // var path = window.location.pathname
     // var url = path.slice(10)
@@ -81,10 +72,10 @@ $(function () {
     var path = window.location.pathname
     let index = path.indexOf("/");
     for (let i = 1; i < 2; i++) {
-        index = path.indexOf("/", index + 1); 
+        index = path.indexOf("/", index + 1);
     }
 
-    var url = path.slice(1,index)
+    var url = path.slice(1, index)
     console.log(url);
 
     // 綁定第一個按鈕的 click 事件處理函式
@@ -230,6 +221,45 @@ $(function () {
                 }),
             })
         }
+    });
+    $('input[type=file]').change(function handleFiles() {
+        var img = document.querySelector('.chimage');
+        // console.log(img);
+        img.src = window.URL.createObjectURL(this.files[0]);
+        // console.log(img.src);
+        img.onload = function () {
+            window.URL.revokeObjectURL(this.src);
+        }
+    })
+    // 綁定第六個按鈕的 click 事件處理函式
+    $('input:button:eq(5)').click(() => {
+        console.log('按鈕 大頭貼 被點擊了');
+        var data = new FormData();
+        $.each($("input[type=file]")[0].files, function (i, file) {
+            data.append('headshot', file);
+        })
+        // var img = document.querySelector('input[type=file]');
+        // console.log(img);
+        $.ajax({
+            type: "put",
+            url: "personal",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (req) {
+                if (req) {
+                    console.log("123");
+                    alert("更新成功");
+                    location.reload();
+                    // console.log(req);
+                    // $('.chimage').prop('src', `/image/member/upload/headshot/${req.split('headshot\\')[1]}`);
+                } else {
+                    // console.log("456");
+                    // console.log(req);
+                    // $('.chimage').prop('src', `/image/member/upload/headshot/${req.split('headshot/')[1]}`);
+                }
+            }
+        })
     });
 
 })

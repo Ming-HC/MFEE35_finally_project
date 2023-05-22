@@ -138,17 +138,22 @@
                         <div class="col-4" style="padding: 30px 50px;">
                             <div class="headsho">
                                 <div style="width: 220px; height: 220px; padding: 20px;">
-                                    <img src="/image/member/demo.png"
-                                        style="width: 100%; height: 100%; object-fit: cover;" class="chimage">
+                                    <%if(personal[0].headshot === null){%>
+                                        <img src="/image/member/demo.png"
+                                            style="width: 100%; height: 100%; object-fit: cover;" class="chimage">
+                                        <%}else{%>
+                                            <img src="/image/member/upload/headshot/<%=personal[0].headshot%>"
+                                                style="width: 100%; height: 100%; object-fit: cover;" class="chimage">
+                                            <%}%>
                                 </div>
-                                    <div>
-                                        <label for="productimage" class="file-button" style="border: none; color: black; background-color: white;
+                                <div>
+                                    <label for="productimage" class="file-button" style="border: none; color: black; background-color: white;
                                             border-radius: 5px;">
-                                            選擇文件
-                                            <input type="file" id="productimage" name="productimage" style="display: none;">
-                                        </label>
-                                        <input type="button" value="儲存" class="w-20 btn btn-secondary btn-sm">
-                                    </div>
+                                        選擇文件
+                                        <input type="file" id="productimage" name="productimage" style="display: none;">
+                                    </label>
+                                    <input type="button" value="儲存" class="w-20 btn btn-secondary btn-sm">
+                                </div>
                             </div>
                         </div>
                     </div>
