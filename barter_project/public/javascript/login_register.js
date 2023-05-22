@@ -57,14 +57,26 @@ $(function () {
                                         $('.imgcontainer img, .d-none.d-md-block.button img, .navbar-brand.d-md-none.button img').prop('src', profile.picture);
                                         $('#psw+label').css('color', 'green');
                                         $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
-                                        if (document.referrer.indexOf('register') == -1) {
+                                        if (document.referrer.indexOf('register') > -1) {
                                             if (req.logined_times < 1) {
-                                                setTimeout(() => { location.href = '/member/'+req.account+'/personal/'; }, 1000);
+                                                setTimeout(() => { location.href = '/member/'+req.account+'/personal'; }, 5000);
                                             } else {
-                                                setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                                    setTimeout(() => { window.location.href = document.referrer; }, 5000);
+                                            }
+                                        } else if (document.referrer == "" || document.referrer.indexOf('login') > -1) {
+                                            if (req.logined_times < 1) {
+                                                setTimeout(() => { location.href = '/member/'+req.account+'/personal'; }, 5000);
+                                            } else {
+                                                setTimeout(() => { location.href = '/'; }, 5000);
+                                            }
+                                        } else if (document.referrer.indexOf('/logout') > -1) {
+                                            if (req.logined_times < 1) {
+                                                setTimeout(() => { location.href = '/member/'+req.account+'/personal'; }, 5000);
+                                            } else {
+                                                setTimeout(() => { location.href = '/'; }, 5000);
                                             }
                                         } else {
-                                            setTimeout(() => { location.href = '/member/'+req.account+'/personal/'; }, 1000);
+                                            setTimeout(() => { location.href = document.referrer; }, 5000);
                                         }
                                     } else {
                                         $('#psw+label').css('color', 'red');
@@ -198,24 +210,24 @@ $(function () {
                                     $('#psw+label').text('Login Success, 5秒後跳轉頁面.');
                                     if (document.referrer.indexOf('register') > -1) {
                                         if (req.logined_times < 1) {
-                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 5000);
                                         } else {
-                                                setTimeout(() => { window.location.href = document.referrer; }, 1000);
+                                                setTimeout(() => { window.location.href = document.referrer; }, 5000);
                                         }
                                     } else if (document.referrer == "" || document.referrer.indexOf('login') > -1) {
                                         if (req.logined_times < 1) {
-                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 5000);
                                         } else {
-                                            setTimeout(() => { location.href = '/'; }, 1000);
+                                            setTimeout(() => { location.href = '/'; }, 5000);
                                         }
                                     } else if (document.referrer.indexOf('/logout') > -1) {
                                         if (req.logined_times < 1) {
-                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 1000);
+                                            setTimeout(() => { location.href = `/member/${req.account}/personal`; }, 5000);
                                         } else {
-                                            setTimeout(() => { location.href = '/'; }, 1000);
+                                            setTimeout(() => { location.href = '/'; }, 5000);
                                         }
                                     } else {
-                                        setTimeout(() => { location.href = document.referrer; }, 1000);
+                                        setTimeout(() => { location.href = document.referrer; }, 5000);
                                     }
                                 } else {
                                     $('#uname').prop('class', 'form-control is-invalid');
@@ -276,7 +288,7 @@ $(function () {
                         success: function (req) {
                             if (req.indexOf('Success') > -1) {
                                 $('input[name=psw]+label').text(req + ' 5秒後跳轉至登入頁.');
-                                setTimeout(() => { location.href = 'login'; }, 1000);
+                                setTimeout(() => { location.href = 'login'; }, 5000);
                             } else {
                                 $('input[name=psw]+label').text(req);
                             }

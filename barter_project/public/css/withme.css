@@ -63,3 +63,9 @@ div.mb-3 {
 body {
     overflow-y: scroll;
 }
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}

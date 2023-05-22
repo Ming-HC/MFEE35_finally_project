@@ -3,10 +3,10 @@ $(function () {
     let index = path.indexOf("/");
     for (let i = 1; i < 3; i++) {
         index = path.indexOf("/", index + 1);
-        console.log(index); 
+        console.log(index);
     }
 
-    var url1 = path.slice(0,index)
+    var url1 = path.slice(0, index)
     console.log(url1);
 
     $('#plus').click(function () {
@@ -19,7 +19,7 @@ function deldata(MYproductid) {
             type: 'delete',
             url: 'MYproduct',
             data: { MYproductid: MYproductid },
-            success: function(){
+            success: function () {
                 alert("刪除成功")
                 location.reload();
             }
@@ -27,5 +27,9 @@ function deldata(MYproductid) {
     } else {
         // console.log(product_id)
     }
+}
+function confirmSubmit() {
+    var confirmation = confirm("確認上架");
+    return confirmation;
 }
 

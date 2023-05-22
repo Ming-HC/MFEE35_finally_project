@@ -1,5 +1,13 @@
 $(function () {
-
+    $('input[type=file]').change(function handleFiles() {
+        var img = document.querySelector('.chimage');
+        console.log(img);
+        img.src = window.URL.createObjectURL(this.files[0]);
+        console.log(img.src);
+        img.onload = function () {
+            window.URL.revokeObjectURL(this.src);
+        }
+    })
     // 連結路由
     // var path = window.location.pathname
     // var url = path.slice(10)

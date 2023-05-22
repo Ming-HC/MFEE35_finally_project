@@ -2,8 +2,13 @@ nav {
     position: initial !important;
 }
 
-.container {
+/* .container {
     max-width: 1200px;
+} */
+html,
+body {
+    height: 100%;
+    margin: 0;
 }
 
 body {
@@ -40,4 +45,23 @@ input {
 div>select:nth-child(2),
 div>select:nth-child(3) {
     margin-left: 5px;
+}
+
+.file-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.file-button:hover {
+    background-color: #0056b3;
+}
+
+.headsho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

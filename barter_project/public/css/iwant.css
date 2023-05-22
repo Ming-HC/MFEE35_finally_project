@@ -63,3 +63,9 @@ div.mb-3 {
     border-color: aqua;
     border-radius: 25px;
 }
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
