@@ -620,19 +620,19 @@ app.post('/member/:user/password', function (req, res) {
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ==========================================================我的物品(編輯)================================================================
-app.get('/member/:user/updproduct', function (req, res) {
+app.get('/member/:user/updproduct1', function (req, res) {
     if (req.session.user) {
-        console.log(req.body);
+        console.log(req.query);
         var user = req.params.user;
         var sql = 'SELECT * FROM membercenter.myproduct where MYproductid=?';
-        conn.query(sql, [req.body.MYproductid], function (err, results, fields) {
+        conn.query(sql, [req.query.MYproductid], function (err, results, fields) {
             if (err) {
                 res.send('select发生错误', err);
             } else {
-                // console.log(results)
+                console.log(results)
                 res.render('updproduct', {
                     user: user,
-                    puton: results,
+                    updproductn: results,
                     page: "updproduct",
                     member: req.session.user.account + "/personal"
                 });
@@ -642,6 +642,16 @@ app.get('/member/:user/updproduct', function (req, res) {
         res.send("error.404");
     }
 });
+app.get('/member/:user/updproduct', function (req, res) {
+    if (req.session.user) {
+        res.render('updproduct', {
+            123: "123"
+        });
+    } else {
+        res.send("error.404");
+    }
+});
+
 // =======================================================================================================================================
 // =======================================================================================================================================
 // =======================================================================================================================================
