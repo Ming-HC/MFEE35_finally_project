@@ -9,7 +9,8 @@ html {
     width: 600px;
     height: 250px;
     border-radius: 10px;
-    background-color: lightsalmon;
+    /* background-color: bisque; */
+    background-color: rgb(232, 229, 229);
     position: relative;
     text-align: center;
     margin: 0 auto;

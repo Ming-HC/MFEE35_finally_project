@@ -566,9 +566,7 @@ router.post('/search(/:page)?', express.urlencoded(), (req, res) => {
                         })
                         if (search_res.length) {
                             targetpage = Math.ceil(search_res.length / 20);
-                            console.log(targetpage);
                             var seach_res_sql = `SELECT *, DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format FROM forum.postlist WHERE post_exists = 1 and post_id in (?) ORDER BY latestReply_time DESC LIMIT ${targetpage - 1}, 20;`;
-                            console.log(seach_res_sql);
                             conn.query(seach_res_sql, [search_res], (err, results, fields) => {
                                 if (err) {
                                     console.log("search result err:", err);

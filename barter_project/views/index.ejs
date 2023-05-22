@@ -36,7 +36,8 @@
       <!-- 導覽列 開始 -->
       <%- include('share/navbar'); %>
       <!-- 導覽列 end -->
-      <div class="container-fluid">
+
+      <div class="container">
         <!-- 跑馬燈-->
         <div class="d-flex justify-content-center flex-column">
           <!-- d-flex justify-content-center flex-column 將所有內容水平垂直置中 -->
@@ -169,7 +170,7 @@
                           <hr />
                           <div
                             class="col-md-3 me-2 mt-2 scrollbar-container"
-                            style="width: 100%; height: 250px; overflow-y: auto"
+                            style="width: 100%; height: 200px; overflow-y: auto"
                           >
                             <p
                               class="card-text"
@@ -185,8 +186,8 @@
                 <div v-else class="card-body">請選產品</div>
               </div>
             </div>
-            <!-- 產品介紹 end -->
           </div>
+          <!-- 產品介紹 end -->
 
           <!-- 最新商品 -->
           <br />
@@ -409,17 +410,12 @@
           </div>
 
           <!-- 討論區 -->
-          <div class="container-fluid" id="article">
-            <div class="row mt-5">
-              <div class="col-12">
-                <div
-                  class="row d-flex justify-content-center align-items-center"
-                >
+          <div class="container" id="article">
+            <div class="row mt-5 d-flex justify-content-center align-items-start">
                   <!-- 左邊文章 -->
-                  <div class="col-12 col-md-8 col-lg-5 align-items-center">
+                  <div class="col-12 col-md-8 col-lg-7 align-items-center">              
                     <div
                       class="card border-0 gradient-background box_shadow d-flex flex-column forum_box_container"
-                      style="height: 100%"
                     >
                       <span
                         class="mt-2 ms-2"
@@ -428,25 +424,25 @@
                       >
                       <hr class="my-2" style="margin: initial" />
                       <a
-                      :href="`http://localhost/forum/post/${articles[0].post_id}`"
-                    >
-                      <img
-                        :src="articles[0].imageurl"
-                        class="mb-3 card card-img-top img-fluid"
-                        alt="文章圖片"
-                      />
-                    </a>
+                        :href="`http://localhost/forum/post/${articles[0].post_id}`"
+                      >
+                        <img
+                          :src="articles[0].imageurl"
+                          class="mb-3 card card-img-top "
+                          alt="文章圖片"
+                          style="height: 270px; width: 100%;"
+                          
+                        />
+                      </a>
                       <!-- img-fluid使圖片在其容器內自動調整大小，以達到響應式設計的效果。 -->
                       <h4 class="ms-2 justify-content-center text-center">
                         {{ articles[0].title }}
                       </h4>
                       <div
                         class="scrollbar-container mx-4 my-1"
-                        style="height: 150px; overflow-y: auto"
+                        style="height: 90px; overflow-y: auto"
                       >
-                        <span
-                          class="ms-2"
-                          style="font-size: calc(1rem + 0.3vw)"
+                        <span class="ms-2" style="font-size: calc(1rem + 0.3vw)"
                           >{{ articles[0].content }}</span
                         >
                       </div>
@@ -471,30 +467,25 @@
                         >
                           <hr style="border: 1px solid black" />
                           <a
-                          :href="`http://localhost/forum/post/${articles.post_id}`"
-                          style="color: initial;text-decoration: initial;"
-                        >       
-                          <h4 class="ms-2">{{ article.title }}</h4>
-                        </a>
+                            :href="`http://localhost/forum/post/${articles.post_id}`"
+                            style="color: initial; text-decoration: initial"
+                          >
+                            <h4 class="ms-2">{{ article.title }}</h4>
+                          </a>
                           <p
                             class="ms-2 d-flex justify-content-end align-items-end flex-wrap"
                             style="height: 100%"
                           >
                             <span>{{ article.post_time }}</span>
                             <span class="mx-2">{{ article.nickname }}</span>
-                            <span class="me-2 float-end">{{
-                              article.class_name
-                            }}</span>
+                            <span class="me-2 float-end"
+                              >{{ article.class_name }}</span
+                            >
                           </p>
                         </div>
                       </div>
-             
-
-
                     </div>
                   </div>
-                </div>
-              </div>
             </div>
 
             <!-- 最下面三筆 -->
@@ -511,13 +502,13 @@
                     >
                     <hr class="my-2" />
                     <a
-                          :href="`http://localhost/forum/post/${articles.post_id}`"
-                        >  
-                    <img
-                      :src="article.imageurl"
-                      class="card img-fluid card-img-top"
-                      alt="文章圖片"
-                    />
+                      :href="`http://localhost/forum/post/${articles.post_id}`"
+                    >
+                      <img
+                        :src="article.imageurl"
+                        class="card img-fluid card-img-top"
+                        alt="文章圖片"
+                      />
                     </a>
                   </div>
                   <h4>{{ article.title }}</h4>
@@ -525,9 +516,9 @@
                     class="mt-2 ms-2 scrollbar-container"
                     style="height: 75px; overflow-y: auto"
                   >
-                    <span style="font-size: calc(1rem + 0.3vw)">{{
-                      article.content
-                    }}</span>
+                    <span style="font-size: calc(1rem + 0.3vw)"
+                      >{{ article.content }}</span
+                    >
                   </div>
                   <p
                     class="mx-2 my-2 d-flex justify-content-end align-items-end"
@@ -542,11 +533,7 @@
         </div>
       </div>
     </div>
-    <!-- 頁尾 -->
-    <!-- <footer class="bg-secondary bg-gradient text-white text-center py-3">
-      <p class="mb-0">版權所有 &copy; 2023 iSpan-MFEE35-前端工程師就業養成班</p>
-    </footer> -->
-    <!-- 頁尾 -->
+
     <footer class="bg-secondary bg-gradient text-white py-3">
       <div class="container">
         <div class="row">

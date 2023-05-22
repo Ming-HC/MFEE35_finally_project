@@ -41,7 +41,7 @@ $(function () {
                         $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload/${imageurl[i]}"><div class="img_tip original" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this) value="${imageurl[i]}">${imageurl[i]}</div></div>`);
                     }
                     $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this) />`);
-                    $('.img_group').append(`<div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
+                    $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload_image_demo.png"><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
                     $("textarea").text(req[0].content);
                 } else {
                     for (let i = 0; i < $("option").length; i++) {
@@ -59,7 +59,7 @@ $(function () {
                         $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload/${imageurl[i]}"><div class="img_tip original" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this) value="${imageurl[i]}">${imageurl[i]}</div></div>`);
                     }
                     $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this) />`);
-                    $('.img_group').append(`<div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
+                    $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload_image_demo.png"><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
                     $("textarea").text(req[1].content);
                 }
             }
@@ -77,7 +77,7 @@ function handleFiles(e) {
         e.style.display = "none";
         $('.img_tip').eq($('.img_tip').length - 1).text(e.value.split("\\").reverse()[0]);
         $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this)>`);
-        $('.img_group').append(`<div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
+        $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload_image_demo.png"><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
     }
 }
 var flag = 1;
