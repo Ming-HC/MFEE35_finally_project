@@ -91,13 +91,13 @@ $(function () {
             newTR.append(`<div><a href="/forum/post/${post_id}"><label>${title}</label></a>
                             <label>${content}</label></div>`);
             newTR.append(`<div>
-                                <div><a href=""><label>${user}</label></a></div>
+                                <div><label>${user}</label></div>
                                 <div class="views_reply_div">
                                     <div class="views"><i class="fa fa-eye" style="font-size:20px"></i><label>${views}</label></div>
                                     <div class="reply"><i class="fa fa-comments-o" style="font-size:20px"></i><label>${reply}</label></div>
                                 </div>
                             </div>`);
-            newTR.append(`<div><a href=""><label>${latestReply_user}</label></a><label>${latestReply_time}</label></div>`);
+            newTR.append(`<div><label>${latestReply_user}</label><label>${latestReply_time}</label></div>`);
             $('#postResult').append(newTR);
         }
     }

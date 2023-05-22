@@ -150,10 +150,10 @@ a {
     margin: 0;
     /* text-align: center; */
 }
-#postResult div div:nth-of-type(4) div a, #postResult div div:nth-of-type(5) a {
-    color: black;
+#postResult div div:nth-of-type(4) div:first-child label:first-child, #postResult div div:nth-of-type(5) label:first-child {
+    color: rgb(13, 110, 253);
 }
-#postResult div div:nth-of-type(3) a label:hover, #postResult div div:nth-of-type(4) div a label:hover {
+#postResult div div:nth-of-type(3) a label:hover, #postResult div div:nth-of-type(4) div:first-child label:first-child:hover, #postResult div div:nth-of-type(5) label:first-child:hover {
     cursor: pointer;
 }
 
@@ -163,20 +163,13 @@ a {
 #postResult div div:nth-of-type(5) {
     height: 52px;
 }
-#postResult div div:nth-of-type(5) a,
 #postResult div div:nth-of-type(5) label {
     display: block;
-}
-
-#postResult div div:nth-of-type(5)>label {
-    /* text-align: center; */
 }
 
 #postResult div div {
     display: inline-block;
 }
-
-
 
 #postResult div div div {
     height: 24px;
@@ -300,10 +293,10 @@ a {
         margin-left: auto;
         height: 24px;
     }
-    #postResult div div:nth-of-type(5) a {
+    #postResult div div:nth-of-type(5) label:first-child {
         visibility: hidden;
     }
-    #postResult div div:nth-of-type(5) a, #postResult div div:nth-of-type(5)>label {
+    #postResult div div:nth-of-type(5) label {
         display: inline-block;
     }
 }
