@@ -1,3 +1,6 @@
+
+
+
 /* 字體設定 */
 * {
   font-family: 'Microsoft JhengHei', 'Heiti TC', sans-serif;
@@ -329,10 +332,22 @@
 /* 最新商品 end*/
 
 /* 討論區 */
- 
+ /* 左邊圖片寬度 */
+ #article .row .col-12  img:nth-child(1){
+  height: 360px;
+}
+
+@media (max-width: 991px) {
+  #article .row .col-12 img:nth-child(1) {
+      max-width: 100%;
+      height: auto;
+  }
+}
+ /* 左邊圖片寬度 end*/
+
   /*文章容器高度 */
     #article .forum_height{
-      height: 500px;
+      height: 510px;
       overflow-y: scroll;
     }
 
@@ -353,26 +368,3 @@
 
 
 /* 討論區 end*/
-
-
-
-/* ----------- */
-
-/* @media (max-width: 613px) {
-  .col-12.d-flex-sm .row .col-12 {
-    width: 250px;
-    }
-} */
-
-/* 討論區 內容變版*/
-/* @media (max-width: 436px) {
-  .col-12 .row .col-lg-12 .box_shadow p{
-    flex-direction: column;
-    text-align: center;
- 
-    }
-    .col-12 .row .col-lg-12 .box_shadow p span{
-      margin-right: auto;
-      margin-left: auto;
-      }
-} */
