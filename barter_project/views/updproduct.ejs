@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <%- include('share/head'); %>
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/checkout/">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+
+</head>
+
+<body class="bg-body-tertiary">
+    <div class="header">
+        <%- include('share/navbar'); %>
+    </div>
+
+    <div class="row" style="padding: 0px; width: 100%; height: 100%; margin: 0px;">
+        <div class="col-lg-3 row" style="height: 120%; background-color: rgba(179, 177, 177, 0.85); margin: 0px;">
+            <div class="col-7"></div>
+            <div class="mt-5 col-5  ">
+                <%- include('sidebar')%>
+            </div>
+        </div>
+        <div class="col-lg-9"
+            style="height: 120%; background-color: rgba(153, 155, 153, 0.692); color: white; padding: 0px 100px 0px 60px;">
+            <div class="col-10">
+                <div class="mt-5">
+                    <div>
+                        <h4
+                            style="background-color: gray; color: white; padding: 20px; border-radius: 22px 22px 0px 0px; margin: 0px;">
+                            編輯商品
+                        </h4>
+                    </div>
+                    <div style="background-color: rgb(189, 131, 142); border-radius: 0px 0px 22px 22px; margin: 0px;"
+                        class="row">
+                        <form action="/member/<%= user %>/updproduct" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="user_name">
+                            <div class="row mt-2">
+                                <label class="col-sm-2 col-form-label">商品圖片：</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" name="productimage">
+                                </div>
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-5 mt-3 mb-3">
+                                    <img src="/image/Myproduct/demo2.png" width="100%" height="225" class="putimage"
+                                        style="object-fit:contain;">
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label class="col-sm-2 col-form-label">商品名稱：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="productname">
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label class="col-sm-2 col-form-label">商品說明：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="productdetail">
+                                </div>
+                            </div>
+
+                            <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-2 pt-0">地點：</legend>
+                                <div class="col-sm-10 row">
+                                    <div class="col-2">
+                                        <input type="radio" id="north" name="district" value="north">
+                                        <label class="form-check-label col-9 mb-3" for="north">北區</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="radio" id="center" name="district" value="center">
+                                        <label class="form-check-label col-9 mb-3" for="center">中區</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="radio" id="south" name="district" value="south">
+                                        <label class="form-check-label col-9 mb-3" for="south">南區</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="radio" id="east" name="district" value="east">
+                                        <label class="form-check-label col-9 mb-3" for="east">東區</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="radio" id="outside" name="district" value="outside">
+                                        <label class="form-check-label col-9 mb-3" for="outside">外島</label>
+                                    </div>
+                                    <div class="row col-12" style="display: none;" data-name='north'>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Taipei"
+                                                value="台北市" checked>
+                                            <label class="form-check-label" for="Taipei">
+                                                台北市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="New Taipei"
+                                                value="新北市">
+                                            <label class="form-check-label" for="New Taipei">
+                                                新北市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Keelung"
+                                                value="基隆市">
+                                            <label class="form-check-label" for="Keelung">
+                                                基隆市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Taoyuan"
+                                                value="桃園市">
+                                            <label class="form-check-label" for="Taoyuan">
+                                                桃園市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Hsinchu County"
+                                                value="新竹縣">
+                                            <label class="form-check-label" for="Hsinchu County">
+                                                新竹縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Hsinchu City"
+                                                value="新竹市">
+                                            <label class="form-check-label" for="Hsinchu City">
+                                                新竹市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Yilan County"
+                                                value="宜蘭縣">
+                                            <label class="form-check-label" for="Yilan County">
+                                                宜蘭縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Yilan City"
+                                                value="宜蘭市">
+                                            <label class="form-check-label" for="Yilan City">
+                                                宜蘭市
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-12" style="display: none;" data-name='center'>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Taichung"
+                                                value="台中市">
+                                            <label class="form-check-label" for="Taichung">
+                                                台中市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Miaoli"
+                                                value="苗栗縣">
+                                            <label class="form-check-label" for="Miaoli">
+                                                苗栗縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Changhua"
+                                                value="彰化縣">
+                                            <label class="form-check-label" for="Changhua">
+                                                彰化縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Nantou"
+                                                value="南投縣">
+                                            <label class="form-check-label" for="Nantou">
+                                                南投縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Yunlin"
+                                                value="雲林縣">
+                                            <label class="form-check-label" for="Yunlin">
+                                                雲林縣
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-12" style="display: none;" data-name='south'>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Chiayi County"
+                                                value="嘉義縣">
+                                            <label class="form-check-label" for="Chiayi County">
+                                                嘉義縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="chiayi city"
+                                                value="嘉義市">
+                                            <label class="form-check-label" for="chiayi city">
+                                                嘉義市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Tainan"
+                                                value="台南市">
+                                            <label class="form-check-label" for="Tainan">
+                                                台南市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Kaohsiung"
+                                                value="高雄市">
+                                            <label class="form-check-label" for="Kaohsiung">
+                                                高雄市
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Pingtung"
+                                                value="屏東縣">
+                                            <label class="form-check-label" for="Pingtung">
+                                                屏東縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Penghu"
+                                                value="澎湖縣">
+                                            <label class="form-check-label" for="Penghu">
+                                                澎湖縣
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-12" style="display: none;" data-name='east'>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Hualien"
+                                                value="花蓮縣">
+                                            <label class="form-check-label" for="Hualien">
+                                                花蓮縣
+                                            </label>
+                                        </div>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="Taitung"
+                                                value="台東縣">
+                                            <label class="form-check-label" for="Taitung">
+                                                台東縣
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-12" style="display: none;" data-name='outside'>
+                                        <div class="form-check col-3 mb-2">
+                                            <input class="form-check-input" type="radio" name="city" id="golden gate"
+                                                value="金門縣">
+                                            <label class="form-check-label" for="golden gate">
+                                                金門縣
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <hr>
+
+                            <input type="submit" class="btn btn-secondary mb-3" value="送出">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </main>
+        </div>
+    </div>
+    <br><br><br>
+</body>
+
+</html>
