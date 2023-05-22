@@ -79,7 +79,8 @@ a {
     border-radius: 10px;
 }
 #postResult>div:nth-child(even) {
-    background-color: bisque;
+    /* background-color: bisque; */
+    background-color: #F5F1F1;
 }
 
 #postResult div div:not(:last-child),
@@ -166,6 +167,9 @@ a {
     display: block;
     margin: 0;
     /* text-align: center; */
+}
+#postResult div div:nth-of-type(4) div a, #postResult div div:nth-of-type(5) a {
+    color: black;
 }
 #postResult div div:nth-of-type(3) a label:hover, #postResult div div:nth-of-type(4) div a label:hover {
     cursor: pointer;
