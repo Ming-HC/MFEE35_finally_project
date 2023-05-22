@@ -62,7 +62,7 @@ a {
     border-radius: 10px;
 }
 #postResult>div:nth-child(even) {
-    background-color: bisque;
+    background-color: #F5F1F1;
 }
 
 #postResult div div:not(:last-child),

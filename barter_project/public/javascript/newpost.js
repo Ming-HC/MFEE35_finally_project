@@ -22,26 +22,6 @@ $(function () {
         }
     }
     getPostClass();
-    // $('#submit button').on('click', function () {
-    //     console.log(member.username);
-    //     console.log($(`option[value=${$('select').val()}]`).text());
-    //     console.log($('input[type=text]').val());
-    //     console.log($('textarea').val());
-    //     var dataToServer = {
-    //         member: member.username,
-    //         class_name: $(`option[value=${$('select').val()}]`).text(),
-    //         title: $('input[type=text]').val(),
-    //         content: $('textarea').val()
-    //     };
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/forum/newpost/new',
-    //         data: dataToServer,
-    //         success: function(req) {
-    //             location.href = '/forum';
-    //         }
-    //     })
-    // })
 })
 function handleFiles(e) {
     if (e.value != "") {
@@ -52,7 +32,7 @@ function handleFiles(e) {
         e.style.display = "none";
         $('.img_tip').eq($('.img_tip').length - 1).text(e.value.split("\\").reverse()[0]);
         $('.inputfile_group').append(`<input type="file" name="imageurl" accept="image/*" onchange=handleFiles(this)>`);
-        $('.img_group').append(`<div class="img_block"><img src=""><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
+        $('.img_group').append(`<div class="img_block"><img src="/image/forum/upload_image_demo.png"><div class="img_tip" onmouseenter=hoverimg(this) onmouseleave=leaveimg(this) onclick=delimg(this)></div></div>`);
     }
 }
 var flag = 1;
