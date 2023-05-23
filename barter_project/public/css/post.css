@@ -75,7 +75,7 @@ pre {
 pre+label {
     display: block;
     text-align: right;
-    color: lightgray;
+    color: gray;
 }
 
 .function_div {
