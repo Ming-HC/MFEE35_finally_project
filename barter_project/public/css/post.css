@@ -18,7 +18,7 @@ body {
 }
 
 #title label {
-    color: lightgray;
+    color: gray;
 }
 
 h3 {
@@ -53,7 +53,7 @@ h3 {
 }
 
 #reply_floor_div label {
-    color: lightgray
+    color: gray
 }
 #reply_floor_div+div img {
     width: 100%;
@@ -80,6 +80,11 @@ pre+label {
 
 .function_div {
     text-align: right;
+}
+input[type="button"] {
+    background-color: #F5F1F1;
+    border: 1px solid gray;
+    border-radius: 5px;
 }
 
 .reply_div {
@@ -153,6 +158,11 @@ textarea {
 div.reply_post_submit_div {
     padding-right: 10px;
     text-align: right;
+}
+input[type="submit"] {
+    background-color: #F5F1F1;
+    border: 1px solid gray;
+    border-radius: 5px;
 }
 
 /* 已刪除文章css */

@@ -136,14 +136,14 @@ $(function () {
         }
     }
     getfloor();
-    $("textarea").focus(() => {
+    $("textarea, input[type=file]").focus(() => {
         if ($(".d-none.d-md-block").prop("href").indexOf('login') > -1) {
             var hint = "需登入才可回覆，是否登入？"
             if (confirm(hint) == true) {
-                $("textarea").blur();
+                $("textarea, input[type=file]").blur();
                 location.href = "/member/login";
             } else {
-                $("textarea").blur();
+                $("textarea, input[type=file]").blur();
             }
         }
     });
