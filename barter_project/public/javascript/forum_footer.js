@@ -6,8 +6,15 @@ $(function () {
             req.forEach((data, index) => {
                 $('.insidediv').append(`<a class="img_block" href="/product/${data.product_id}/detail"><img src="${data.product_image}" alt="${data.product_name}"><div class="img_tip">${data.product_name}</div></a>`);
             })
+            if (window.innerWidth > 767) {
+                var scrolltimes = 4
+            } else if (window.innerWidth > 530) {
+                var scrolltimes = 6
+            } else {
+                
+            }
             var maxscrollwidth = $('.insidediv')[0].scrollWidth - $('.insidediv')[0].clientWidth;
-            var scrollvalue = maxscrollwidth / 4;
+            var scrollvalue = maxscrollwidth / scrolltimes;
             var flag = 1;
             $(".scrollbtn").on('click', function (event) {
                 var targetscroll = $('.insidediv')[0].scrollLeft;

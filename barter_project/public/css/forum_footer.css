@@ -71,6 +71,7 @@ html {
     color: white;
     opacity: 0.7;
     display: none;
+    border-radius: 0 
 }
 
 .random_recommend .img_block:hover .img_tip {
@@ -83,13 +84,7 @@ html {
     width: 25px;
     position: absolute;
     bottom: 90px;
-
 }
-
-/* .random_recommend .prevbtn:hover,
-.random_recommend .nextbtn:hover {
-    background-color: rgb(128, 128, 128, 0.4);
-} */
 
 .random_recommend .prevbtn {
     left: 20px;
@@ -97,4 +92,16 @@ html {
 
 .random_recommend .nextbtn {
     right: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .random_recommend .outsidediv {
+        width: 500px;
+    }
+    .random_recommend .insidediv {
+        width: 490px;
+    }
+}
+@media only screen and (max-width: 530px) {
+
 }

@@ -10,7 +10,8 @@ body {
 
 .post a {
     padding: 5px;
-    border: 1px solid black;
+    background-color: #F5F1F1;
+    border: 1px solid gray;
     border-radius: 10px;
 }
 
@@ -43,12 +44,21 @@ body {
 .search>input:focus {
     width: 250px;
 }
-
-#search_submit,
+#search_submit {
+    width: 50px;
+    background-color: #F5F1F1;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
 .post>button {
     border-radius: 10px;
 }
-
+.search_select {
+    height: 26px;
+    background-color: #F5F1F1;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
 .subject {
     margin-top: 30px;
 }

@@ -32,10 +32,22 @@ body {
     width: 250px;
 }
 
-#search_submit,
+#search_submit {
+    width: 50px;
+    background-color: #F5F1F1;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
 .post>button {
     border-radius: 10px;
 }
+.search_select {
+    height: 26px;
+    background-color: #F5F1F1;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
 .search_post {
     padding-bottom: 10px;
     margin-bottom: 10px;

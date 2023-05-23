@@ -43,11 +43,6 @@ router.get('/view/newpost', function (req, res) {
 
 
 router.get('(/:class)?/:page/getpost', function (req, res) {
-    // sql語法 從第幾筆開始要幾筆 limit記得可以
-    // 但也需總共有幾筆 返回頁數
-    // 20230503 AM11 ok
-    // 網址輸入空文章頁面仍會渲染 但沒文章 浪費server資源?
-
     var targetpage = req.params.page;
     var classname = req.params.class ? req.params.class : "all";
     var select_classname_sql = `select class_name from forum.class where class_name_eng = '${classname}';`;
@@ -251,7 +246,6 @@ router.post('(/:class)?/getclass', express.urlencoded(), function (req, res) {
 })
 
 router.post('/newpost/:something', express.urlencoded(), post_upload.array('imageurl'), function (req, res) {
-    // bug: 需加 權限 限制 發佈 系統公告文章
     upload_image_index = 0;
     var imageurl = [];
     for (let i = 0; i < req.files.length; i++) {
@@ -435,7 +429,6 @@ router.post('/post/:id/reply', express.urlencoded(), post_upload.array('imageurl
                 res.send("reply post error");
             } else {
                 var select_latestreply_sql = `select user, post_time from forum.post_${post_id} ORDER BY post_time desc;`;
-                // 加更新文章最新回覆使用者及時間 2023/05/02 AM11 ok
                 conn.query(select_latestreply_sql, function (err, results, fields) {
                     if (err) {
                         console.log("search latestreply err:", err);
@@ -544,7 +537,6 @@ router.post('/search(/:page)?', express.urlencoded(), (req, res) => {
             })
             break;
         case "content":
-            // 先搜出所有文章id 再去各文章搜尋內文 紀錄符合的文章id 再select postlist 符合的文章id 傳送至前端
             var dataToWeb = { post_id: [] };
             var search_allpostid_sql = `SELECT post_id FROM forum.postlist WHERE post_exists = 1;`;
             conn.query(search_allpostid_sql, (err, results, fields) => {
