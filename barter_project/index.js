@@ -620,19 +620,21 @@ app.post('/member/:user/password', function (req, res) {
 // =======================================================================================================================================
 // =======================================================================================================================================
 // ==========================================================我的物品(編輯)================================================================
-app.get('/member/:user/updproduct1', function (req, res) {
+app.get('/member/:user/MYproduct/:MYproductid', function (req, res) {
     if (req.session.user) {
-        console.log(req.query);
+        // console.log(req.params);
         var user = req.params.user;
+        var MYproductid = req.params.MYproductid;
         var sql = 'SELECT * FROM membercenter.myproduct where MYproductid=?';
-        conn.query(sql, [req.query.MYproductid], function (err, results, fields) {
+        conn.query(sql, [req.params.MYproductid], function (err, results, fields) {
             if (err) {
                 res.send('select发生错误', err);
             } else {
-                console.log(results)
+                // console.log(results)
                 res.render('updproduct', {
                     user: user,
-                    updproductn: results,
+                    MYproductid: MYproductid,
+                    updproduct: results,
                     page: "updproduct",
                     member: req.session.user.account + "/personal"
                 });
@@ -642,15 +644,73 @@ app.get('/member/:user/updproduct1', function (req, res) {
         res.send("error.404");
     }
 });
-app.get('/member/:user/updproduct', function (req, res) {
+
+var v1 = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public/image/MYproduct/upload");
+    },
+    filename: function (req, file, cb) {
+        fs.readdir('public/image/MYproduct/upload', function (err, data) {
+            if (err) throw err;
+            if (data[0]) {
+                data.forEach(function (filename, index) {
+                    data[index] = filename.split('.jpg')[0].split('_')[1];
+                })
+                data = data.sort(function (a, b) { return a - b });
+                var userFileName = `productimage_${Number(data[data.length - 1]) + 1}.jpg`;
+            } else {
+                var userFileName = `productimage_0.jpg`;
+            }
+            cb(null, userFileName);
+        })
+    }
+})
+
+var v2 = multer({
+    storage: v1,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype != 'image/png' && file.mimetype !== 'image/jpeg') {
+            return cb(new Error('檔案類型錯誤'));
+        }
+        cb(null, true);
+    }
+});
+app.post('/member/:user/MYproduct/:MYproductid', express.urlencoded(), v2.single('productimage'), function (req, res) {
     if (req.session.user) {
-        res.render('updproduct', {
-            123: "123"
+        MYproductid = req.params.MYproductid 
+        // console.log(req.file);
+        // console.log(req.body);
+        image = '/image/MYproduct/upload/' + req.file.filename
+        // console.log(image);
+        // console.log(req.body.productname);
+        // console.log(req.body.productdetail);
+        // console.log(req.body.city);
+        // console.log(MYproductid);
+        // console.log(req.body.city);
+        var user = req.params.user;
+        var MYproductid = req.params.MYproductid;
+        var sql = 'UPDATE membercenter.MYproduct SET MYproductimage=?,MYproductname=?,MYproductdetail=?,MYproductcity=? where MYproductid = ?';
+        conn.query(sql, [image, req.body.productname, req.body.productdetail, req.body.city, MYproductid], function (err, results, fields) {
+            if (err) {
+                res.send('更新發生錯誤', err);
+            } else {
+                // console.log(results)
+                // res.render('updproduct', {
+                //     user: user,
+                //     MYproductid: MYproductid,
+                //     updproduct: results,
+                //     page: "updproduct",
+                //     member: req.session.user.account + "/personal"
+                // });
+                res.send("<script>alert('商品更新成功！');window.location.href='/member/" + user + "/MYproduct'</script>");
+            }
         });
     } else {
         res.send("error.404");
     }
 });
+
+
 
 // =======================================================================================================================================
 // =======================================================================================================================================
