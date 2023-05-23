@@ -32,7 +32,7 @@ function update(MYproductid) {
 }
 
 function deldata(MYproductid) {
-    if (confirm("您確定要刪除這個文件嗎？")) {
+    if (confirm("您確定要刪除這個物品嗎？")) {
         $.ajax({
             type: 'delete',
             url: 'MYproduct',
