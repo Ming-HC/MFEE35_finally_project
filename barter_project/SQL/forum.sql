@@ -24,7 +24,7 @@ create table forum.postlist (
 `post_exists` int default 1,
 primary key (`post_id`),
 foreign key (class_name) references class(class_name)
-);
+) AUTO_INCREMENT=2;
 insert into forum.class(class_name_eng, class_name) values('all', '全部主題');
 insert into forum.class(class_name_eng, class_name) values('complex', '綜合討論');
 insert into forum.class(class_name_eng, class_name) values('gossip', '閒聊');

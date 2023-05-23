@@ -1,20 +1,3 @@
--- forum.post_1 definition
-
-CREATE TABLE forum.post_1 (
-  `reply_floor` int(11) NOT NULL AUTO_INCREMENT,
-  `class_name` varchar(20) DEFAULT NULL,
-  `title` varchar(40) DEFAULT NULL,
-  `user` varchar(20) NOT NULL,
-  `imageurl` varchar(200) DEFAULT NULL,
-  `content` varchar(1000) NOT NULL,
-  `post_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `floor_exists` int(11) DEFAULT '1',
-  PRIMARY KEY (`reply_floor`),
-  KEY `class_name` (`class_name`),
-  CONSTRAINT `post_1_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-
-
 -- forum.post_10 definition
 
 CREATE table forum.post_10 (
@@ -472,9 +455,6 @@ CREATE table forum.post_9 (
   KEY `class_name` (`class_name`),
   CONSTRAINT `post_9_ibfk_1` FOREIGN KEY (`class_name`) REFERENCES `class` (`class_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO forum.post_1 (class_name,title,`user`,imageurl,content,post_time,floor_exists) VALUES
-	 ('綜合討論','dsfa','testuser','','dfasfa','2023-05-19 10:30:11',0);
 
 INSERT INTO forum.post_2 (class_name,title,`user`,imageurl,content,post_time,floor_exists) VALUES
 	 ('系統公告','系統改版，停機公告','root','','各位會員 好：
