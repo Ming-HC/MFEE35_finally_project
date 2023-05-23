@@ -35,8 +35,9 @@
                     </div>
                     <div style="background-color: rgb(189, 131, 142); border-radius: 0px 0px 22px 22px; margin: 0px;"
                         class="row">
-                        <form action="/member/<%= user %>/updproduct" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="user_name">
+                        <form action="/member/<%= user %>/MYproduct/<%= MYproductid%>" method="post" enctype="multipart/form-data">
+                        <!-- <form id="myForm" enctype="multipart/form-data"> -->
+                            <!-- <input type="hidden" name="user_name"> -->
                             <div class="row mt-2">
                                 <label class="col-sm-2 col-form-label">商品圖片：</label>
                                 <div class="col-sm-10">
@@ -44,7 +45,7 @@
                                 </div>
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-5 mt-3 mb-3">
-                                    <img src="/image/Myproduct/demo2.png" width="100%" height="225" class="putimage"
+                                    <img src="<%= updproduct[0].MYproductimage%>" width="100%" height="225" class="putimage"
                                         style="object-fit:contain;">
                                 </div>
                             </div>
@@ -59,7 +60,7 @@
                             <div class="row mb-4">
                                 <label class="col-sm-2 col-form-label">商品說明：</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="productdetail">
+                                    <input type="text" class="form-control" name="productdetail" value="<%= updproduct[0].MYproductdetail%>">
                                 </div>
                             </div>
 
@@ -257,8 +258,8 @@
                                 </div>
                             </fieldset>
                             <hr>
-
-                            <input type="submit" class="btn btn-secondary mb-3" value="送出">
+                            
+                            <button type="submit" onclick="uploadFile()" class="btn btn-secondary mb-3">上傳檔案</button>
                         </form>
                     </div>
                 </div>

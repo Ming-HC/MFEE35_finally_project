@@ -47,7 +47,7 @@
             </div>
             <div class="tab-content" id="v-pills-tabContent" style="width:80%">
               <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                aria-labelledby="v-pills-home-tab" style="height: 550px; overflow: auto; overflow-x: clip;">
+                aria-labelledby="v-pills-home-tab" style="height: 550px; width: 715px; overflow: auto; overflow-x: clip;">
                 <% if(product=="nothing" ){%>
                   <div style="font-size: 100px;opacity: 0.3;">目前並無商品</div>
                   <%}else{%>
@@ -81,8 +81,8 @@
                         <%}%>
               </div>
               <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"
-                style="height: 550px; overflow: auto; overflow-x: clip;">
-                <div class="d-flex justify-content-end">
+                style="height: 550px; width: 715px;overflow: auto; overflow-x: clip;">
+                <div class="d-flex justify-content-end" style="padding-right: 20px;">
                   <button class="mt-3 btn btn-secondary mb-1" id="plus" onclick="apple()">上傳</button>
                 </div>
                 <hr>
@@ -113,7 +113,7 @@
                             <%= MYproduct[i].lunch_date_formatted %>
                           </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 mt-3">
                           <form action="/member/<%= user %>/MYproduct" method="post" onsubmit="return confirmSubmit()">
                             <input type="hidden" name="MYproductname" value="<%= MYproduct[i].MYproductname%>">
                             <input type="hidden" name="MYproductimage" value="<%= MYproduct[i].MYproductimage%>">
@@ -122,12 +122,16 @@
                             <input type="hidden" name="MYproductid" value="<%= MYproduct[i].MYproductid%>">
                             <input type="submit" value="上架" class="btn-sm btn btn-secondary mt-3">
                           </form>
-                          <button class="mt-3 btn btn-secondary mb-1" id="updproduct" onclick="update(<%= MYproduct[i].MYproductid %>)">
-                            編輯
-                          </button>
-                          <button class="btn-sm btn btn-danger mt-3" onclick="deldata(<%= MYproduct[i].MYproductid %>)">
-                            刪除
-                          </button>
+                          <div>
+                            <button class="btn-sm mt-3 btn btn-secondary mb-1" id="updproduct" onclick="update(<%= MYproduct[i].MYproductid %>)">
+                              編輯
+                            </button>
+                          </div>
+                          <div>
+                            <button class="btn-sm btn btn-danger mt-3" onclick="deldata(<%= MYproduct[i].MYproductid %>)">
+                              刪除
+                            </button>
+                          </div>
                         </div>
                       </div>
                       <hr>
