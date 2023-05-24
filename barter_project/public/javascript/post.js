@@ -1,4 +1,5 @@
 $(function () {
+    $('.page').remove();
     function getfloor() {
         $('#floorResult').html('');
         $.ajax({
