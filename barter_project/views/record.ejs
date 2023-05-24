@@ -37,22 +37,19 @@
               <% if(record=="nothing" ){%>
                 <div style="font-size: 100px;opacity: 0.3;">目前並無紀錄</div>
                 <% }else{ %>
-                  <table>
+                  <table style="margin: 20px 10px; width: 100%; text-align: center;">
                     <tr>
                       <th>
-                        <h3>賣家姓名&nbsp&nbsp&nbsp&nbsp</h3>
+                        <h3>對方名稱</h3>
                       </th>
                       <th>
-                        <h3>買家商品&nbsp&nbsp&nbsp&nbsp</h3>
+                        <h3>我方商品</h3>
                       </th>
                       <th>
-                        <h3>賣家商品&nbsp&nbsp&nbsp&nbsp</h3>
+                        <h3>交易商品</h3>
                       </th>
                       <th>
-                        <h3>是否成功&nbsp&nbsp&nbsp&nbsp</h3>
-                      </th>
-                      <th>
-                        <h3>交易時間&nbsp&nbsp&nbsp&nbsp</h3>
+                        <h3>交易時間</h3>
                       </th>
                     </tr>
                     <% for (var i=0; i<record.length; i++) {%>
@@ -65,9 +62,6 @@
                         </td>
                         <td>
                           <%= record[i].product2%>
-                        </td>
-                        <td>
-                          <%= record[i].success%>
                         </td>
                         <td>
                           <%= record[i].time%>

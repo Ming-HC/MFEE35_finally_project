@@ -36,7 +36,7 @@
                     <div style="background-color: rgb(189, 131, 142); border-radius: 0px 0px 22px 22px; margin: 0px;"
                         class="d-flex align-items-start">
                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
-                            aria-orientation="vertical">
+                            aria-orientation="vertical" style="width: 100px;">
                             <button class="nav-link active myproduct" id="v-pills-home-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
                                 aria-selected="true"
@@ -46,23 +46,27 @@
                                 aria-controls="v-pills-profile" aria-selected="false"
                                 style="border-radius: 0px; color: brown; background-color: rgb(189, 131, 142); border-bottom: 2px solid white; border-radius: 0px; padding: 10px; border-bottom-color: brown;">與我交換</button>
                         </div>
-                        <div class="tab-content" id="v-pills-tabContent" style="width:80%">
+                        <div class="tab-content" id="v-pills-tabContent" style="width:100%">
                             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                                 aria-labelledby="v-pills-home-tab"
-                                style="height: 550px; overflow: auto; overflow-x: clip;">
+                                style="height: 550px; overflow: auto; overflow-x: clip; width:100%">
                                 <% if(iwant=="nothing" ){%>
-                                    <div style="font-size: 100px;opacity: 0.3;">目前並無商品</div>
+                                    <div style="font-size: 100px;opacity: 0.3;">目前並無交換商品</div>
                                     <%}else{%>
                                         <!-- <hr> -->
                                         <% for(var i=0; i<iwant.length; i++) {%>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3" style="margin: 10px;">
                                                 <div class="col-5">
                                                     <p width="100%" height="100%"
                                                         style="text-align: center; background-color: pink; padding: 8px; margin: 20px 0px 0px 0px;">
                                                         <%= iwant[i].BWC_user_name%>
                                                     </p>
                                                     <div style=" width: 100%; height: 200px;">
-                                                        <img src="<%= iwant[i].BWC_product_image%>">
+                                                        <img style="padding-top: 0px;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        object-fit: contain;
+                                                        border: 1px solid #d6d4d4;" src="<%= iwant[i].BWC_product_image%>">
                                                     </div>
                                                     <p width="100%"
                                                         style="text-align: center; background-color: #d6d4d4; padding: 8px;">
@@ -70,7 +74,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="col-2">
-                                                    <div class="text-secondary" style="position: absolute;">
+                                                    <div class="text-secondary">
                                                         <p
                                                             style="text-align: center; position: relative; margin-top: 40px;">
                                                             <i class="bi bi-arrow-right" style="font-size: 100px;">
@@ -86,7 +90,11 @@
                                                         <%= iwant[i].WC_user_name%>
                                                     </p>
                                                     <div style=" width: 100%; height: 200px;">
-                                                        <img src="<%= iwant[i].WC_product_image%>">
+                                                        <img style="padding-top: 0px;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        object-fit: contain;
+                                                        border: 1px solid #d6d4d4;" src="<%= iwant[i].WC_product_image%>">
                                                     </div>
                                                     <p width="100%"
                                                         style="text-align: center; background-color: #d6d4d4; padding: 8px;">
@@ -101,18 +109,22 @@
                                 aria-labelledby="v-pills-profile-tab"
                                 style="height: 550px; overflow: auto; overflow-x: clip;">
                                 <% if(withme=="nothing" ){%>
-                                    <div style="font-size: 100px;opacity: 0.3;">目前並無商品</div>
+                                    <div style="font-size: 100px;opacity: 0.3;">目前並無交換商品</div>
                                     <%}else{%>
                                         <!-- <hr> -->
                                         <% for(var i=0; i<withme.length; i++) {%>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3" style="margin: 10px;">
                                                 <div class="col-5">
                                                     <p width="100%" height="100%"
                                                         style="text-align: center; background-color: pink; padding: 8px; margin: 20px 0px 0px 0px;">
                                                         <%= withme[i].BWC_user_name%>
                                                     </p>
                                                     <div style=" width: 100%; height: 200px;">
-                                                        <img src="<%= withme[i].BWC_product_image%>">
+                                                        <img style="padding-top: 0px;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        object-fit: contain;
+                                                        border: 1px solid #d6d4d4;" src="<%= withme[i].BWC_product_image%>">
                                                     </div>
                                                     <p width="100%"
                                                         style="text-align: center; background-color: #d6d4d4; padding: 8px;">
@@ -120,9 +132,9 @@
                                                     </p>
                                                 </div>
                                                 <div class="col-2">
-                                                    <div class="text-secondary" style="position: absolute;">
+                                                    <div class="text-secondary">
                                                         <p
-                                                            style="text-align: center; position: relative; margin-top: 40px;">
+                                                            style="text-align: center; margin-top: 40px;">
                                                             <i class="bi bi-arrow-right" style="font-size: 100px;">
                                                             </i>
                                                         </p>
@@ -136,7 +148,11 @@
                                                         <%= withme[i].WC_user_name%>
                                                     </p>
                                                     <div style=" width: 100%; height: 200px;">
-                                                        <img src="<%= withme[i].WC_product_image%>">
+                                                        <img style="padding-top: 0px;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        object-fit: contain;
+                                                        border: 1px solid #d6d4d4;" src="<%= withme[i].WC_product_image%>">
                                                     </div>
                                                     <p width="100%"
                                                         style="text-align: center; background-color: #d6d4d4; padding: 8px;">
@@ -144,7 +160,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <form id="myForm" action="/<%=user%>/withme" method="post">
+                                                    <form id="myForm" action="/member/<%=user%>/iwant" method="post">
                                                         <input type="hidden" name="WC_user_name"
                                                             value="<%= withme[i].WC_user_name%>">
                                                         <input type="hidden" name="WC_product_name"
@@ -154,7 +170,7 @@
                                                         <input type="hidden" name="BWC_product_name"
                                                             value="<%= withme[i].BWC_product_name%>">
                                                         <input type="hidden" name="id" value="<%= withme[i].id%>">
-                                                        <input type="submit" value="同意交換" onclick="judge(event)">
+                                                        <input type="submit" value="同意交換" onclick="judge(event)" class="btn btn-secondary" style="margin: 10px;">
                                                     </form>
                                                 </div>
                                             </div>
