@@ -521,7 +521,7 @@ router.post('/search(/:page)?', express.urlencoded(), (req, res) => {
             })
             break;
         case "title":
-            var search_sql = `SELECT * from forum.postlist where post_exists = 1 and title like '%${req.body.select_content}%' ORDER BY latestReply_time DESC LIMIT 0, 20;`;
+            var search_sql = `SELECT *, DATE_FORMAT(latestReply_time, '%Y/%m/%d %H:%i') latestReply_time_format from forum.postlist where post_exists = 1 and title like '%${req.body.select_content}%' ORDER BY latestReply_time DESC LIMIT 0, 20;`;
             var search_page_sql = `SELECT * from forum.postlist where post_exists = 1 and title like '%${req.body.select_content}%';`;
             conn.query(search_sql + search_page_sql, (err, results, fields) => {
                 if (err) {
